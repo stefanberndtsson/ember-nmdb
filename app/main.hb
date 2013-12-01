@@ -28,7 +28,7 @@
 
   <script type="text/x-handlebars" data-template-name="Nmdb-search/_results">
       <div class="row container">
-	<div class="btn-toolbar visible-xs">
+	<div class="btn-toolbar visible-xs visible-sm">
 	  <div class="btn-group col-xs-12">
 	    <button class="btn btn-default col-xs-6 action-button-movies">Movies</button>
 	    <button class="btn btn-default col-xs-6 action-button-people">People</button>
@@ -36,7 +36,7 @@
 	</div>
       </div>
       <div class="row container col-sm-12 col-md-12 col-lg-12">
-	<div class="col-sm-6 action-list-movies">
+	<div class="col-md-6 action-list-movies">
 	  <ul class="list-group">
 	    {{#if result.movies}}
 	    <h2 class="list-group-item-heading">Movies</h2>
@@ -46,7 +46,7 @@
 	    {{/each}}
 	  </ul>
 	</div>
-	<div class="col-sm-6 action-list-people">
+	<div class="col-md-6 action-list-people">
 	  <ul class="list-group">
 	    {{#if result.people}}
 	    <h2 class="list-group-item-heading">People</h2>
@@ -111,7 +111,7 @@
     <div class="col-xs-12">
       <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="jumbotron">
-	  <h1 class="page-header">{{model.person.first_name}} {{model.person.last_name}}</h1>
+	  <h1 class="page-header">{{model.person.first_name}}&nbsp;{{model.person.last_name}}</h1>
 	</div>
       </div>
       <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
