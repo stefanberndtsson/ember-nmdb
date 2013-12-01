@@ -39,12 +39,20 @@ function nmdbSetup(rootElement) {
 	    var movies_button = $('.action-button-movies');
 	    this.get('hideLists')(movies_button.is(':visible'));
 	    var that = this;
-	    $(window).resize(function(x,y,z) {
+	    $(window).resize(function() {
 		var movies_button = $('.action-button-movies');
 		that.get('hideLists')(movies_button.is(':visible'));
 	    });
 	    $('.action-button-movies').on('click', function() { that.get('showMovies')(); });
 	    $('.action-button-people').on('click', function() { that.get('showPeople')(); });
+	},
+	hideButtons: function() {
+	    $('.action-button-movies').hide();
+	    $('.action-button-people').hide();
+	},
+	showButtons: function() {
+	    $('.action-button-movies').show();
+	    $('.action-button-people').show();
 	},
 	showMovies: function() {
 	    $('.action-button-movies').addClass('active');
@@ -68,18 +76,24 @@ function nmdbSetup(rootElement) {
 		$('.action-list-movies').show();
 		$('.action-list-people').show();
 	    }
+	},
+	buttonsVisibleTrigger: function() {
+	    var that = this;
+	    $('.action-button-movies').on('click', function() { that.get('showMovies')(); });
+	    $('.action-button-people').on('click', function() { that.get('showPeople')(); });
+	    $(window).trigger('resize');
 	}
     });
 
     Nmdb.IndexRoute = Ember.Route.extend({
 	apiUrl: apiUrlBase+"/searches",
 	setupController: function(controller, context, queryParams) {
+	    controller.set('result', {});
+	    controller.set('queried', false);
 	    if(queryParams.query && queryParams.query.match && !queryParams.query.match(/^\s*$/)) {
 		controller.set('queryString', queryParams.query);
-		console.log("setupController: ", queryParams, queryParams.query);
 		this.query(controller, queryParams.query);
 	    } else {
-		controller.set('result', {});
 		controller.set('queryString', '');
 	    }
 	},
@@ -92,12 +106,13 @@ function nmdbSetup(rootElement) {
 		contentType: 'application/json',
 		success: function(data) {
 		    controller.set('result', data);
+		    controller.set('queried', true);
+		    $(window).trigger('resize');
 		}
 	    });
 	},
 	actions: {
 	    search: function(queryString) {
-		console.log("actions.search: ", queryString);
 		this.transitionTo('index', {queryParams: {query: queryString}});
 	    }
 	}
@@ -111,7 +126,6 @@ function nmdbSetup(rootElement) {
 	apiUrl: apiUrlBase+"/movies",
 	lastId: null,
 	setupController: function(controller, context, queryParams) {
-	    console.log(context, queryParams);
 	    if(this.get('lastId') != context.id) {
 		controller.set('model', {});
 	    }
@@ -137,7 +151,6 @@ function nmdbSetup(rootElement) {
 	apiUrl: apiUrlBase+"/people",
 	lastId: null,
 	setupController: function(controller, context, queryParams) {
-	    console.log("setupController");
 	    if(this.get('lastId') != context.id) {
 		controller.set('model', {});
 		controller.set('roleData', []);
@@ -192,13 +205,31 @@ function nmdbSetup(rootElement) {
 
     Nmdb.PersonView = Ember.View.extend({
 	didInsertElement: function() {
-	    console.log("didInsertElement");
 	    this.controller.get('setActiveRole')(this.controller);
 	}
     });
 
     Ember.Handlebars.registerHelper('index', function(obj) {
         return obj.data.view.contentIndex+1;
+    });
+
+    Ember.Handlebars.registerHelper('trigger', function (evtName, options) {
+	var options = arguments[arguments.length - 1],
+        hash = options.hash,
+        view = options.data.view,
+        target;
+
+	view = view.get('concreteView');
+
+	if (hash.target) {
+            target = Ember.Handlebars.get(this, hash.target, options);
+	} else {
+            target = view;
+	}
+
+	Ember.run.next(function () {
+            target.trigger(evtName);
+	});
     });
 }
 

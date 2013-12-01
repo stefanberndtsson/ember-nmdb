@@ -27,13 +27,16 @@
   </script>
 
   <script type="text/x-handlebars" data-template-name="Nmdb-search/_results">
-      <div class="row container">
+      <div class="row container col-sm-12">
+	{{#if queried}}
+	{{trigger "buttonsVisibleTrigger"}}
 	<div class="btn-toolbar visible-xs visible-sm">
-	  <div class="btn-group col-xs-12">
-	    <button class="btn btn-default col-xs-6 action-button-movies">Movies</button>
-	    <button class="btn btn-default col-xs-6 action-button-people">People</button>
+	  <div class="btn-group col-xs-12 col-sm-12">
+	    <button class="btn btn-default col-xs-6 col-sm-6 action-button-movies">Movies</button>
+	    <button class="btn btn-default col-xs-6 col-sm-6 action-button-people">People</button>
 	  </div>
 	</div>
+	{{/if}}
       </div>
       <div class="row container col-sm-12 col-md-12 col-lg-12">
 	<div class="col-md-6 action-list-movies">
