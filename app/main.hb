@@ -168,12 +168,13 @@
 	  </div>
 	</div>
       </div>
+    </div>
   </script>
 
   <script type="text/x-handlebars" data-template-name="Nmdb-person">
     <div class="col-xs-12">
       <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<div class="jumbotron">
+	<div class="well well-lg">
 	  <h1 class="page-header">{{person.first_name}}&nbsp;{{person.last_name}}</h1>
 	</div>
       </div>
@@ -186,26 +187,38 @@
 	  {{/each}}
 	</ul>
       </div>
-      <div class="container row col-xs-12 col-sm-12">
-	<table class="table">
-	  <thead>
-            <tr>
-              <th></th>
-              <th>Cast</th>
-              <th>Character</th>
-            </tr>
-	  </thead>
-	  <tbody>
-            {{#each roleData}}
-            <tr>
-              <th>{{index}}</th>
-              <td>{{#link-to 'movie' id}}{{movie}}{{/link-to}}</td>
-              <td>{{character}} {{extras}}</td>
-            </tr>
-            {{/each}}
-	  </tbody>
-	</table>
+      <div class="container row">&nbsp;</div>
+      <div class="col-xs-12">
+	<div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	  <div class="panel panel-default">
+	    <div class="panel-heading">
+	      <h4 class="panel-title">Movies</h4>
+	    </div>
+	    <div class="panel-body">
+	      <div class="container row col-xs-12 col-sm-12">
+		<table class="table">
+		  <thead>
+		    <tr>
+		      <th></th>
+		      <th>Cast</th>
+		      <th>Character</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    {{#each roleData}}
+		    <tr>
+		      <th>{{index}}</th>
+		      <td>{{#link-to 'movie' id}}{{movie}}{{/link-to}}</td>
+		      <td>{{character}} {{extras}}</td>
+		    </tr>
+		    {{/each}}
+		  </tbody>
+		</table>
+	      </div>
+	    </div>
+	  </div>
+	</div>
       </div>
     </div>
   </script>
-  </div>
+</div>
