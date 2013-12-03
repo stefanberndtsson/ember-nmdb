@@ -31,7 +31,7 @@ function nmdbSetup(rootElement, environment) {
 
     Nmdb.Router.map(function() {
 	this.resource('index', {path: '/', queryParams: ['query', 'limit']});
-	this.resource('movie', {path: '/movie/:id'});
+	this.resource('movie', {path: '/movie/:id', queryParams: ['page']});
 	this.resource('person', {path: '/person/:id', queryParams: ['role']});
     });
 
@@ -144,46 +144,63 @@ function nmdbSetup(rootElement, environment) {
 	lastId: null,
 	setupController: function(controller, context, queryParams) {
 	    if(this.get('lastId') != context.id) {
-		controller.set('model', {});
+		controller.set('movie', {});
+		$.ajax({
+		    url: this.get('apiUrl')+'/'+context.id,
+		    cache: false,
+		    type: 'GET',
+		    dataType: 'json',
+		    contentType: 'application/json',
+		}).then(function(data) {
+		    console.log("Fetched movie: ", data);
+		    controller.set('movie', data);
+		});
+		$.ajax({
+		    url: this.get('apiUrl')+'/'+context.id+'/genres',
+		    cache: false,
+		    type: 'GET',
+		    dataType: 'json',
+		    contentType: 'application/json',
+		}).then(function(data) {
+		    controller.set('genres', data);
+		});
 	    }
+
+	    controller.set('section', queryParams.page);
+	    if(!controller.get('section') || controller.get('section') == 'cast') {
+		
+		$.ajax({
+		    url: this.get('apiUrl')+'/'+context.id+'/cast_members',
+		    cache: false,
+		    type: 'GET',
+		    dataType: 'json',
+		    contentType: 'application/json',
+		}).then(function(data) {
+		    console.log("Fetched cast");
+		    controller.set('cast_members', data);
+		    controller.setSection(controller, queryParams.page);
+		});
+	    }
+
+	    if(controller.get('section') == 'keywords') {
+		$.ajax({
+		    url: this.get('apiUrl')+'/'+context.id+'/keywords',
+		    cache: false,
+		    type: 'GET',
+		    dataType: 'json',
+		    contentType: 'application/json',
+		}).then(function(data) {
+		    console.log("Fetched keywords");
+		    controller.set('keywords', data);
+		    controller.setSection(controller, queryParams.page);
+		});
+	    }
+
+	    if(controller.get('section') == 'quotes') {
+		controller.setSection(controller, queryParams.page);
+	    }
+
 	    this.set('lastId', context.id);
-	    $.ajax({
-		url: this.get('apiUrl')+'/'+context.id,
-		cache: false,
-		type: 'GET',
-		dataType: 'json',
-		contentType: 'application/json',
-	    }).then(function(data) {
-		console.log("Fetched movie: ", data);
-		controller.set('movie', data);
-	    });
-	    $.ajax({
-		url: this.get('apiUrl')+'/'+context.id+'/genres',
-		cache: false,
-		type: 'GET',
-		dataType: 'json',
-		contentType: 'application/json',
-	    }).then(function(data) {
-		controller.set('genres', data);
-	    });
-	    $.ajax({
-		url: this.get('apiUrl')+'/'+context.id+'/keywords',
-		cache: false,
-		type: 'GET',
-		dataType: 'json',
-		contentType: 'application/json',
-	    }).then(function(data) {
-		controller.set('keywords', data);
-	    });
-	    $.ajax({
-		url: this.get('apiUrl')+'/'+context.id+'/cast_members',
-		cache: false,
-		type: 'GET',
-		dataType: 'json',
-		contentType: 'application/json',
-	    }).then(function(data) {
-		controller.set('cast_members', data);
-	    });
 	},
     });
 
@@ -191,7 +208,40 @@ function nmdbSetup(rootElement, environment) {
 	movie: {},
 	genres: [],
 	keywords: [],
-	cast_members: []
+	cast_members: [],
+	section: 'cast',
+	sections: ['cast', 'keywords', 'quotes'],
+	section_selected_cast: false,
+	section_selected_keywords: false,
+	section_selected_quotes: false,
+	setSection: function(controller, sectionValue) {
+	    controller.set('section', sectionValue);
+	    controller.get('sections').forEach(function(item) {
+		if(item == sectionValue) {
+		    controller.set('section_selected_'+item, true);
+		} else {
+		    controller.set('section_selected_'+item, false);
+		}
+	    });
+	},
+	showCast: function() {
+	    if(this.get('section') == 'cast') {
+		return true;
+	    }
+	    return false;
+	}.property('movie'),
+	showKeywords: function() {
+	    if(this.get('section') == 'keywords') {
+		return true;
+	    }
+	    return false;
+	}.property('movie'),
+	showQuotes: function() {
+	    if(this.get('section') == 'quotes') {
+		return true;
+	    }
+	    return false;
+	}.property('movie'),
     });
 
     Nmdb.PersonRoute = Ember.Route.extend({
@@ -288,6 +338,13 @@ function nmdbSetup(rootElement, environment) {
 	Ember.run.next(function () {
             target.trigger(evtName);
 	});
+    });
+
+    Ember.Handlebars.registerHelper('ifpropeq', function(v1, v2, options) {
+	if(options.contexts.objectAt(0)[v1] == v2) {
+	    return options.fn(this);
+	}
+	return options.inverse(this);
     });
 }
 
