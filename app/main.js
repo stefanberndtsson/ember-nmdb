@@ -143,6 +143,9 @@ function nmdbSetup(rootElement, environment) {
 	apiUrl: apiUrlBase+"/movies",
 	lastId: null,
 	setupController: function(controller, context, queryParams) {
+	    if(!queryParams.page) {
+		queryParams.page = 'cast';
+	    }
 	    if(this.get('lastId') != context.id) {
 		controller.set('movie', {});
 		$.ajax({
