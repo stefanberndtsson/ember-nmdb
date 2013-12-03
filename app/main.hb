@@ -41,20 +41,20 @@
       <div class="row container col-sm-12 col-md-12 col-lg-12">
 	<div class="col-md-6 action-list-movies">
 	  <ul class="list-group">
-	    {{#if result.movies}}
+	    {{#if movies}}
 	    <h2 class="list-group-item-heading">Movies</h2>
 	    {{/if}}
-	    {{#each result.movies}}
+	    {{#each movies}}
 	    <li class="list-group-item">{{#link-to 'movie' id}}{{full_title}}{{/link-to}}</li>
 	    {{/each}}
 	  </ul>
 	</div>
 	<div class="col-md-6 action-list-people">
 	  <ul class="list-group">
-	    {{#if result.people}}
+	    {{#if people}}
 	    <h2 class="list-group-item-heading">People</h2>
 	    {{/if}}
-	    {{#each result.people}}
+	    {{#each people}}
 	    <li class="list-group-item">
 	      {{#link-to 'person' id}}
 	        {{first_name}} {{last_name}} {{#if name_count}}({{name_count}}){{/if}}
@@ -70,14 +70,14 @@
     <div class="col-xs-12">
       <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="jumbotron">
-	  <h1 class="page-header">{{model.movie.full_title}}</h1>
+	  <h1 class="page-header">{{movie.full_title}}</h1>
 	  <div class="row container col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	    {{#each model.genres}}
+	    {{#each genres}}
 	    <span class="label label-default">{{genre}}</span>
 	    {{/each}}
 	  </div>
 	  <div class="hidden row container col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	    {{#each model.keywords}}
+	    {{#each keywords}}
 	    <span class="label label-default">{{id}} {{keyword}}</span>
 	    {{/each}}
 	  </div>
@@ -93,7 +93,7 @@
             </tr>
 	  </thead>
 	  <tbody>
-            {{#each model.cast_members}}
+            {{#each cast_members}}
             <tr>
               <th>{{sort_value}}</th>
               <td>{{#link-to 'person' id}}{{name}}{{/link-to}}</td>
@@ -114,14 +114,14 @@
     <div class="col-xs-12">
       <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="jumbotron">
-	  <h1 class="page-header">{{model.person.first_name}}&nbsp;{{model.person.last_name}}</h1>
+	  <h1 class="page-header">{{person.first_name}}&nbsp;{{person.last_name}}</h1>
 	</div>
       </div>
       <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<ul class="nav nav-pills">
 	  {{#each role in roles}}
 	  <li {{bindAttr class="role.roleClass"}}>
-	    {{#link-to 'person' model.person.id role=role.name}}{{role.display}}{{/link-to}}
+	    {{#link-to 'person' person.id role=role.name}}{{role.display}}{{/link-to}}
 	  </li>
 	  {{/each}}
 	</ul>

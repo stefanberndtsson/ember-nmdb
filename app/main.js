@@ -8,8 +8,11 @@ function loadTemplate(url, callback) {
     });
 }
 
-function nmdbSetup(rootElement) {
+function nmdbSetup(rootElement, environment) {
     var apiUrlBase = "http://nmdb-api.nocrew.org"
+    if(environment == "devel") {
+	var apiUrlBase = "http://localhost:3034"
+    }
 
     Nmdb = Ember.Application.create({
 	rootElement: '#'+rootElement,
@@ -88,7 +91,8 @@ function nmdbSetup(rootElement) {
     Nmdb.IndexRoute = Ember.Route.extend({
 	apiUrl: apiUrlBase+"/searches",
 	setupController: function(controller, context, queryParams) {
-	    controller.set('result', {});
+	    controller.set('movies', []);
+	    controller.set('people', []);
 	    controller.set('queried', false);
 	    if(queryParams.query && queryParams.query.match && !queryParams.query.match(/^\s*$/)) {
 		controller.set('queryString', queryParams.query);
@@ -99,13 +103,25 @@ function nmdbSetup(rootElement) {
 	},
 	query: function(controller, query) {
 	    $.ajax({
-		url: this.get('apiUrl')+'?'+$.param({query: query}),
+		url: this.get('apiUrl')+'/movies?'+$.param({query: query}),
 		cache: false,
 		type: 'GET',
 		dataType: 'json',
 		contentType: 'application/json',
 		success: function(data) {
-		    controller.set('result', data);
+		    controller.set('movies', data);
+		    controller.set('queried', true);
+		    $(window).trigger('resize');
+		}
+	    });
+	    $.ajax({
+		url: this.get('apiUrl')+'/people?'+$.param({query: query}),
+		cache: false,
+		type: 'GET',
+		dataType: 'json',
+		contentType: 'application/json',
+		success: function(data) {
+		    controller.set('people', data);
 		    controller.set('queried', true);
 		    $(window).trigger('resize');
 		}
@@ -119,7 +135,8 @@ function nmdbSetup(rootElement) {
     });
 
     Nmdb.IndexController = Ember.Controller.extend({
-	result: {}
+	movies: [],
+	people: []
     });
 
     Nmdb.MovieRoute = Ember.Route.extend({
@@ -138,42 +155,83 @@ function nmdbSetup(rootElement) {
 		contentType: 'application/json',
 	    }).then(function(data) {
 		console.log("Fetched movie: ", data);
-		controller.set('model', data);
+		controller.set('movie', data);
+	    });
+	    $.ajax({
+		url: this.get('apiUrl')+'/'+context.id+'/genres',
+		cache: false,
+		type: 'GET',
+		dataType: 'json',
+		contentType: 'application/json',
+	    }).then(function(data) {
+		controller.set('genres', data);
+	    });
+	    $.ajax({
+		url: this.get('apiUrl')+'/'+context.id+'/keywords',
+		cache: false,
+		type: 'GET',
+		dataType: 'json',
+		contentType: 'application/json',
+	    }).then(function(data) {
+		controller.set('keywords', data);
+	    });
+	    $.ajax({
+		url: this.get('apiUrl')+'/'+context.id+'/cast_members',
+		cache: false,
+		type: 'GET',
+		dataType: 'json',
+		contentType: 'application/json',
+	    }).then(function(data) {
+		controller.set('cast_members', data);
 	    });
 	},
     });
 
     Nmdb.MovieController = Ember.ObjectController.extend({
-	model: {},
+	movie: {},
+	genres: [],
+	keywords: [],
+	cast_members: []
     });
 
     Nmdb.PersonRoute = Ember.Route.extend({
 	apiUrl: apiUrlBase+"/people",
 	lastId: null,
 	setupController: function(controller, context, queryParams) {
+	    var roleName = queryParams.role || 'acting';
 	    if(this.get('lastId') != context.id) {
-		controller.set('model', {});
+		controller.set('person', {});
+		$.ajax({
+		    url: this.get('apiUrl')+'/'+context.id+'?'+$.param({role: queryParams.role}),
+		    cache: false,
+		    type: 'GET',
+		    dataType: 'json',
+		    contentType: 'application/json',
+		}).then(function(data) {
+		    console.log("Fetched person: ", data);
+		    controller.set('person', data);
+		});
+	    }
+	    if(this.get('lastRole') != roleName) {
 		controller.set('roleData', []);
+		$.ajax({
+		    url: this.get('apiUrl')+'/'+context.id+'/as_role?'+$.param({role: queryParams.role}),
+		    cache: false,
+		    type: 'GET',
+		    dataType: 'json',
+		    contentType: 'application/json',
+		}).then(function(data) {
+		    controller.set('roleData', data);
+		});
 	    }
 	    this.set('lastId', context.id);
-	    var roleName = queryParams.role || 'acting';
+	    this.set('lastRole', roleName);
 	    controller.get('setActiveRole')(controller, roleName);
-	    $.ajax({
-		url: this.get('apiUrl')+'/'+context.id+'?'+$.param({role: queryParams.role}),
-		cache: false,
-		type: 'GET',
-		dataType: 'json',
-		contentType: 'application/json',
-	    }).then(function(data) {
-		console.log("Fetched person: ", data);
-		controller.set('model', data);
-		controller.set('roleData', data['as_'+roleName]);
-	    });
 	},
     });
 
     Nmdb.PersonController = Ember.ObjectController.extend({
-	model: {},
+	person: {},
 	activeRole: {},
 	roleData: [],
 	roles: [
@@ -236,9 +294,10 @@ function nmdbSetup(rootElement) {
 var scripts = document.getElementsByTagName( 'script' );
 var thisScriptTag = scripts[ scripts.length - 1 ];
 var rootElement = thisScriptTag.dataset.rootElement;
+var appEnv = thisScriptTag.dataset.appEnv;
 var scriptHost = thisScriptTag.dataset.srcDir;
 $(function() {
     loadTemplate(scriptHost+"/main.hb", function() {
-	nmdbSetup(rootElement);
+	nmdbSetup(rootElement, appEnv);
     })
 });
