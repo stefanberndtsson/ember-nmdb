@@ -301,11 +301,11 @@ function nmdbSetup(rootElement, environment) {
 		    contentType: 'application/json',
 		}).then(function(data) {
 		    controller.set('roleData', data);
+		    controller.get('setActiveRole')(controller, roleName);
 		});
 	    }
 	    this.set('lastId', context.id);
 	    this.set('lastRole', roleName);
-	    controller.get('setActiveRole')(controller, roleName);
 	},
     });
 
@@ -358,6 +358,23 @@ function nmdbSetup(rootElement, environment) {
 	    return options.fn(this);
 	}
 	return options.inverse(this);
+    });
+
+    Ember.Handlebars.registerBoundHelper('displayTitle', function(movie, options) {
+	var string = "";
+	if(movie.is_episode) {
+	    string = movie.title + " ("+movie.title_year+")" +"<br/>&nbsp;-&nbsp;";
+	    if(movie.episode_name) {
+		string += movie.episode_name;
+	    }
+	    if(movie.episode_episode && movie.episode_season) {
+		var episode_num = movie.episode_season+":"+movie.episode_episode;
+		string += " (#"+episode_num+")";
+	    }
+	} else {
+	    string = movie.full_title;
+	}
+	return new Ember.Handlebars.SafeString(string);
     });
 }
 

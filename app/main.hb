@@ -69,7 +69,7 @@
   <script type="text/x-handlebars" data-template-name="Nmdb-movie">
     <div class="col-xs-12">
       <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<div class="well well-lg">
+	<div class="well well-sm">
 	  <h1 class="page-header">{{movie.full_title}}</h1>
 	  <div class="row container col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	    {{#each genres}}
@@ -142,13 +142,13 @@
 	    <h4 class="panel-title">Cast</h4>
 	  </div>
 	  <div class="panel-body">
-	    <div class="container row col-xs-12 col-sm-12">
-	      <table class="table">
+	    <div class="container row col-xs-12 col-sm-12 table-responsive">
+	      <table class="table table-condensed">
 		<thead>
 		  <tr>
-		    <th></th>
-		    <th>Cast</th>
-		    <th>Character</th>
+		    <th width="1%"></th>
+		    <th width="39%">Cast</th>
+		    <th width="60%">Character</th>
 		  </tr>
 		</thead>
 		<tbody>
@@ -174,8 +174,8 @@
   <script type="text/x-handlebars" data-template-name="Nmdb-person">
     <div class="col-xs-12">
       <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<div class="well well-lg">
-	  <h1 class="page-header">{{person.first_name}}&nbsp;{{person.last_name}}</h1>
+	<div class="well well-sm">
+	  <h3 class="page-header">{{person.first_name}}&nbsp;{{person.last_name}}</h3>
 	</div>
       </div>
       <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -199,20 +199,20 @@
 	  </div>
 	  <div class="panel-body">
 	    <div class="container row col-xs-12 col-sm-12">
-	      <table class="table">
+	      <table class="table table-condensed">
 		<thead>
 		  <tr>
-		    <th></th>
-		    <th>Cast</th>
-		    <th>Character</th>
+		    <th width="1%"></th>
+		    <th width="60%">Cast</th>
+		    <th width="39%">Character</th>
 		  </tr>
 		</thead>
 		<tbody>
-		  {{#each roleData}}
+		  {{#each entry in roleData}}
 		  <tr>
 		    <th>{{index}}</th>
-		    <td>{{#link-to 'movie' id}}{{movie}}{{/link-to}}</td>
-		    <td>{{character}} {{extras}}</td>
+		    <td>{{#link-to 'movie' entry.id}}{{displayTitle entry.movie}}{{/link-to}}</td>
+		    <td>{{entry.character}} {{entry.extras}}</td>
 		  </tr>
 		  {{/each}}
 		</tbody>
