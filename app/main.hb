@@ -182,7 +182,11 @@
 	<ul class="nav nav-pills">
 	  {{#each role in roles}}
 	  <li {{bindAttr class="role.roleClass"}}>
-	    {{#link-to 'person' person.id role=role.name}}{{role.display}}{{/link-to}}
+	    {{#if role.disabled}}
+	    <a href="javascript:void(0);">{{role.display}}</a>
+	    {{else}}
+	    {{#link-to 'person' person.id role=role.name classNames="disabled"}}{{role.display}}{{/link-to}}
+	    {{/if}}
 	  </li>
 	  {{/each}}
 	</ul>

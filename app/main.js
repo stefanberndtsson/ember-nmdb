@@ -1,3 +1,7 @@
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
 function loadTemplate(url, callback) {
     console.log("DEBUG: Loading template");
     var contents = $.get(url, function(templateText) {
@@ -262,6 +266,28 @@ function nmdbSetup(rootElement, environment) {
 		    contentType: 'application/json',
 		}).then(function(data) {
 		    console.log("Fetched person: ", data);
+		    var roleStructure = [];
+		    data.all_roles.forEach(function(role) {
+			var roleProperties = {};
+			if(role == "archive") { 
+			    roleProperties['display'] = 'Archive footage'; 
+			} else {
+			    roleProperties['display'] = role.capitalize().replace(/-/, ' ');
+			}
+			roleProperties['name'] = role;
+			roleProperties['roleClass'] = 'role-nav role-nav-'+role;
+			roleProperties['disabled'] = true;
+			data.active_roles.forEach(function(active_role) {
+			    if(active_role == role) {
+				roleProperties['disabled'] = false;
+			    }
+			});
+			if(roleProperties['disabled']) {
+			    roleProperties['roleClass'] += ' disabled';
+			}
+			roleStructure.push(roleProperties);
+		    });
+		    controller.set('roles', roleStructure);
 		    controller.set('person', data);
 		});
 	    }
@@ -287,23 +313,7 @@ function nmdbSetup(rootElement, environment) {
 	person: {},
 	activeRole: {},
 	roleData: [],
-	roles: [
-	    {
-		name: "acting",
-		display: "Acting",
-		roleClass: "role-nav role-nav-acting"
-	    },
-	    {
-		name: "self",
-		display: "Self",
-		roleClass: "role-nav role-nav-self"
-	    },
-	    {
-		name: "archive",
-		display: "Archive footage",
-		roleClass: "role-nav role-nav-archive"
-	    }
-	],
+	roles: [],
 	setActiveRole: function(controller, roleName) {
 	    if(!roleName) {
 		roleName = controller.get('activeRole').role || 'acting';
