@@ -275,7 +275,7 @@ function nmdbSetup(rootElement, environment) {
 			    roleProperties['display'] = role.capitalize().replace(/-/, ' ');
 			}
 			roleProperties['name'] = role;
-			roleProperties['roleClass'] = 'role-nav role-nav-'+role;
+			roleProperties['roleClass'] = 'col-md-2 col-sm-3 col-xs-4 role-nav role-nav-'+role;
 			roleProperties['disabled'] = true;
 			data.active_roles.forEach(function(active_role) {
 			    if(active_role == role) {
