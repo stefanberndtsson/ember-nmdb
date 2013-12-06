@@ -376,6 +376,54 @@ function nmdbSetup(rootElement, environment) {
 	}
 	return new Ember.Handlebars.SafeString(string);
     });
+
+    Ember.Handlebars.registerBoundHelper('displayEpisode', function(movie, options) {
+	var string = "";
+	if(movie.episode_name) {
+	    string += movie.episode_name;
+	}
+	if(movie.episode_episode && movie.episode_season) {
+	    var episode_num = movie.episode_season+":"+movie.episode_episode;
+	    string += " (#"+episode_num+")";
+	}
+	return new Ember.Handlebars.SafeString(string);
+    });
+
+    Ember.Handlebars.registerBoundHelper('episodeCount', function(entry, options) {
+	var string = "";
+	if(entry.episodes) {
+	    string = entry.episodes.length + ' episode';
+	    if(entry.episodes.length > 1) { string += 's' };
+	    string = ' ('+string+')';
+	}
+	return new Ember.Handlebars.SafeString(string);
+    });
+
+    Ember.Handlebars.registerHelper('ifIndexGt', function(v1, options) {
+        var currentIndex = options.data.view.contentIndex+1;
+	if(currentIndex > parseInt(v1)) {
+	    return options.fn(this);
+	}
+	return options.inverse(this);
+    });
+
+    Ember.Handlebars.registerHelper('episode-hidden-class', function(options) {
+	var parentId = options.data.view._parentView._parentView.content.id;
+	return 'episode-hidden episode-hidden-'+parentId;
+    });
+
+    Ember.Handlebars.registerHelper('episode-hidden-show-link', function(options) {
+	if(!options.data.view.content.episodes || options.data.view.content.episodes.length <= 5) { return '' }
+	var currentId = options.data.view.content.id;
+	var string = new Ember.Handlebars.SafeString(' <span>(<a id="episode-hidden-control-'+currentId+'">Show all</a>)</span>');
+	$(document).on('click', '#episode-hidden-control-'+currentId, function() {
+	    console.log("Clicked: ", this);
+	    $('.episode-hidden-'+currentId).fadeIn(200);
+	    $('#episode-hidden-control-'+currentId).parent().fadeOut(200);
+	    return false;
+	});
+	return string;
+    });
 }
 
 var scripts = document.getElementsByTagName( 'script' );

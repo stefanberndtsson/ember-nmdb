@@ -211,9 +211,21 @@
 		  {{#each entry in roleData}}
 		  <tr>
 		    <th>{{index}}</th>
-		    <td>{{#link-to 'movie' entry.id}}{{displayTitle entry.movie}}{{/link-to}}</td>
+		    <td>
+		      {{#link-to 'movie' entry.id}}{{displayTitle entry.movie}}{{/link-to}}
+		      {{episodeCount entry}}{{episode-hidden-show-link}}
+		    </td>
 		    <td>{{entry.character}} {{entry.extras}}</td>
 		  </tr>
+		  {{#each episode in entry.episodes}}
+		  <tr class="{{#ifIndexGt 5}}{{episode-hidden-class}}{{/ifIndexGt}}">
+		    <th></th>
+		    <td>
+		      {{#link-to 'movie' episode.id}} - {{displayEpisode episode}}{{/link-to}}
+		    </td>
+		    <td>{{episode.character}} {{episode.extras}}</td>
+		  </tr>
+		  {{/each}}
 		  {{/each}}
 		</tbody>
 	      </table>

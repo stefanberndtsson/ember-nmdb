@@ -2,3 +2,5 @@ html {
      overflow: -moz-scrollbars-vertical;
      overflow-y: scroll;
 }
+
+.episode-hidden { display: none; }
