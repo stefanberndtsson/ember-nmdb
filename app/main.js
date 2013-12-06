@@ -257,6 +257,7 @@ function nmdbSetup(rootElement, environment) {
 	setupController: function(controller, context, queryParams) {
 	    var roleName = queryParams.role || 'acting';
 	    if(this.get('lastId') != context.id) {
+		this.set('lastRole', null);
 		controller.set('person', {});
 		$.ajax({
 		    url: this.get('apiUrl')+'/'+context.id+'?'+$.param({role: queryParams.role}),
