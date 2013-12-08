@@ -1,3 +1,6 @@
+var prevHeight = 0;
+var prevWidth = 0;
+
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
@@ -46,9 +49,15 @@ function nmdbSetup(rootElement, environment) {
 	    var movies_button = $('.action-button-movies');
 	    this.get('hideLists')(movies_button.is(':visible'));
 	    var that = this;
-	    $(window).resize(function() {
-		var movies_button = $('.action-button-movies');
-		that.get('hideLists')(movies_button.is(':visible'));
+	    $(window).resize(function(x,y,z) {
+		var currentHeight = $(window).height();
+		var currentWidth = $(window).width();
+		if(currentWidth != prevWidth) {
+		    var movies_button = $('.action-button-movies');
+		    that.get('hideLists')(movies_button.is(':visible'));
+		}
+		prevHeight = currentHeight;
+		prevWidth = currentWidth;
 	    });
 	    $('.action-button-movies').on('click', function() { that.get('showMovies')(); });
 	    $('.action-button-people').on('click', function() { that.get('showPeople')(); });
@@ -93,54 +102,55 @@ function nmdbSetup(rootElement, environment) {
     });
 
     Nmdb.IndexRoute = Ember.Route.extend({
-	apiUrl: apiUrlBase+"/searches",
 	setupController: function(controller, context, queryParams) {
 	    controller.set('movies', []);
 	    controller.set('people', []);
 	    controller.set('queried', false);
 	    if(queryParams.query && queryParams.query.match && !queryParams.query.match(/^\s*$/)) {
 		controller.set('queryString', queryParams.query);
-		this.query(controller, queryParams.query);
+		controller.send('query', queryParams.query);
 	    } else {
 		controller.set('queryString', '');
 	    }
 	},
-	query: function(controller, query) {
-	    $.ajax({
-		url: this.get('apiUrl')+'/movies?'+$.param({query: query}),
-		cache: false,
-		type: 'GET',
-		dataType: 'json',
-		contentType: 'application/json',
-		success: function(data) {
-		    controller.set('movies', data);
-		    controller.set('queried', true);
-		    $(window).trigger('resize');
-		}
-	    });
-	    $.ajax({
-		url: this.get('apiUrl')+'/people?'+$.param({query: query}),
-		cache: false,
-		type: 'GET',
-		dataType: 'json',
-		contentType: 'application/json',
-		success: function(data) {
-		    controller.set('people', data);
-		    controller.set('queried', true);
-		    $(window).trigger('resize');
-		}
-	    });
-	},
-	actions: {
-	    search: function(queryString) {
-		this.transitionTo('index', {queryParams: {query: queryString}});
-	    }
-	}
     });
 
     Nmdb.IndexController = Ember.Controller.extend({
+	apiUrl: apiUrlBase+"/searches",
 	movies: [],
-	people: []
+	people: [],
+	actions: {
+	    query: function(query) {
+		var controller = this;
+		$.ajax({
+		    url: this.get('apiUrl')+'/movies?'+$.param({query: query}),
+		    cache: false,
+		    type: 'GET',
+		    dataType: 'json',
+		    contentType: 'application/json',
+		    success: function(data) {
+			controller.set('movies', data);
+			controller.set('queried', true);
+			$(window).trigger('resize');
+		    }
+		});
+		$.ajax({
+		    url: this.get('apiUrl')+'/people?'+$.param({query: query}),
+		    cache: false,
+		    type: 'GET',
+		    dataType: 'json',
+		    contentType: 'application/json',
+		    success: function(data) {
+			controller.set('people', data);
+			controller.set('queried', true);
+			$(window).trigger('resize');
+		    }
+		});
+	    },
+	    search: function(queryString) {
+		this.transitionToRoute('index', {queryParams: {query: queryString}});
+	    }
+	}
     });
 
     Nmdb.MovieRoute = Ember.Route.extend({
@@ -436,4 +446,6 @@ $(function() {
     loadTemplate(scriptHost+"/main.hb", function() {
 	nmdbSetup(rootElement, appEnv);
     })
+    prevHeight = $(window).height();
+    prevWidth = $(window).width();
 });
