@@ -15,7 +15,9 @@ Nmdb.PersonRoute = Ember.Route.extend({
 	    }).then(function(data) {
 		console.log("Fetched person: ", data);
 		var roleStructure = [];
-		data.all_roles.forEach(function(role) {
+		var roleIdxs = {};
+		data.all_roles.forEach(function(role, i) {
+		    roleIdxs[role] = i;
 		    var roleProperties = {};
 		    if(role == "archive") { 
 			roleProperties['display'] = 'Archive footage'; 
@@ -36,7 +38,9 @@ Nmdb.PersonRoute = Ember.Route.extend({
 		    roleStructure.push(roleProperties);
 		});
 		controller.set('roles', roleStructure);
+		controller.set('roleIdxs', roleIdxs);
 		controller.set('person', data);
+		controller.get('setActiveRole')(controller, roleName);
 	    });
 	}
 	if(this.get('lastRole') != roleName) {
@@ -59,16 +63,25 @@ Nmdb.PersonRoute = Ember.Route.extend({
 
 Nmdb.PersonController = Ember.ObjectController.extend({
     person: {},
-    activeRole: {},
+    activeRole: null,
+    roleIdxs: {},
     roleData: [],
     roles: [],
     setActiveRole: function(controller, roleName) {
-	if(!roleName) {
-	    roleName = controller.get('activeRole').role || 'acting';
+	var r = controller.get('roles');
+	if(!r || r.length == 0) { return; }
+
+	var oldRoleName = controller.get('activeRole');
+	if(oldRoleName) {
+	    var oldRoleIdx = controller.get('roleIdxs')[oldRoleName];
+	    var oldT = Ember.ArrayProxy.create(r);
+	    Ember.set(oldT[oldRoleIdx], 'roleClass', oldT[oldRoleIdx].roleClass.replace(/ active$/, ''));
 	}
-	controller.set('activeRole', { role: roleName });
-	$('.role-nav').removeClass('active');
-	$('.role-nav-'+roleName).addClass('active');
+
+	roleIdx = controller.get('roleIdxs')[roleName];
+	var t = Ember.ArrayProxy.create(r);
+	Ember.set(t[roleIdx], 'roleClass', t[roleIdx].roleClass + ' active');
+	controller.set('activeRole', roleName);
     }
 });
 
