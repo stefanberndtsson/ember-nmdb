@@ -15,9 +15,7 @@ Nmdb.PersonRoute = Ember.Route.extend({
 	    }).then(function(data) {
 		console.log("Fetched person: ", data);
 		var roleStructure = [];
-		var roleIdxs = {};
 		data.all_roles.forEach(function(role, i) {
-		    roleIdxs[role] = i;
 		    var roleProperties = {};
 		    if(role == "archive") { 
 			roleProperties['display'] = 'Archive footage'; 
@@ -25,22 +23,17 @@ Nmdb.PersonRoute = Ember.Route.extend({
 			roleProperties['display'] = role.capitalize().replace(/-/, ' ');
 		    }
 		    roleProperties['name'] = role;
-		    roleProperties['roleClass'] = 'col-md-2 col-sm-3 col-xs-4 role-nav role-nav-'+role;
 		    roleProperties['disabled'] = true;
 		    data.active_roles.forEach(function(active_role) {
 			if(active_role == role) {
 			    roleProperties['disabled'] = false;
 			}
 		    });
-		    if(roleProperties['disabled']) {
-			roleProperties['roleClass'] += ' disabled';
-		    }
 		    roleStructure.push(roleProperties);
 		});
 		controller.set('roles', roleStructure);
-		controller.set('roleIdxs', roleIdxs);
 		controller.set('person', data);
-		controller.get('setActiveRole')(controller, roleName);
+		controller.set('activeRole', roleName);
 	    });
 	}
 	if(this.get('lastRole') != roleName) {
@@ -53,7 +46,7 @@ Nmdb.PersonRoute = Ember.Route.extend({
 		contentType: 'application/json',
 	    }).then(function(data) {
 		controller.set('roleData', data);
-		controller.get('setActiveRole')(controller, roleName);
+		controller.set('activeRole', roleName);
 	    });
 	}
 	this.set('lastId', context.id);
@@ -64,29 +57,22 @@ Nmdb.PersonRoute = Ember.Route.extend({
 Nmdb.PersonController = Ember.ObjectController.extend({
     person: {},
     activeRole: null,
-    roleIdxs: {},
     roleData: [],
-    roles: [],
-    setActiveRole: function(controller, roleName) {
-	var r = controller.get('roles');
-	if(!r || r.length == 0) { return; }
-
-	var oldRoleName = controller.get('activeRole');
-	if(oldRoleName) {
-	    var oldRoleIdx = controller.get('roleIdxs')[oldRoleName];
-	    var oldT = Ember.ArrayProxy.create(r);
-	    Ember.set(oldT[oldRoleIdx], 'roleClass', oldT[oldRoleIdx].roleClass.replace(/ active$/, ''));
-	}
-
-	roleIdx = controller.get('roleIdxs')[roleName];
-	var t = Ember.ArrayProxy.create(r);
-	Ember.set(t[roleIdx], 'roleClass', t[roleIdx].roleClass + ' active');
-	controller.set('activeRole', roleName);
-    }
+    roles: []
 });
 
-Nmdb.PersonView = Ember.View.extend({
-    didInsertElement: function() {
-	this.controller.get('setActiveRole')(this.controller);
-    }
+Nmdb.RoleLink = Ember.View.extend({
+    tagName: 'li',
+    classNames: ['col-md-2', 'col-sm-3', 'col-xs-4'],
+    classNameBindings: ['isActive:active', 'isEnabled::disabled'],
+    templateName: 'rolelink',
+    isEnabled: function() {
+	console.log(this.get('templateData.keywords.role.disabled'));
+	return this.get('templateData.keywords.role.disabled') == false;
+    }.property(),
+    isActive: function() {
+	var role = this.get('templateData.keywords.role.name');
+	var active = this.get('controller').get('activeRole');
+	return (active === role);
+    }.property('controller.activeRole')
 });

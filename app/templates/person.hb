@@ -1,3 +1,11 @@
+<script type="text/x-handlebars" data-template-name="Nmdb-rolelink">
+  {{#if role.disabled}}
+  <a href="javascript:void(0);">{{role.display}}</a>
+  {{else}}
+  {{#link-to 'person' person.id role=role.name}}{{role.display}}{{/link-to}}
+  {{/if}}
+</script>
+
 <script type="text/x-handlebars" data-template-name="Nmdb-person">
   <div class="col-xs-12">
     <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -8,13 +16,7 @@
     <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <ul class="nav nav-pills">
 	{{#each role in roles}}
-	<li {{bindAttr class="role.roleClass"}}>
-	  {{#if role.disabled}}
-	  <a href="javascript:void(0);">{{role.display}}</a>
-	  {{else}}
-	  {{#link-to 'person' person.id role=role.name classNames="disabled"}}{{role.display}}{{/link-to}}
-	  {{/if}}
-	</li>
+	{{view Nmdb.RoleLink}}
 	{{/each}}
       </ul>
     </div>
