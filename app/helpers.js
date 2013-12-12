@@ -6,25 +6,6 @@ Ember.Handlebars.registerHelper('index', function(obj) {
     return obj.data.view.contentIndex+1;
 });
 
-Ember.Handlebars.registerHelper('trigger', function (evtName, options) {
-    var options = arguments[arguments.length - 1],
-    hash = options.hash,
-    view = options.data.view,
-    target;
-
-    view = view.get('concreteView');
-
-    if (hash.target) {
-        target = Ember.Handlebars.get(this, hash.target, options);
-    } else {
-        target = view;
-    }
-
-    Ember.run.next(function () {
-        target.trigger(evtName);
-    });
-});
-
 Ember.Handlebars.registerHelper('ifpropeq', function(v1, v2, options) {
     if(options.contexts.objectAt(0)[v1] == v2) {
 	return options.fn(this);

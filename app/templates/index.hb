@@ -39,7 +39,6 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-search/_results">
   <div class="row container col-sm-12">
     {{#if queried}}
-    {{trigger "buttonsVisibleTrigger"}}
     <div class="btn-toolbar visible-xs visible-sm" id="results-buttons">
       <div class="btn-group col-xs-12 col-sm-12">
 	{{#view Nmdb.ButtonMovies}}Movies{{/view}}
