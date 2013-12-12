@@ -6,20 +6,28 @@
   {{/if}}
 </script>
 
+<script type="text/x-handlebars" data-template-name="Nmdb-person/_rolelinks">
+  <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <ul class="nav nav-pills">
+      {{#each role in roles}}
+      {{view Nmdb.RoleLink}}
+      {{/each}}
+    </ul>
+  </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="Nmdb-person/_summary">
+  <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="well well-sm">
+      <h3 class="page-header">{{person.first_name}}&nbsp;{{person.last_name}}</h3>
+    </div>
+  </div>
+</script>
+
 <script type="text/x-handlebars" data-template-name="Nmdb-person">
   <div class="col-xs-12">
-    <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <div class="well well-sm">
-	<h3 class="page-header">{{person.first_name}}&nbsp;{{person.last_name}}</h3>
-      </div>
-    </div>
-    <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <ul class="nav nav-pills">
-	{{#each role in roles}}
-	{{view Nmdb.RoleLink}}
-	{{/each}}
-      </ul>
-    </div>
+    {{partial "person/summary"}}
+    {{partial "person/rolelinks"}}
     <div class="container row">&nbsp;</div>
     <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="panel panel-default">
