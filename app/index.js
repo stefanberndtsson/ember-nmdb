@@ -75,6 +75,7 @@ Nmdb.IndexController = Ember.Controller.extend({
     apiUrl: Nmdb.apiUrlBase+"/searches",
     movies: [],
     people: [],
+    buttonsVisible: false,
     actions: {
 	query: function(query) {
 	    var controller = this;
@@ -109,3 +110,63 @@ Nmdb.IndexController = Ember.Controller.extend({
     }
 });
 
+Nmdb.ButtonMovies = Ember.View.extend({
+    tagName: 'button',
+    elementId: 'button-movies',
+    classNames: ['btn', 'btn-default', 'col-xs-6', 'col-sm-6'],
+    classNameBindings: ['active'],
+    didInsertElement: function() {
+	var that = this;
+	$(window).on('resize', function() {
+	    var prevVisible = that.get('controller').get('buttonsVisible');
+	    var currVisible = $('#results-buttons').is(':visible');
+	    if(prevVisible != currVisible) {
+		that.get('controller').set('buttonsVisible', currVisible);
+		if(currVisible) {
+		    that.get('controller').set('activeResultsView', 'movies');
+		}
+	    }
+	});
+    },
+    click: function() {
+	this.get('controller').set('activeResultsView', 'movies');
+    },
+    active: function() {
+	return (this.get('controller').get('activeResultsView') === 'movies');
+    }.property('controller.activeResultsView')
+});
+
+Nmdb.ButtonPeople = Ember.View.extend({
+    tagName: 'button',
+    elementId: 'button-people',
+    classNames: ['btn', 'btn-default', 'col-xs-6', 'col-sm-6'],
+    classNameBindings: ['active'],
+    click: function() {
+	this.get('controller').set('activeResultsView', 'people');
+    },
+    active: function() {
+	return (this.get('controller').get('activeResultsView') === 'people');
+    }.property('controller.activeResultsView')
+});
+
+Nmdb.ResultsMovies = Ember.View.extend({
+    tagName: 'div',
+    templateName: 'results-movies',
+    classNames: ['col-md-6'],
+    classNameBindings: ['show:visible:hidden'],
+    show: function() {
+	if(!this.get('controller').get('buttonsVisible')) { return true; }
+	return (this.get('controller').get('activeResultsView') === 'movies');
+    }.property('controller.buttonsVisible', 'controller.activeResultsView')
+});
+
+Nmdb.ResultsPeople = Ember.View.extend({
+    tagName: 'div',
+    templateName: 'results-people',
+    classNames: ['col-md-6'],
+    classNameBindings: ['show:visible:hidden'],
+    show: function() {
+	if(!this.get('controller').get('buttonsVisible')) { return true; }
+	return (this.get('controller').get('activeResultsView') === 'people');
+    }.property('controller.buttonsVisible', 'controller.activeResultsView')
+});

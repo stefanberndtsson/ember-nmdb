@@ -11,4 +11,8 @@
     </div>
   </nav>
   {{outlet}}
+  <div id="bs-xs-mark" class="visible-xs"></div>
+  <div id="bs-sm-mark" class="visible-sm"></div>
+  <div id="bs-md-mark" class="visible-md"></div>
+  <div id="bs-lg-mark" class="visible-lg"></div>
 </script>
