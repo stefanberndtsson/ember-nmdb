@@ -1,3 +1,11 @@
+<script type="text/x-handlebars" data-template-name="Nmdb-sectionlink">
+  {{#if section.disabled}}
+  <a href="javascript:void(0);">{{section.display}}</a>
+  {{else}}
+  {{#link-to 'movie' movie.id page=section.name}}{{section.display}}{{/link-to}}
+  {{/if}}
+</script>
+
 <script type="text/x-handlebars" data-template-name="Nmdb-movie">
   <div class="col-xs-12">
     <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -17,25 +25,17 @@
     </div>
     <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <ul class="nav nav-pills">
-	<li {{bind-attr class="section_selected_cast:active"}}>{{#link-to 'movie' movie.id page='cast'}}Cast{{/link-to}}</li>
-	<li {{bind-attr class="section_selected_keywords:active"}}>{{#link-to 'movie' movie.id page='keywords'}}Keywords{{/link-to}}</li>
-	<li {{bind-attr class="section_selected_quotes:active"}}>{{#link-to 'movie' movie.id page='quotes'}}Quotes{{/link-to}}</li>
+	{{#each section in sections}}
+	{{view Nmdb.SectionLink}}
+	{{/each}}
       </ul>
     </div>
     <div class="container row">&nbsp;</div>
   </div>
-  {{#if section_selected_cast}}
-  {{partial "movie/cast"}}
-  {{/if}}
-  {{#if section_selected_keywords}}
-  {{partial "movie/keywords"}}
-  {{/if}}
-  {{#if section_selected_quotes}}
-  {{partial "movie/quotes"}}
-  {{/if}}
+  {{view Nmdb.CurrentView}}
 </script>
 
-<script type="text/x-handlebars" data-template-name="Nmdb-movie/_keywords">
+<script type="text/x-handlebars" data-template-name="Nmdb-movie-keywords">
   <div class="col-xs-12">
     <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="panel panel-default">
@@ -52,7 +52,7 @@
   </div>
 </script>
 
-<script type="text/x-handlebars" data-template-name="Nmdb-movie/_quotes">
+<script type="text/x-handlebars" data-template-name="Nmdb-movie-quotes">
   <div class="col-xs-12">
     <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="panel panel-default">
@@ -66,7 +66,7 @@
   </div>
 </script>
 
-<script type="text/x-handlebars" data-template-name="Nmdb-movie/_cast">
+<script type="text/x-handlebars" data-template-name="Nmdb-movie-cast">
   <div class="col-xs-12">
     <div class="container row col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="panel panel-default">

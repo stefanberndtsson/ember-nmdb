@@ -5,6 +5,13 @@ Nmdb.MovieRoute = Ember.Route.extend({
 	if(!queryParams.page) {
 	    queryParams.page = 'cast';
 	}
+	var sectionInvalid = true;
+	controller.get('sections').forEach(function(section) {
+	    if(!sectionInvalid) { return; }
+	    if(queryParams.page === section.name) { sectionInvalid = false; }
+	});
+	if(sectionInvalid) { queryParams.page = 'cast'; }
+	controller.set('section', queryParams.page);
 	if(this.get('lastId') != context.id) {
 	    controller.set('movie', {});
 	    $.ajax({
@@ -28,9 +35,7 @@ Nmdb.MovieRoute = Ember.Route.extend({
 	    });
 	}
 
-	controller.set('section', queryParams.page);
 	if(!controller.get('section') || controller.get('section') == 'cast') {
-	    
 	    $.ajax({
 		url: this.get('apiUrl')+'/'+context.id+'/cast_members',
 		cache: false,
@@ -72,19 +77,19 @@ Nmdb.MovieController = Ember.ObjectController.extend({
     keywords: [],
     cast_members: [],
     section: 'cast',
-    sections: ['cast', 'keywords', 'quotes'],
-    section_selected_cast: false,
-    section_selected_keywords: false,
-    section_selected_quotes: false,
+    sections: [
+	{name: 'cast',
+	 display: 'Cast',
+	 disabled: false},
+	{name: 'keywords',
+	 display: 'Keywords',
+	 disabled: false},
+	{name: 'quotes',
+	 display: 'Quotes',
+	 disabled: true}
+    ],
     setSection: function(controller, sectionValue) {
 	controller.set('section', sectionValue);
-	controller.get('sections').forEach(function(item) {
-	    if(item == sectionValue) {
-		controller.set('section_selected_'+item, true);
-	    } else {
-		controller.set('section_selected_'+item, false);
-	    }
-	});
     },
     showCast: function() {
 	if(this.get('section') == 'cast') {
@@ -106,3 +111,27 @@ Nmdb.MovieController = Ember.ObjectController.extend({
     }.property('movie'),
 });
 
+Nmdb.SectionLink = Ember.View.extend({
+    tagName: 'li',
+    classNames: ['col-xs-4 col-sm-1'],
+    classNameBindings: ['isActive:active', 'isEnabled::disabled'],
+    templateName: 'sectionlink',
+    isEnabled: function() {
+	return (this.get('templateData.keywords.section.disabled') === false);
+    }.property(),
+    isActive: function() {
+	if(this.get('controller.section') === this.get('templateData.keywords.section.name')) {
+	    return true;
+	}
+	return false;
+    }.property('controller.section')
+});
+
+Nmdb.CurrentView = Ember.View.extend({
+    templateName: function() {
+	return 'movie-'+this.get('controller.section');
+    }.property('controller.section').cacheable(),
+    _templateChanged: function() {
+        this.rerender();
+    }.observes('templateName')
+});
