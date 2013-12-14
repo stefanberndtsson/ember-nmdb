@@ -4,3 +4,35 @@ html {
 }
 
 .episode-hidden { display: none; }
+
+.section-menu {
+    background-color: #eee;
+}
+
+ul.section-menu > li > a:hover {
+    background-color: #ffc;
+}
+
+ul.section-menu > li.active > a {
+    background-color: #428bca;
+    color: white;
+}
+
+ul.section-menu > li.active > a:hover {
+    background-color: #428bca;
+    color: white;
+}
+
+ul.nav > li.dropdown > a.dropdown-active {
+    background-color: #357ebd;
+    color: white;
+}
+
+ul.nav > li.dropdown > a.dropdown-active:hover {
+    background-color: #357ebd;
+    color: white;
+}
+
+li.dropdown > a.dropdown-active span.caret {
+    border-top-color: white;
+}

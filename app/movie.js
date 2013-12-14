@@ -42,6 +42,21 @@ Nmdb.MoviePageRoute = Ember.Route.extend({
 	console.log("MoviePageRoute.setupController", model);
 	controller.set('model', model);
 	controller.set('section', model.page);
+    },
+    renderTemplate: function(x) {
+	console.log("MoviePageRoute.renderTemplate", this.get('controller'));
+	var controller = this.get('controller');
+	this.render();
+	this.render('components/section-menu', {
+	    outlet: 'menu',
+	    controller: {
+		router: 'movie-page',
+		modelId: controller.get('model.movie.id'),
+		sections: controller.get('sections'),
+		currentSection: controller.get('section'),
+		sectionMenuTitle: 'Sections'
+	    }
+	});
     }
 });
 
@@ -59,21 +74,6 @@ Nmdb.MoviePageController = Ember.Controller.extend({
          display: 'Quotes',
          disabled: true}
     ],
-});
-
-Nmdb.MovieSectionLinkComponent = Ember.Component.extend({
-    tagName: 'li',
-    classNames: ['col-xs-4', 'col-sm-1'],
-    classNameBindings: ['isActive:active', 'isEnabled::disabled'],
-    isEnabled: function() {
-        return (this.get('section.disabled') === false);
-    }.property(),
-    isActive: function() {
-        if(this.get('currentSection') === this.get('section.name')) {
-            return true;
-        }
-        return false;
-    }.property('currentSection')
 });
 
 Nmdb.MoviePageDataView = Ember.View.extend({

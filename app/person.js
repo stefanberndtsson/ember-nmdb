@@ -42,7 +42,14 @@ Nmdb.PersonPageRoute = Ember.Route.extend({
 	controller.set('model', model);
 	controller.set('pageData', model.pageData);
 	if(model.person.all_roles) {
-            var roleStructure = [];
+	    if(model.person.all_roles[0] != model.person.active_roles[0]) {
+		if(queryParams.role != model.person.active_roles[0]) {
+		    this.replaceWith('person-page', model.person.id, 
+				     'as_role', {queryParams: {role: model.person.active_roles[0]}});
+		}
+	    }
+            var roleStructureTabbed = [];
+            var roleStructureDropdown = [];
             model.person.all_roles.forEach(function(role, i) {
                 var roleProperties = {};
                 if(role == "archive") { 
@@ -52,26 +59,65 @@ Nmdb.PersonPageRoute = Ember.Route.extend({
                 }
                 roleProperties['name'] = role;
                 roleProperties['disabled'] = true;
+		roleProperties['tabbed'] = (i < 3);
                 model.person.active_roles.forEach(function(active_role) {
                     if(active_role == role) {
                         roleProperties['disabled'] = false;
                     }
                 });
-                roleStructure.push(roleProperties);
+		if(i < 3) {
+                    roleStructureTabbed.push(roleProperties);
+		} else {
+                    roleStructureDropdown.push(roleProperties);
+		}
             });
-            controller.set('roles', roleStructure);
+            controller.set('tabbedRoles', roleStructureTabbed);
+            controller.set('dropdownRoles', roleStructureDropdown);
 	    controller.set('activeRole', queryParams.role);
 	}
 	console.log(controller.get('section'));
+    },
+    renderTemplate: function(x) {
+	console.log("PersonPageRoute.renderTemplate", this.get('controller'));
+	var controller = this.get('controller');
+	this.render();
+	this.render('components/section-menu', {
+	    outlet: 'menu',
+	    controller: {
+		router: 'person-page',
+		modelId: controller.get('model.person.id'),
+		sections: controller.get('sections'),
+		currentSection: controller.get('section'),
+		sectionMenuTitle: 'Sections'
+	    }
+	});
     }
 });
 
 Nmdb.PersonPageController = Ember.Controller.extend({
     model: {},
     section: 'as_role',
+    sections: [
+        {name: 'as_role',
+         display: 'As Role',
+         disabled: false},
+    ],
     activeRole: null,
-    roles: [],
-    pageData: []
+    tabbedRoles: [],
+    dropdownRoles: [],
+    pageData: [],
+    activeRoleIsDropdown: function() {
+	console.log("activeRoleIsDropdown");
+	var activeRole = this.get('activeRole');
+	var isDropdown = false;
+	this.get('dropdownRoles').forEach(function(item) {
+	    console.log("active...", activeRole, item.name);
+	    if(activeRole == item.name) {
+		isDropdown = true;
+	    }
+	});
+	return isDropdown;
+    }.property('activeRole')
 });
 
 Nmdb.PersonPageDataView = Ember.View.extend({
@@ -85,8 +131,11 @@ Nmdb.PersonPageDataView = Ember.View.extend({
 
 Nmdb.PersonRoleLinkComponent = Ember.Component.extend({
     tagName: 'li',
-    classNames: ['col-xs-4', 'col-sm-2'],
+    classNames: [],
     classNameBindings: ['isActive:active', 'isEnabled::disabled'],
+    tabbed: function() {
+	return this.get('role.tabbed');
+    }.property(),
     isEnabled: function() {
         return (this.get('role.disabled') === false);
     }.property(),

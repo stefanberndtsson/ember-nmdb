@@ -29,3 +29,20 @@ Nmdb.BootstrapIndicatorComponent = Ember.Component.extend({
 	return this.get('type').toUpperCase();
     }.property('type')
 });
+
+Nmdb.SectionLinkComponent = Ember.Component.extend({
+    tagName: 'li',
+    classNames: [],
+    classNameBindings: ['isActive:active', 'isEnabled::disabled'],
+    isEnabled: function() {
+        return (this.get('section.disabled') === false);
+    }.property(),
+    isActive: function() {
+	console.log("isActive: ", this.get('router'));
+        if(this.get('currentSection') === this.get('section.name')) {
+            return true;
+        }
+        return false;
+    }.property('currentSection')
+});
+

@@ -1,11 +1,13 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-search">
-  <div class="row container col-sm-12">
-    <div class="btn-toolbar visible-xs visible-sm" id="results-buttons">
-      <div class="btn-group col-xs-12 col-sm-12">
+  <div class="container">
+    <div class="col-sm-12">
+      <div class="btn-toolbar visible-xs visible-sm" id="results-buttons">
+	<div class="btn-group col-xs-12 col-sm-12">
+	</div>
       </div>
     </div>
   </div>
-  <div class="row container col-sm-12 col-md-12 col-lg-12">
+  <div class="container">
     {{movies-results movies=model.movies}}
     {{people-results people=model.people}}
   </div>
