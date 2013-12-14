@@ -1,8 +1,7 @@
 Nmdb.PersonRoute = Ember.Route.extend({
     apiUrl: Nmdb.apiUrlBase+"/people",
-    beforeModel: function(transition) {
-	console.log("PersonRoute.beforeModel", transition.params.id);
-	if(!transition.params.page) {
+    beforeModel: function(transition, x, y) {
+	if(transition.targetName == 'person.index') {
 	    this.transitionTo('person-page', transition.params.id, 'as_role', {queryParams: {role: 'acting'}});
 	}
     },

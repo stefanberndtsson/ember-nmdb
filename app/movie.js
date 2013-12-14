@@ -1,7 +1,7 @@
 Nmdb.MovieRoute = Ember.Route.extend({
     apiUrl: Nmdb.apiUrlBase+"/movies",
     beforeModel: function(transition) {
-	if(!transition.params.page) {
+	if(transition.targetName == 'movie.index') {
 	    this.transitionTo('movie-page', transition.params.id, 'cast');
 	}
     },
