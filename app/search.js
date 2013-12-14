@@ -1,7 +1,6 @@
 Nmdb.SearchRoute = Ember.Route.extend({
     apiUrl: Nmdb.apiUrlBase+"/searches",
     model: function(context,params) {
-	console.log("SearchRoute.model", context, params);
 	return Ember.RSVP.hash({
 	    query: context.query,
 	    movies: Nmdb.AjaxPromise(this.get('apiUrl')+'/movies?'+$.param({query: context.query})),
@@ -9,7 +8,6 @@ Nmdb.SearchRoute = Ember.Route.extend({
 	});
     },
     setupController: function(controller, model, queryParams) {
-	console.log("SearchRoute.setupController", model);
 	this.controllerFor('index').set('queryString', model.query);
 	controller.set('model', model);
     }

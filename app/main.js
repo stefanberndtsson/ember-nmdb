@@ -40,6 +40,13 @@ function nmdbSetup(rootElement, environment) {
 	appName: "Nmdb",
     });
 
+    Ember.Route.reopen({
+	enter: function(router) {
+	    window.scrollTo(0,0);
+	    return this._super(router);
+	}
+    });
+
     Nmdb.Router.map(function() {
 	this.resource('index', {path: '/'}, function() {
 	    this.resource('search', {path: 'search/:query', queryParams: ['limit']});

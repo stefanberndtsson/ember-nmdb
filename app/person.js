@@ -11,7 +11,6 @@ Nmdb.PersonRoute = Ember.Route.extend({
 	});
     },
     setupController: function(controller, model, queryParams) {
-	console.log("PersonRoute.setupController", model);
 	controller.set('model', model);
     }
 });
@@ -26,7 +25,6 @@ Nmdb.PersonPageRoute = Ember.Route.extend({
 	as_role: 'as_role',
     },
     model: function(context, queryParams, transition) {
-	console.log("PersonPageRoute.model", context, transition.params, queryParams);
 	var person_id = transition.params.id;
 	return Ember.RSVP.hash({
 	    page: context.page,
@@ -38,7 +36,6 @@ Nmdb.PersonPageRoute = Ember.Route.extend({
 	});
     },
     setupController: function(controller, model, queryParams) {
-	console.log("PersonPageRoute.setupController", model);
 	controller.set('model', model);
 	controller.set('pageData', model.pageData);
 	if(model.person.all_roles) {
@@ -75,10 +72,8 @@ Nmdb.PersonPageRoute = Ember.Route.extend({
             controller.set('dropdownRoles', roleStructureDropdown);
 	    controller.set('activeRole', queryParams.role);
 	}
-	console.log(controller.get('section'));
     },
     renderTemplate: function(x) {
-	console.log("PersonPageRoute.renderTemplate", this.get('controller'));
 	var controller = this.get('controller');
 	this.render();
 	this.render('components/section-menu', {
@@ -107,11 +102,9 @@ Nmdb.PersonPageController = Ember.Controller.extend({
     dropdownRoles: [],
     pageData: [],
     activeRoleIsDropdown: function() {
-	console.log("activeRoleIsDropdown");
 	var activeRole = this.get('activeRole');
 	var isDropdown = false;
 	this.get('dropdownRoles').forEach(function(item) {
-	    console.log("active...", activeRole, item.name);
 	    if(activeRole == item.name) {
 		isDropdown = true;
 	    }

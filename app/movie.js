@@ -12,7 +12,6 @@ Nmdb.MovieRoute = Ember.Route.extend({
 	});
     },
     setupController: function(controller, model, queryParams) {
-	console.log("MovieRoute.setupController", model);
 	controller.set('model', model);
     }
 });
@@ -29,7 +28,6 @@ Nmdb.MoviePageRoute = Ember.Route.extend({
 	quotes: 'quotes'
     },
     model: function(context, transition) {
-	console.log("MoviePageRoute.model", context, transition.params);
 	var movie_id = transition.params.id;
 	return Ember.RSVP.hash({
 	    page: context.page,
@@ -39,12 +37,10 @@ Nmdb.MoviePageRoute = Ember.Route.extend({
 	});
     },
     setupController: function(controller, model, queryParams) {
-	console.log("MoviePageRoute.setupController", model);
 	controller.set('model', model);
 	controller.set('section', model.page);
     },
     renderTemplate: function(x) {
-	console.log("MoviePageRoute.renderTemplate", this.get('controller'));
 	var controller = this.get('controller');
 	this.render();
 	this.render('components/section-menu', {
