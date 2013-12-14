@@ -1,15 +1,4 @@
-var prevHeight = 0;
-var prevWidth = 0;
-
-function loadTemplate(url, callback) {
-    console.log("DEBUG: Loading template");
-    var contents = $.get(url, function(templateText) {
-        Ember.Handlebars.bootstrap(templateText);
-        if (callback) {
-            callback();
-        }
-    });
-}
+Ember.FEATURES["query-params"] = true;
 
 function loadScriptSync(url) {
     console.log("loadScriptSync: ", url);
@@ -52,18 +41,28 @@ function nmdbSetup(rootElement, environment) {
     });
 
     Nmdb.Router.map(function() {
-	this.resource('index', {path: '/', queryParams: ['query', 'limit']});
-	this.resource('movie', {path: '/movie/:id', queryParams: ['page']});
-	this.resource('person', {path: '/person/:id', queryParams: ['role']});
+	this.resource('index', {path: '/'}, function() {
+	    this.resource('search', {path: 'search/:query', queryParams: ['limit']});
+	    this.resource('movie', {path: 'movie/:id'}, function() {
+		this.resource('movie-page', {path: '/:page'});
+	    });	
+	    this.resource('person', {path: 'person/:id'}, function() {
+		this.resource('person-page', {path: '/:page', queryParams: ['role']});
+	    });
+	});
     });
 
     if(environment != "production") {
 	loadScriptSync(scriptHost+"/index.js");
+	loadScriptSync(scriptHost+"/common.js");
+	loadScriptSync(scriptHost+"/helpers.js");
+	loadScriptSync(scriptHost+"/search.js");
 	loadScriptSync(scriptHost+"/movie.js");
 	loadScriptSync(scriptHost+"/person.js");
-	loadScriptSync(scriptHost+"/helpers.js");
 	loadTemplateSync(scriptHost+'/templates/main.hb');
+	loadTemplateSync(scriptHost+'/templates/common.hb');
 	loadTemplateSync(scriptHost+'/templates/index.hb');
+	loadTemplateSync(scriptHost+'/templates/search.hb');
 	loadTemplateSync(scriptHost+'/templates/movie.hb');
 	loadTemplateSync(scriptHost+'/templates/person.hb');
     }
@@ -74,8 +73,4 @@ var thisScriptTag = scripts[ scripts.length - 1 ];
 var rootElement = thisScriptTag.dataset.rootElement;
 var appEnv = thisScriptTag.dataset.appEnv;
 var scriptHost = thisScriptTag.dataset.srcDir;
-$(function() {
-    nmdbSetup(rootElement, appEnv);
-    prevHeight = $(window).height();
-    prevWidth = $(window).width();
-});
+nmdbSetup(rootElement, appEnv);

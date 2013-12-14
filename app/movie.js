@@ -1,137 +1,86 @@
 Nmdb.MovieRoute = Ember.Route.extend({
     apiUrl: Nmdb.apiUrlBase+"/movies",
-    lastId: null,
-    setupController: function(controller, context, queryParams) {
-	if(!queryParams.page) {
-	    queryParams.page = 'cast';
+    beforeModel: function(transition) {
+	if(!transition.params.page) {
+	    this.transitionTo('movie-page', transition.params.id, 'cast');
 	}
-	var sectionInvalid = true;
-	controller.get('sections').forEach(function(section) {
-	    if(!sectionInvalid) { return; }
-	    if(queryParams.page === section.name) { sectionInvalid = false; }
-	});
-	if(sectionInvalid) { queryParams.page = 'cast'; }
-	controller.set('section', queryParams.page);
-	if(this.get('lastId') != context.id) {
-	    controller.set('movie', {});
-	    $.ajax({
-		url: this.get('apiUrl')+'/'+context.id,
-		cache: false,
-		type: 'GET',
-		dataType: 'json',
-		contentType: 'application/json',
-	    }).then(function(data) {
-		console.log("Fetched movie: ", data);
-		controller.set('movie', data);
-	    });
-	    $.ajax({
-		url: this.get('apiUrl')+'/'+context.id+'/genres',
-		cache: false,
-		type: 'GET',
-		dataType: 'json',
-		contentType: 'application/json',
-	    }).then(function(data) {
-		controller.set('genres', data);
-	    });
-	}
-
-	if(!controller.get('section') || controller.get('section') == 'cast') {
-	    $.ajax({
-		url: this.get('apiUrl')+'/'+context.id+'/cast_members',
-		cache: false,
-		type: 'GET',
-		dataType: 'json',
-		contentType: 'application/json',
-	    }).then(function(data) {
-		console.log("Fetched cast");
-		controller.set('cast_members', data);
-		controller.setSection(controller, queryParams.page);
-	    });
-	}
-
-	if(controller.get('section') == 'keywords') {
-	    $.ajax({
-		url: this.get('apiUrl')+'/'+context.id+'/keywords',
-		cache: false,
-		type: 'GET',
-		dataType: 'json',
-		contentType: 'application/json',
-	    }).then(function(data) {
-		console.log("Fetched keywords");
-		controller.set('keywords', data);
-		controller.setSection(controller, queryParams.page);
-	    });
-	}
-
-	if(controller.get('section') == 'quotes') {
-	    controller.setSection(controller, queryParams.page);
-	}
-
-	this.set('lastId', context.id);
     },
+    model: function(context) {
+	return Ember.RSVP.hash({
+	    movie: Nmdb.AjaxPromise(this.get('apiUrl')+'/'+context.id),
+	    genres: Nmdb.AjaxPromise(this.get('apiUrl')+'/'+context.id+'/genres'),
+	});
+    },
+    setupController: function(controller, model, queryParams) {
+	console.log("MovieRoute.setupController", model);
+	controller.set('model', model);
+    }
 });
 
-Nmdb.MovieController = Ember.ObjectController.extend({
-    movie: {},
-    genres: [],
-    keywords: [],
-    cast_members: [],
+Nmdb.MovieController = Ember.Controller.extend({
+    model: {},
+});
+
+Nmdb.MoviePageRoute = Ember.Route.extend({
+    apiUrl: Nmdb.apiUrlBase+"/movies",
+    pages: {
+	cast: 'cast_members',
+	keywords: 'keywords',
+	quotes: 'quotes'
+    },
+    model: function(context, transition) {
+	console.log("MoviePageRoute.model", context, transition.params);
+	var movie_id = transition.params.id;
+	return Ember.RSVP.hash({
+	    page: context.page,
+	    movie: this.modelFor('movie').movie,
+	    genres: this.modelFor('movie').genres,
+	    pageData: Nmdb.AjaxPromise(this.get('apiUrl')+'/'+movie_id+'/'+this.get('pages')[context.page]),
+	});
+    },
+    setupController: function(controller, model, queryParams) {
+	console.log("MoviePageRoute.setupController", model);
+	controller.set('model', model);
+	controller.set('section', model.page);
+    }
+});
+
+Nmdb.MoviePageController = Ember.Controller.extend({
+    model: {},
     section: 'cast',
     sections: [
-	{name: 'cast',
-	 display: 'Cast',
-	 disabled: false},
-	{name: 'keywords',
-	 display: 'Keywords',
-	 disabled: false},
-	{name: 'quotes',
-	 display: 'Quotes',
-	 disabled: true}
+        {name: 'cast',
+         display: 'Cast',
+         disabled: false},
+        {name: 'keywords',
+         display: 'Keywords',
+         disabled: false},
+        {name: 'quotes',
+         display: 'Quotes',
+         disabled: true}
     ],
-    setSection: function(controller, sectionValue) {
-	controller.set('section', sectionValue);
-    },
-    showCast: function() {
-	if(this.get('section') == 'cast') {
-	    return true;
-	}
-	return false;
-    }.property('movie'),
-    showKeywords: function() {
-	if(this.get('section') == 'keywords') {
-	    return true;
-	}
-	return false;
-    }.property('movie'),
-    showQuotes: function() {
-	if(this.get('section') == 'quotes') {
-	    return true;
-	}
-	return false;
-    }.property('movie'),
 });
 
-Nmdb.SectionLink = Ember.View.extend({
+Nmdb.MovieSectionLinkComponent = Ember.Component.extend({
     tagName: 'li',
-    classNames: ['col-xs-4 col-sm-1'],
+    classNames: ['col-xs-4', 'col-sm-1'],
     classNameBindings: ['isActive:active', 'isEnabled::disabled'],
-    templateName: 'sectionlink',
     isEnabled: function() {
-	return (this.get('templateData.keywords.section.disabled') === false);
+        return (this.get('section.disabled') === false);
     }.property(),
     isActive: function() {
-	if(this.get('controller.section') === this.get('templateData.keywords.section.name')) {
-	    return true;
-	}
-	return false;
-    }.property('controller.section')
+        if(this.get('currentSection') === this.get('section.name')) {
+            return true;
+        }
+        return false;
+    }.property('currentSection')
 });
 
-Nmdb.CurrentView = Ember.View.extend({
+Nmdb.MoviePageDataView = Ember.View.extend({
     templateName: function() {
-	return 'movie-'+this.get('controller.section');
-    }.property('controller.section').cacheable(),
+	return 'movie-page-'+this.get('controller.section');
+    }.property('controller.section'),
     _templateChanged: function() {
-        this.rerender();
-    }.observes('templateName')
+	this.rerender();
+    }.observes('templateName'),
 });
