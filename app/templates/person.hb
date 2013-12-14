@@ -1,15 +1,17 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-person">
   <div class="container">
-    <div class="col-xs-3">
-      {{outlet menu}}
-    </div>
-    <div class="col-xs-9">
-      <div class="row">
-	<div class="well well-sm">
-	  <h3 class="page-header">{{model.person.first_name}}&nbsp;{{model.person.last_name}}</h3>
-	</div>
+    <div class="row">
+      <div class="col-xs-3">
+	{{outlet menu}}
       </div>
-      {{outlet}}
+      <div class="col-xs-9">
+	<div class="row">
+	  <div class="well well-sm">
+	    <h3 class="page-header">{{model.person.first_name}}&nbsp;{{model.person.last_name}}</h3>
+	  </div>
+	</div>
+	{{outlet}}
+      </div>
     </div>
   </div>
 </script>
@@ -50,36 +52,36 @@
 	<h4 class="panel-title">Movies</h4>
       </div>
       <div class="panel-body">
-          <table class="table table-condensed">
-            <thead>
-              <tr>
-		<th width="1%"></th>
-		<th width="60%">Cast</th>
-		<th width="39%">Character</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each entry in pageData}}
-              <tr>
-		<th>{{index}}</th>
-		<td>
-                  {{#link-to 'movie' entry.id}}{{displayTitle entry.movie}}{{/link-to}}
-                  {{episodeCount entry}}{{episode-hidden-show-link}}
-		</td>
-		<td>{{entry.character}} {{entry.extras}}</td>
-              </tr>
-              {{#each episode in entry.episodes}}
-              <tr class="{{#ifIndexGt 5}}{{episode-hidden-class}}{{/ifIndexGt}}">
-		<th></th>
-		<td>
-                  {{#link-to 'movie' episode.id}} - {{displayEpisode episode}}{{/link-to}}
-		</td>
-		<td>{{episode.character}} {{episode.extras}}</td>
-              </tr>
-              {{/each}}
-              {{/each}}
-            </tbody>
-          </table>
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+	      <th width="1%"></th>
+	      <th width="60%">Cast</th>
+	      <th width="39%">Character</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each entry in pageData}}
+            <tr>
+	      <th>{{index}}</th>
+	      <td>
+                {{#link-to 'movie' entry.id}}{{displayTitle entry.movie}}{{/link-to}}
+                {{episodeCount entry}}{{episode-hidden-show-link}}
+	      </td>
+	      <td>{{entry.character}} {{entry.extras}}</td>
+            </tr>
+            {{#each episode in entry.episodes}}
+            <tr class="{{#ifIndexGt 5}}{{episode-hidden-class}}{{/ifIndexGt}}">
+	      <th></th>
+	      <td>
+                {{#link-to 'movie' episode.id}} - {{displayEpisode episode}}{{/link-to}}
+	      </td>
+	      <td>{{episode.character}} {{episode.extras}}</td>
+            </tr>
+            {{/each}}
+            {{/each}}
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

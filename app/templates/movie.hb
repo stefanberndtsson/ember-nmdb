@@ -1,20 +1,22 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-movie">
   <div class="container">
-    <div class="col-xs-3">
-      {{outlet menu}}
-    </div>
-    <div class="col-xs-9">
-      <div class="row">
-	<div class="well well-sm">
-          <h1 class="page-header">{{model.movie.full_title}}</h1>
-          <div class="row container col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            {{#each model.genres}}
-            <span class="label label-default">{{genre}}</span>
-            {{/each}}
-          </div>
-	</div>
+    <div class="row">
+      <div class="col-xs-3">
+	{{outlet menu}}
       </div>
-      {{outlet}}
+      <div class="col-xs-9">
+	<div class="row">
+	  <div class="well well-sm">
+            <h1 class="page-header">{{model.movie.full_title}}</h1>
+            <div class="row container col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              {{#each model.genres}}
+              <span class="label label-default">{{genre}}</span>
+              {{/each}}
+            </div>
+	  </div>
+	</div>
+	{{outlet}}
+      </div>
     </div>
   </div>
 </script>
