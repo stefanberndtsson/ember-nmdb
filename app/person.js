@@ -8,6 +8,7 @@ Nmdb.PersonRoute = Nmdb.Route.extend({
     model: function(context) {
 	return Ember.RSVP.hash({
 	    person: Nmdb.AjaxPromise(this.get('apiUrl')+'/'+context.id),
+	    info: Nmdb.AjaxPromise(this.get('apiUrl')+'/'+context.id+'/info'),
 	});
     },
     setupController: function(controller, model, queryParams) {

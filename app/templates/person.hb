@@ -7,7 +7,12 @@
       <div class="col-xs-9">
 	<div class="row">
 	  <div class="well well-sm">
-	    <h3 class="page-header">{{model.person.first_name}}&nbsp;{{model.person.last_name}}</h3>
+	    <h3>{{model.person.first_name}}&nbsp;{{model.person.last_name}}</h3>
+	    <dl>
+	      {{displayInfo 'DB' model.info}}
+	      {{displayInfo 'AG' model.info}}
+	      {{displayInfo 'DD' model.info}}
+	    </dl>
 	  </div>
 	</div>
 	{{outlet}}

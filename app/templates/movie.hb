@@ -7,7 +7,7 @@
       <div class="col-xs-9">
 	<div class="row">
 	  <div class="well well-sm">
-            <h1 class="page-header">{{model.movie.full_title}}</h1>
+            <h3>{{model.movie.full_title}}</h3>
             <div class="row container col-xs-12 col-sm-12 col-md-12 col-lg-12">
               {{#each model.genres}}
               <span class="label label-default">{{genre}}</span>
@@ -87,6 +87,29 @@
         <li class="list-group-item plot-summary">
 	  {{decodeLinks plot links}}
 	  <div><em class="pull-right">{{author}}</em></div>
+	</li>
+	{{/each}}
+	</ul>
+      </div>
+    </div>
+  </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="Nmdb-movie-page-trivia">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Trivia</h4>
+      </div>
+      <div class="panel-body">
+	<ul class="list-group">
+	{{#each model.pageData}}
+        <li class="list-group-item">
+	  {{#if spoiler}}
+	  <span class="bold">[SPOILER]</span> {{decodeLinks trivia links}}
+	  {{else}}
+	  {{decodeLinks trivia links}}
+	  {{/if}}
 	</li>
 	{{/each}}
 	</ul>

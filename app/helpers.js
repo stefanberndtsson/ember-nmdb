@@ -78,14 +78,23 @@ Ember.Handlebars.registerBoundHelper('decodeLinks', function(string, links, opti
 	if(type == "PID") {
 	    var linked = links.people[matchId][0];
 	    linkText = linked.first_name+'&nbsp;'+linked.last_name;
-	    linkTitle = linked.full_name.replace(/'/,"\\'");
+	    linkTitle = linked.full_name.replace(/'/g,"\\'");
 	} else {
 	    var linked = links.movies[matchId][0];
 	    linkText = linked.title;
-	    linkTitle = linked.full_title.replace(/'/,"\\'");;
+	    linkTitle = linked.full_title.replace(/'/g,"\\'");;
 	}
 	return "{{#link-to '"+router+"' "+matchId+" title='"+linkTitle+"'}}"+linkText+"{{/link-to}}";
     });
 
     return Ember.Handlebars.compile(string)(options.context, options);
+});
+
+Ember.Handlebars.registerBoundHelper('displayInfo', function(code, infos, options) {
+    var info = infos.find(function(item,i) {
+	return item.code == code;
+    });
+    if(!info) { return ''; }
+    var string ='<dt>'+info.display+'</dt><dd>'+info.value+'</dd>';
+    return new Ember.Handlebars.SafeString(string);
 });
