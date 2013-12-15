@@ -69,3 +69,20 @@ Ember.Handlebars.registerHelper('episode-hidden-show-link', function(options) {
     });
     return string;
 });
+
+Ember.Handlebars.registerBoundHelper('decodeLinks', function(string, links, options) {
+    string = string.replace(/@@(PID|MID)@(\d+)@@/g, function(match, type, matchId) {
+	var router = (type == "PID") ? 'person' : 'movie';
+	var linkText = "";
+	if(type == "PID") {
+	    var linked = links.people[matchId][0];
+	    linkText = linked.first_name+'&nbsp;'+linked.last_name;
+	} else {
+	    var linked = links.movies[matchId][0];
+	    linkText = linked.title;
+	}
+	return "{{#link-to '"+router+"' "+matchId+"}}"+linkText+"{{/link-to}}";
+    });
+
+    return Ember.Handlebars.compile(string)(options.context, options);
+});

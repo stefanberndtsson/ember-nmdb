@@ -1,4 +1,4 @@
-Nmdb.SearchRoute = Ember.Route.extend({
+Nmdb.SearchRoute = Nmdb.Route.extend({
     apiUrl: Nmdb.apiUrlBase+"/searches",
     model: function(context,params) {
 	return Ember.RSVP.hash({

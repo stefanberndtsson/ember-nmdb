@@ -6,7 +6,7 @@
   {{#if section.disabled}}
   <a href="javascript:void(0);">{{section.display}}</a>
   {{else}}
-  {{#link-to router modelId section.name}}{{section.display}}{{/link-to}}
+  {{#link-to router modelId section.name queryParams=false}}{{section.display}}{{/link-to}}
   {{/if}}
 </script>
 

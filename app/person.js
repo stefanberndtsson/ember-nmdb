@@ -1,4 +1,4 @@
-Nmdb.PersonRoute = Ember.Route.extend({
+Nmdb.PersonRoute = Nmdb.Route.extend({
     apiUrl: Nmdb.apiUrlBase+"/people",
     beforeModel: function(transition, x, y) {
 	if(transition.targetName == 'person.index') {
@@ -19,24 +19,26 @@ Nmdb.PersonController = Ember.Controller.extend({
     model: {},
 });
 
-Nmdb.PersonPageRoute = Ember.Route.extend({
+Nmdb.PersonPageRoute = Nmdb.Route.extend({
     apiUrl: Nmdb.apiUrlBase+"/people",
     pages: {
 	as_role: 'as_role',
+	biography: 'biography'
     },
     model: function(context, queryParams, transition) {
 	var person_id = transition.params.id;
+	var params = (context.page == 'as_role') ? "?"+$.param({role: queryParams.role}) : "";
 	return Ember.RSVP.hash({
 	    page: context.page,
 	    person: this.modelFor('person').person,
 	    pageData: Nmdb.AjaxPromise(
 		this.get('apiUrl')+'/'+person_id+
-		    '/'+this.get('pages')[context.page]+
-		    '?'+$.param({role: queryParams.role})),
+		    '/'+this.get('pages')[context.page]+params)
 	});
     },
     setupController: function(controller, model, queryParams) {
 	controller.set('model', model);
+	controller.set('section', model.page);
 	controller.set('pageData', model.pageData);
 	if(model.person.all_roles) {
 	    if(model.person.all_roles[0] != model.person.active_roles[0]) {
@@ -95,7 +97,11 @@ Nmdb.PersonPageController = Ember.Controller.extend({
     sections: [
         {name: 'as_role',
          display: 'As Role',
-         disabled: false},
+         disabled: false,
+	},
+	{name: 'biography',
+	 display: 'Biography',
+	 disabled: false}
     ],
     activeRole: null,
     tabbedRoles: [],

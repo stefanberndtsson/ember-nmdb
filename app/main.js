@@ -29,7 +29,7 @@ function nmdbSetup(rootElement, environment) {
 	rootElement: '#'+rootElement,
 	Resolver: Ember.DefaultResolver.extend({
             resolveTemplate: function(parsedName) {
-		console.log("Resolver", parsedName.fullNameWithoutType);
+//		console.log("Resolver", parsedName.fullNameWithoutType);
 		parsedName.fullNameWithoutType = "Nmdb-"+parsedName.fullNameWithoutType;
 		return this._super(parsedName);
             }
@@ -40,10 +40,10 @@ function nmdbSetup(rootElement, environment) {
 	appName: "Nmdb",
     });
 
-    Ember.Route.reopen({
-	enter: function(router) {
+    Nmdb.Route = Ember.Route.extend({
+	transitionTo: function() {
 	    window.scrollTo(0,0);
-	    return this._super(router);
+	    return this._super.apply(this, arguments);
 	}
     });
 
