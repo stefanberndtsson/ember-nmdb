@@ -25,6 +25,7 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
     pages: {
 	cast: 'cast_members',
 	keywords: 'keywords',
+	plots: 'plots',
 	quotes: 'quotes'
     },
     model: function(context, transition) {
@@ -71,6 +72,9 @@ Nmdb.MoviePageController = Ember.Controller.extend({
          disabled: false},
         {name: 'keywords',
          display: 'Keywords',
+         disabled: false},
+        {name: 'plots',
+         display: 'Plot summary',
          disabled: false},
         {name: 'quotes',
          display: 'Quotes',
