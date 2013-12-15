@@ -28,21 +28,6 @@
   {{/if}}
 </script>
 
-<script type="text/x-handlebars" data-template-name="Nmdb-person-page-biography">
-  {{#each group in pageData}}
-  <h3>{{group.display}}</h3>
-  {{#if group.value}}
-  {{group.value}}
-  {{else}}
-  <ul>
-    {{#each entry in group.values}}
-    <li>{{decodeLinks entry.value entry.links}}</li>
-    {{/each}}
-  </ul>
-  {{/if}}
-  {{/each}}
-</script>
-
 <script type="text/x-handlebars" data-template-name="Nmdb-person-page-as_role">
   <div class="row">
     <ul class="nav nav-tabs">
@@ -101,3 +86,79 @@
     </div>
   </div>
 </script>
+
+<script type="text/x-handlebars" data-template-name="Nmdb-person-page-biography">
+  {{#each group in pageData}}
+  <h3>{{group.display}}</h3>
+  {{#if group.value}}
+  {{group.value}}
+  {{else}}
+  <ul>
+    {{#each entry in group.values}}
+    <li>{{decodeLinks entry.value entry.links}}</li>
+    {{/each}}
+  </ul>
+  {{/if}}
+  {{/each}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="Nmdb-person-page-trivia">
+  {{#each group in pageData}}
+  <h3>{{group.display}}</h3>
+  {{#if group.value}}
+  {{group.value}}
+  {{else}}
+  <ul>
+    {{#each entry in group.values}}
+    <li>{{decodeLinks entry.value entry.links}}</li>
+    {{/each}}
+  </ul>
+  {{/if}}
+  {{/each}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="Nmdb-person-page-quotes">
+  {{#each group in pageData}}
+  <h3>{{group.display}}</h3>
+  {{#if group.value}}
+  {{group.value}}
+  {{else}}
+  <ul>
+    {{#each entry in group.values}}
+    <li>{{decodeLinks entry.value entry.links}}</li>
+    {{/each}}
+  </ul>
+  {{/if}}
+  {{/each}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="Nmdb-person-page-other_works">
+  {{#each group in pageData}}
+  <h3>{{group.display}}</h3>
+  {{#if group.value}}
+  {{group.value}}
+  {{else}}
+  <ul>
+    {{#each entry in group.values}}
+    <li>{{decodeLinks entry.value entry.links}}</li>
+    {{/each}}
+  </ul>
+  {{/if}}
+  {{/each}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="Nmdb-person-page-publicity">
+  {{#each group in pageData}}
+  <h3>{{group.display}}</h3>
+  {{#if group.value}}
+  {{group.value}}
+  {{else}}
+  <ul>
+    {{#each entry in group.values}}
+    <li>{{decodeLinks entry.value entry.links}}</li>
+    {{/each}}
+  </ul>
+  {{/if}}
+  {{/each}}
+</script>
+

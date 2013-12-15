@@ -74,14 +74,17 @@ Ember.Handlebars.registerBoundHelper('decodeLinks', function(string, links, opti
     string = string.replace(/@@(PID|MID)@(\d+)@@/g, function(match, type, matchId) {
 	var router = (type == "PID") ? 'person' : 'movie';
 	var linkText = "";
+	var linkTitle = "";
 	if(type == "PID") {
 	    var linked = links.people[matchId][0];
 	    linkText = linked.first_name+'&nbsp;'+linked.last_name;
+	    linkTitle = linked.full_name.replace(/'/,"\\'");
 	} else {
 	    var linked = links.movies[matchId][0];
 	    linkText = linked.title;
+	    linkTitle = linked.full_title.replace(/'/,"\\'");;
 	}
-	return "{{#link-to '"+router+"' "+matchId+"}}"+linkText+"{{/link-to}}";
+	return "{{#link-to '"+router+"' "+matchId+" title='"+linkTitle+"'}}"+linkText+"{{/link-to}}";
     });
 
     return Ember.Handlebars.compile(string)(options.context, options);

@@ -23,7 +23,11 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
     apiUrl: Nmdb.apiUrlBase+"/people",
     pages: {
 	as_role: 'as_role',
-	biography: 'biography'
+	biography: 'biography',
+	trivia: 'trivia',
+	quotes: 'quotes',
+	other_works: 'other_works',
+	publicity: 'publicity'
     },
     model: function(context, queryParams, transition) {
 	var person_id = transition.params.id;
@@ -97,11 +101,22 @@ Nmdb.PersonPageController = Ember.Controller.extend({
     sections: [
         {name: 'as_role',
          display: 'As Role',
-         disabled: false,
-	},
+         disabled: false},
 	{name: 'biography',
 	 display: 'Biography',
-	 disabled: false}
+	 disabled: false},
+	{name: 'trivia',
+	 display: 'Trivia',
+	 disabled: false},
+	{name: 'quotes',
+	 display: 'Quotes',
+	 disabled: false},
+	{name: 'other_works',
+	 display: 'Other works',
+	 disabled: false},
+	{name: 'publicity',
+	 display: 'Publicity',
+	 disabled: false},
     ],
     activeRole: null,
     tabbedRoles: [],
