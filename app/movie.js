@@ -47,6 +47,14 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 		Ember.set(sections[i], 'disabled', ($.inArray(section.name, model.movie.active_pages) == -1));
 	    });
 	}
+	if(model.page == 'trivia') {
+	    controller.set('hasSpoilers', false);
+	    model.pageData.forEach(function(item) {
+		if(item.spoiler) {
+		    controller.set('hasSpoilers', true);
+		}
+	    });
+	}
     },
     renderTemplate: function(x) {
 	var controller = this.get('controller');
@@ -84,6 +92,11 @@ Nmdb.MoviePageController = Ember.Controller.extend({
          display: 'Quotes',
          disabled: true}
     ],
+    actions: {
+	toggleSpoilers: function() {
+	    $('.spoiler').toggle();
+	}
+    }
 });
 
 Nmdb.MoviePageDataView = Ember.View.extend({

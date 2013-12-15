@@ -102,11 +102,14 @@
         <h4 class="panel-title">Trivia</h4>
       </div>
       <div class="panel-body">
+	{{#if hasSpoilers}}
+	<div class="panel-heading"><button class="btn btn-default" {{action toggleSpoilers}}>Toggle spoilers</button></div>
+	{{/if}}
 	<ul class="list-group">
 	{{#each model.pageData}}
         <li class="list-group-item">
 	  {{#if spoiler}}
-	  <span class="bold">[SPOILER]</span> {{decodeLinks trivia links}}
+	  <span class="bold">[SPOILER]</span> <span class="spoiler">{{decodeLinks trivia links}}</span>
 	  {{else}}
 	  {{decodeLinks trivia links}}
 	  {{/if}}

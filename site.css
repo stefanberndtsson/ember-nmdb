@@ -44,3 +44,7 @@ li.plot-summary {
 .bold {
     font-weight: bold;
 }
+
+.spoiler {
+    display: none;
+}
