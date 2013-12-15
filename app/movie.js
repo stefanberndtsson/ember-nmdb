@@ -94,7 +94,7 @@ Nmdb.MoviePageController = Ember.Controller.extend({
     ],
     actions: {
 	toggleSpoilers: function() {
-	    $('.spoiler').toggle();
+	    $('.spoiler').visibilityToggle();
 	}
     }
 });
