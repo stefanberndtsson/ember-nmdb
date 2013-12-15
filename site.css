@@ -36,3 +36,11 @@ ul.nav > li.dropdown > a.dropdown-active:hover {
 li.dropdown > a.dropdown-active span.caret {
     border-top-color: white;
 }
+
+li.plot-summary {
+    padding-bottom: 2em;
+}
+
+.bold {
+    font-weight: bold;
+}
