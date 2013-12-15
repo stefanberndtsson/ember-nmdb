@@ -66,7 +66,7 @@
       </div>
       <div class="panel-body">
         {{#each model.pageData}}
-        <span class="col-xs-6 col-sm-6 col-md-4 col-lg-4 panel">{{keyword}}</span>
+        <span class="col-xs-6 col-sm-6 col-md-4 col-lg-4 panel">{{display}}</span>
         {{/each}}
       </div>
     </div>
