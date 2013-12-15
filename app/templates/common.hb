@@ -11,7 +11,7 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="Nmdb-components/section-menu">
-  <ul class="nav section-menu">
+  <ul class="nav well well-sm section-menu">
     <li class="disabled"><a href="javascript:void(0);"><h4>{{sectionMenuTitle}}</h4></a></li>
     {{#each section in sections}}
     {{section-link router=router section=section modelId=modelId currentSection=currentSection}}

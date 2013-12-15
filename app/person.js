@@ -44,7 +44,7 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 	controller.set('model', model);
 	controller.set('section', model.page);
 	controller.set('pageData', model.pageData);
-	if(model.person.all_roles) {
+	if(model.page == 'as_role') {
 	    if(model.person.all_roles[0] != model.person.active_roles[0]) {
 		if(queryParams.role != model.person.active_roles[0]) {
 		    this.replaceWith('person-page', model.person.id, 
@@ -77,6 +77,12 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
             controller.set('tabbedRoles', roleStructureTabbed);
             controller.set('dropdownRoles', roleStructureDropdown);
 	    controller.set('activeRole', queryParams.role);
+	}
+	if(model.person.active_pages) {
+	    var sections = controller.get('sections');
+	    sections.forEach(function(section, i) {
+		Ember.set(sections[i], 'disabled', ($.inArray(section.name, model.person.active_pages) == -1));
+	    });
 	}
     },
     renderTemplate: function(x) {

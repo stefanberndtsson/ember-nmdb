@@ -39,6 +39,12 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
     setupController: function(controller, model, queryParams) {
 	controller.set('model', model);
 	controller.set('section', model.page);
+	if(model.movie.active_pages) {
+	    var sections = controller.get('sections');
+	    sections.forEach(function(section, i) {
+		Ember.set(sections[i], 'disabled', ($.inArray(section.name, model.movie.active_pages) == -1));
+	    });
+	}
     },
     renderTemplate: function(x) {
 	var controller = this.get('controller');
