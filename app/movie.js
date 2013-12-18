@@ -27,6 +27,7 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	keywords: 'keywords',
 	plots: 'plots',
 	trivia: 'trivia',
+	goofs: 'goofs',
 	quotes: 'quotes'
     },
     model: function(context, transition) {
@@ -47,7 +48,7 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 		Ember.set(sections[i], 'disabled', ($.inArray(section.name, model.movie.active_pages) == -1));
 	    });
 	}
-	if(model.page == 'trivia') {
+	if(model.page == 'trivia' || model.page == "goofs") {
 	    controller.set('hasSpoilers', false);
 	    model.pageData.forEach(function(item) {
 		if(item.spoiler) {
@@ -84,6 +85,9 @@ Nmdb.MoviePageController = Ember.Controller.extend({
          disabled: false},
         {name: 'trivia',
          display: 'Trivia',
+         disabled: false},
+        {name: 'goofs',
+         display: 'Goofs',
          disabled: false},
         {name: 'plots',
          display: 'Plot summary',
