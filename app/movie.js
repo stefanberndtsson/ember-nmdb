@@ -94,7 +94,7 @@ Nmdb.MoviePageController = Ember.Controller.extend({
          disabled: false},
         {name: 'quotes',
          display: 'Quotes',
-         disabled: true}
+         disabled: false}
     ],
     actions: {
 	toggleSpoilers: function() {

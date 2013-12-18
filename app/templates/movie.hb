@@ -154,6 +154,24 @@
         <h4 class="panel-title">Quotes</h4>
       </div>
       <div class="panel-body">
+	<ul class="list-group">
+	{{#each model.pageData}}
+        <li class="list-group-item">
+	  {{#each quote}}
+	  {{#if quoter}}
+	  <span class="bold">
+	    {{#link-to 'person' quoter.person.id title=quoter.person.full_name}}
+	    {{quoter.character}}
+	    {{/link-to}}
+	  </span>: {{decodeLinks content links}}
+	  {{else}}
+	  {{decodeLinks content links}}
+	  {{/if}}
+	  <br/>
+	  {{/each}}
+	</li>
+	{{/each}}
+	</ul>
       </div>
     </div>
   </div>
