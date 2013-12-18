@@ -3,8 +3,8 @@ Nmdb.SearchRoute = Nmdb.Route.extend({
     model: function(context,params) {
 	return Ember.RSVP.hash({
 	    query: context.query,
-	    movies: Nmdb.AjaxPromise(this.get('apiUrl')+'/movies?'+$.param({query: context.query})),
-	    people: Nmdb.AjaxPromise(this.get('apiUrl')+'/people?'+$.param({query: context.query}))
+	    movies: Nmdb.AjaxPromise(this.get('apiUrl')+'/solr_movies?'+$.param({query: context.query})),
+	    people: Nmdb.AjaxPromise(this.get('apiUrl')+'/solr_people?'+$.param({query: context.query}))
 	});
     },
     setupController: function(controller, model, queryParams) {
