@@ -160,10 +160,14 @@
 	  {{#each quote}}
 	  {{#if quoter}}
 	  <span class="bold">
+	    {{#if quoter.person}}
 	    {{#link-to 'person' quoter.person.id title=quoter.person.full_name}}
-	    {{quoter.character}}
+	    {{quoter.character}}:
 	    {{/link-to}}
-	  </span>: {{decodeLinks content links}}
+	    {{else}}
+	    {{quoter.character}}:
+	    {{/if}}
+	  </span> {{decodeLinks content links}}
 	  {{else}}
 	  {{decodeLinks content links}}
 	  {{/if}}
@@ -175,5 +179,16 @@
       </div>
     </div>
   </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="Nmdb-movie-page-links">
+  {{#each linkSections}}
+  <h4>{{name}}</h4>
+  <ul>
+    {{#each links}}
+    <li><a target="_blank" href="{{unbound linkHref}}">{{linkText}}</a></li>
+    {{/each}}
+  </ul>
+  {{/each}}
 </script>
 

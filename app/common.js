@@ -50,7 +50,7 @@ Nmdb.SectionLinkComponent = Ember.Component.extend({
     classNameBindings: ['isActive:active', 'isEnabled::disabled'],
     isEnabled: function() {
         return (this.get('section.disabled') === false);
-    }.property(),
+    }.property('section.disabled'),
     isActive: function() {
         if(this.get('currentSection') === this.get('section.name')) {
             return true;

@@ -28,7 +28,8 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	plots: 'plots',
 	trivia: 'trivia',
 	goofs: 'goofs',
-	quotes: 'quotes'
+	quotes: 'quotes',
+	links: 'externals'
     },
     model: function(context, transition) {
 	var movie_id = transition.params.id;
@@ -42,11 +43,24 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
     setupController: function(controller, model, queryParams) {
 	controller.set('model', model);
 	controller.set('section', model.page);
+	console.log("setupController", this);
 	if(model.movie.active_pages) {
 	    var sections = controller.get('sections');
 	    sections.forEach(function(section, i) {
 		Ember.set(sections[i], 'disabled', ($.inArray(section.name, model.movie.active_pages) == -1));
 	    });
+	    if(model.page != 'links') {
+		Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.movie.id+'/externals').then(function(data) {
+		    if(data.imdb_id) {
+			var linkSection = controller.get('sections').filter(function(item) {
+			    return (item.name == 'links');
+			});
+			console.log("Enabling", linkSection[0].name);
+			Ember.set(linkSection[0], 'disabled', false);
+			console.log("Status", controller.get('sections')[5].disabled);
+		    }
+		});
+	    }
 	}
 	if(model.page == 'trivia' || model.page == "goofs") {
 	    controller.set('hasSpoilers', false);
@@ -55,6 +69,30 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 		    controller.set('hasSpoilers', true);
 		}
 	    });
+	}
+	if(model.page == 'links') {
+	    var linkSections = [{
+		name: "IMDb",
+		links: [{
+		    linkHref: 'http://www.imdb.com/title/'+model.pageData.imdb_id,
+		    linkText: 'IMDb - '+model.movie.full_title
+		}]
+	    }];
+	    var wikiLinks = [];
+	    for(var prop in model.pageData.wikipedia) {
+		console.log("Links", prop, model.pageData.wikipedia[prop]);
+		wikiLinks.push({
+		    linkHref: 'http://'+prop+'.wikipedia.org/wiki/'+model.pageData.wikipedia[prop],
+		    linkText: prop.toUpperCase()+' - '+model.pageData.wikipedia[prop]
+		});
+	    }
+	    if(wikiLinks.length != 0) {
+		linkSections.push({
+		    name: "Wikipedia",
+		    links: wikiLinks
+		});
+	    }
+	    controller.set('linkSections', linkSections);
 	}
     },
     renderTemplate: function(x) {
@@ -70,7 +108,13 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 		sectionMenuTitle: 'Sections'
 	    }
 	});
-    }
+    },
+	fetchExternalData: function() {
+	    var controller = this.get('controller');
+	    console.log("fetchExternalData - controller", controller);
+	    var tmp = Nmdb.AjaxPromise(this.get('apiUrl')+'/'+controller.get('model.movie.id')+'/externals');
+	    console.log("fetchExternalData - promise", controller);
+	}
 });
 
 Nmdb.MoviePageController = Ember.Controller.extend({
@@ -94,7 +138,10 @@ Nmdb.MoviePageController = Ember.Controller.extend({
          disabled: false},
         {name: 'quotes',
          display: 'Quotes',
-         disabled: false}
+         disabled: false},
+        {name: 'links',
+         display: 'Links',
+         disabled: true}
     ],
     actions: {
 	toggleSpoilers: function() {
