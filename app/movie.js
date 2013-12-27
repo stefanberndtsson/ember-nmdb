@@ -44,7 +44,6 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	controller.set('model', model);
 	controller.set('section', model.page);
 	controller.set('cover.visible', false);
-	console.log("setupController", this);
 	if(model.movie.active_pages) {
 	    var sections = controller.get('sections');
 	    sections.forEach(function(section, i) {
@@ -56,9 +55,7 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 			var linkSection = controller.get('sections').filter(function(item) {
 			    return (item.name == 'links');
 			});
-			console.log("Enabling", linkSection[0].name);
 			Ember.set(linkSection[0], 'disabled', false);
-			console.log("Status", controller.get('sections')[5].disabled);
 		    }
 		});
 	    }
@@ -81,7 +78,6 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	    }];
 	    var wikiLinks = [];
 	    for(var prop in model.pageData.wikipedia) {
-		console.log("Links", prop, model.pageData.wikipedia[prop]);
 		wikiLinks.push({
 		    linkHref: 'http://'+prop+'.wikipedia.org/wiki/'+model.pageData.wikipedia[prop],
 		    linkText: prop.toUpperCase()+' - '+model.pageData.wikipedia[prop]
@@ -97,7 +93,6 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	}
 	if(!model.movie.image_url) {
 	    Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.movie.id+'/cover').then(function(data) {
-		console.log("Image", data.image);
 		if(data.image) {
 		    controller.set('cover.url', data.image);
 		    controller.set('cover.visible', true);

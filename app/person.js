@@ -28,7 +28,8 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 	trivia: 'trivia',
 	quotes: 'quotes',
 	other_works: 'other_works',
-	publicity: 'publicity'
+	publicity: 'publicity',
+	links: 'externals'
     },
     model: function(context, queryParams, transition) {
 	var person_id = transition.params.id;
@@ -45,6 +46,7 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 	controller.set('model', model);
 	controller.set('section', model.page);
 	controller.set('pageData', model.pageData);
+	controller.set('cover.visible', false);
 	if(model.page == 'as_role') {
 	    if(model.person.all_roles[0] != model.person.active_roles[0]) {
 		if(queryParams.role != model.person.active_roles[0]) {
@@ -84,6 +86,50 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 	    sections.forEach(function(section, i) {
 		Ember.set(sections[i], 'disabled', ($.inArray(section.name, model.person.active_pages) == -1));
 	    });
+	    if(model.page != 'links') {
+		Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.person.id+'/externals').then(function(data) {
+		    if(data.imdb_id) {
+			var linkSection = controller.get('sections').filter(function(item) {
+			    return (item.name == 'links');
+			});
+			Ember.set(linkSection[0], 'disabled', false);
+		    }
+		});
+	    }
+	}
+	if(model.page == 'links') {
+	    var linkSections = [{
+		name: "IMDb",
+		links: [{
+		    linkHref: 'http://www.imdb.com/name/'+model.pageData.imdb_id,
+		    linkText: 'IMDb - '+model.person.full_name
+		}]
+	    }];
+	    var wikiLinks = [];
+	    for(var prop in model.pageData.wikipedia) {
+		wikiLinks.push({
+		    linkHref: 'http://'+prop+'.wikipedia.org/wiki/'+model.pageData.wikipedia[prop],
+		    linkText: prop.toUpperCase()+' - '+model.pageData.wikipedia[prop]
+		});
+	    }
+	    if(wikiLinks.length != 0) {
+		linkSections.push({
+		    name: "Wikipedia",
+		    links: wikiLinks
+		});
+	    }
+	    controller.set('linkSections', linkSections);
+	}
+	if(!model.person.image_url) {
+	    Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.person.id+'/cover').then(function(data) {
+		if(data.image) {
+		    controller.set('cover.url', data.image);
+		    controller.set('cover.visible', true);
+		}
+	    });
+	} else {
+	    controller.set('cover.url', model.person.image_url);
+	    controller.set('cover.visible', true);
 	}
     },
     renderTemplate: function(x) {
@@ -96,7 +142,8 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 		modelId: controller.get('model.person.id'),
 		sections: controller.get('sections'),
 		currentSection: controller.get('section'),
-		sectionMenuTitle: 'Sections'
+		sectionMenuTitle: 'Sections',
+		cover: controller.get('cover')
 	    }
 	});
     }
@@ -104,6 +151,10 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 
 Nmdb.PersonPageController = Ember.Controller.extend({
     model: {},
+    cover: {
+	url: null,
+	visible: false
+    },
     section: 'as_role',
     sections: [
         {name: 'as_role',
@@ -124,6 +175,9 @@ Nmdb.PersonPageController = Ember.Controller.extend({
 	{name: 'publicity',
 	 display: 'Publicity',
 	 disabled: false},
+	{name: 'links',
+	 display: 'Links',
+	 disabled: true},
     ],
     activeRole: null,
     tabbedRoles: [],
