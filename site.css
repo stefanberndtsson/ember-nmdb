@@ -48,3 +48,7 @@ li.plot-summary {
 .spoiler {
     visibility: hidden;
 }
+
+#cover-image {
+    width: 100%;
+}

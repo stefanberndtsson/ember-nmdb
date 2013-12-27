@@ -16,5 +16,8 @@
     {{#each section in sections}}
     {{section-link router=router section=section modelId=modelId currentSection=currentSection}}
     {{/each}}
+    {{#if cover.visible}}
+    <img {{bind-attr src=cover.url}} id="cover-image"/>
+    {{/if}}
   </ul>
 </script>

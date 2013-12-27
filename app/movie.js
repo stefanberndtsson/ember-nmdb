@@ -43,6 +43,7 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
     setupController: function(controller, model, queryParams) {
 	controller.set('model', model);
 	controller.set('section', model.page);
+	controller.set('cover.visible', false);
 	console.log("setupController", this);
 	if(model.movie.active_pages) {
 	    var sections = controller.get('sections');
@@ -94,6 +95,18 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	    }
 	    controller.set('linkSections', linkSections);
 	}
+	if(!model.movie.image_url) {
+	    Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.movie.id+'/cover').then(function(data) {
+		console.log("Image", data.image);
+		if(data.image) {
+		    controller.set('cover.url', data.image);
+		    controller.set('cover.visible', true);
+		}
+	    });
+	} else {
+	    controller.set('cover.url', model.movie.image_url);
+	    controller.set('cover.visible', true);
+	}
     },
     renderTemplate: function(x) {
 	var controller = this.get('controller');
@@ -105,20 +118,19 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 		modelId: controller.get('model.movie.id'),
 		sections: controller.get('sections'),
 		currentSection: controller.get('section'),
-		sectionMenuTitle: 'Sections'
+		sectionMenuTitle: 'Sections',
+		cover: controller.get('cover'),
 	    }
 	});
     },
-	fetchExternalData: function() {
-	    var controller = this.get('controller');
-	    console.log("fetchExternalData - controller", controller);
-	    var tmp = Nmdb.AjaxPromise(this.get('apiUrl')+'/'+controller.get('model.movie.id')+'/externals');
-	    console.log("fetchExternalData - promise", controller);
-	}
 });
 
 Nmdb.MoviePageController = Ember.Controller.extend({
     model: {},
+    cover: {
+	visible: false,
+	url: null
+    },
     section: 'cast',
     sections: [
         {name: 'cast',
