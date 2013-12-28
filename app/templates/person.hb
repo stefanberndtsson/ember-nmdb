@@ -210,3 +210,29 @@
   </div>
 </script>
 
+<script type="text/x-handlebars" data-template-name="Nmdb-person-page-images">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Images</h4>
+      </div>
+      <div class="panel-body">
+	<div class="row">
+	{{#if model.pageData.tmdb.profiles}}
+	<h4 class="panel-heading">Profiles</h4>
+        {{#each model.pageData.tmdb.profiles}}
+        <span class="col-xs-6 col-sm-4 col-md-3 col-lg-3 panel">
+	  <span class="poster-image">
+	  <a target="_blank" href="{{unbound image_url}}">
+	    <img {{bind-attr src=image_url_medium}} />
+	  </a>
+	  </span>
+	</span>
+        {{/each}}
+	{{/if}}
+	</div>
+      </div>
+    </div>
+  </div>
+</script>
+

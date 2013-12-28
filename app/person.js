@@ -30,6 +30,7 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 	quotes: 'quotes',
 	other_works: 'other_works',
 	publicity: 'publicity',
+	images: 'images',
 	links: 'externals'
     },
     beforeModel: function(queryParams,transition) {
@@ -97,6 +98,16 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 		    if(data.imdb_id) {
 			var linkSection = controller.get('sections').filter(function(item) {
 			    return (item.name == 'links');
+			});
+			Ember.set(linkSection[0], 'disabled', false);
+		    }
+		});
+	    }
+	    if(model.page != 'images' && $.inArray('images', model.person.active_pages) == -1) {
+		Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.person.id+'/images').then(function(data) {
+		    if(data.tmdb) {
+			var linkSection = controller.get('sections').filter(function(item) {
+			    return (item.name == 'images');
 			});
 			Ember.set(linkSection[0], 'disabled', false);
 		    }
@@ -193,6 +204,9 @@ Nmdb.PersonPageController = Ember.Controller.extend({
 	{name: 'publicity',
 	 display: 'Publicity',
 	 disabled: false},
+	{name: 'images',
+	 display: 'Images',
+	 disabled: true},
 	{name: 'links',
 	 display: 'Links',
 	 disabled: true},
