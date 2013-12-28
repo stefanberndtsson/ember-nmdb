@@ -2,7 +2,7 @@ Nmdb.PersonRoute = Nmdb.Route.extend({
     apiUrl: Nmdb.apiUrlBase+"/people",
     beforeModel: function(transition, x, y) {
 	if(transition.targetName == 'person.index') {
-	    this.transitionTo('person-page', transition.params.id, 'as_role', {queryParams: {role: 'acting'}});
+	    this.transitionTo('person-page', transition.params.id, 'top_movies');
 	}
     },
     model: function(context) {
@@ -24,12 +24,18 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
     apiUrl: Nmdb.apiUrlBase+"/people",
     pages: {
 	as_role: 'as_role',
+	top_movies: 'top_movies',
 	biography: 'biography',
 	trivia: 'trivia',
 	quotes: 'quotes',
 	other_works: 'other_works',
 	publicity: 'publicity',
 	links: 'externals'
+    },
+    beforeModel: function(queryParams,transition) {
+	if(transition.params.page == 'as_role' && !queryParams.role) {
+	    this.transitionTo('person-page', transition.params.id, 'as_role', {queryParams: {role: 'acting'}})
+	}
     },
     model: function(context, queryParams, transition) {
 	var person_id = transition.params.id;
@@ -164,8 +170,11 @@ Nmdb.PersonPageController = Ember.Controller.extend({
 	url: null,
 	visible: false
     },
-    section: 'as_role',
+    section: 'top_movies',
     sections: [
+	{name: 'top_movies',
+	 display: 'Top Movies',
+	 disabled: false},
         {name: 'as_role',
          display: 'As Role',
          disabled: false},

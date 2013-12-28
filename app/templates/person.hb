@@ -178,3 +178,35 @@
   {{/each}}
 </script>
 
+<script type="text/x-handlebars" data-template-name="Nmdb-person-page-top_movies">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+	<h4 class="panel-title">Top Movies</h4>
+      </div>
+      <div class="panel-body">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+	      <th width="1%"></th>
+	      <th width="60%">Cast</th>
+	      <th width="39%">Character</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each entry in pageData}}
+            <tr>
+	      <th>{{index}}</th>
+	      <td>
+                {{#link-to 'movie' entry.id}}{{displayTitle entry.movie}}{{/link-to}}
+	      </td>
+	      <td>{{entry.character}} {{entry.extras}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</script>
+
