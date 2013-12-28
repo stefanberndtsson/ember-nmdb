@@ -76,6 +76,15 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 		    linkText: 'IMDb - '+model.movie.full_title
 		}]
 	    }];
+	    if(model.pageData.freebase_topic) {
+		linkSections.push({
+		    name: "Freebase",
+		    links: [{
+			linkHref: 'http://www.freebase.com/'+model.pageData.freebase_topic,
+			linkText: 'Freebase - '+model.movie.full_title
+		    }]
+		});
+	    }
 	    var wikiLinks = [];
 	    for(var prop in model.pageData.wikipedia) {
 		wikiLinks.push({

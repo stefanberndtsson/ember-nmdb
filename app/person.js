@@ -105,6 +105,15 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 		    linkText: 'IMDb - '+model.person.full_name
 		}]
 	    }];
+	    if(model.pageData.freebase_topic) {
+		linkSections.push({
+		    name: "Freebase",
+		    links: [{
+			linkHref: 'http://www.freebase.com/'+model.pageData.freebase_topic,
+			linkText: 'Freebase - '+model.person.full_name
+		    }]
+		});
+	    }
 	    var wikiLinks = [];
 	    for(var prop in model.pageData.wikipedia) {
 		wikiLinks.push({
