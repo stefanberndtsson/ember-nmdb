@@ -29,7 +29,8 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	trivia: 'trivia',
 	goofs: 'goofs',
 	quotes: 'quotes',
-	links: 'externals'
+	links: 'externals',
+	images: 'images'
     },
     model: function(context, transition) {
 	var movie_id = transition.params.id;
@@ -54,6 +55,16 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 		    if(data.imdb_id) {
 			var linkSection = controller.get('sections').filter(function(item) {
 			    return (item.name == 'links');
+			});
+			Ember.set(linkSection[0], 'disabled', false);
+		    }
+		});
+	    }
+	    if(model.page != 'images' && $.inArray('images', model.movie.active_pages) == -1) {
+		Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.movie.id+'/images').then(function(data) {
+		    if(data.tmdb) {
+			var linkSection = controller.get('sections').filter(function(item) {
+			    return (item.name == 'images');
 			});
 			Ember.set(linkSection[0], 'disabled', false);
 		    }
@@ -155,6 +166,9 @@ Nmdb.MoviePageController = Ember.Controller.extend({
         {name: 'quotes',
          display: 'Quotes',
          disabled: false},
+        {name: 'images',
+         display: 'Images',
+         disabled: false},
         {name: 'links',
          display: 'Links',
          disabled: true}
@@ -163,7 +177,12 @@ Nmdb.MoviePageController = Ember.Controller.extend({
 	toggleSpoilers: function() {
 	    $('.spoiler').visibilityToggle();
 	}
-    }
+    },
+    hasImageBackdrop: function() {
+	var images = this.get('model.pageData.tmdb.backdrops');
+	console.log(images && images.length > 0);
+	return images && images.backdrops && images.backdrops.length > 0;
+    }.property('model.pageData')
 });
 
 Nmdb.MoviePageDataView = Ember.View.extend({
