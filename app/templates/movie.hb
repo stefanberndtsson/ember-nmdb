@@ -210,6 +210,9 @@
 	  </a>
 	  </span>
 	</span>
+	{{#ifIndexMod 4}}<div class="clearfix visible-md visible-lg"></div>{{/ifIndexMod}}
+	{{#ifIndexMod 3}}<div class="clearfix visible-sm"></div>{{/ifIndexMod}}
+	{{#ifIndexMod 2}}<div class="clearfix visible-xs"></div>{{/ifIndexMod}}
         {{/each}}
 	{{/if}}
 	</div>
@@ -224,6 +227,8 @@
 	  </a>
 	  </span>
 	</span>
+	{{#ifIndexMod 3}}<div class="clearfix visible-md visible-lg"></div>{{/ifIndexMod}}
+	{{#ifIndexMod 2}}<div class="clearfix visible-sm visible-xs"></div>{{/ifIndexMod}}
         {{/each}}
 	{{/if}}
 	</div>

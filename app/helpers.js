@@ -53,6 +53,14 @@ Ember.Handlebars.registerHelper('ifIndexGt', function(v1, options) {
     return options.inverse(this);
 });
 
+Ember.Handlebars.registerHelper('ifIndexMod', function(v1, options) {
+    var currentIndex = options.data.view.contentIndex+1;
+    if(currentIndex%parseInt(v1) == 0) {
+        return options.fn(this);
+    }
+    return options.inverse(this);
+});
+
 Ember.Handlebars.registerHelper('episode-hidden-class', function(options) {
     var parentId = options.data.view._parentView._parentView.content.id;
     return 'episode-hidden episode-hidden-'+parentId;
