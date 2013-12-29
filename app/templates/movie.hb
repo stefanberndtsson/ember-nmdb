@@ -9,7 +9,7 @@
 	<div class="row">
 	  <div class="navbar navbar-custom">
 	    <ul class="nav navbar-nav col-xs-12">
-	      <li class="col-xs-4">
+	      <li class="col-xs-6">
 		{{#if model.movie.prev_followed}}
 		{{#link-to 'movie' model.movie.prev_followed.id class="btn wrap pull-left"}}
 		<span class="glyphicon glyphicon-chevron-left"/>
@@ -17,12 +17,7 @@
 		{{/link-to}}
 		{{/if}}
 	      </li>
-	      <li class="col-xs-4 disabled">
-		<a href="javascript:void(0)" class="navbar-brand col-xs-12 text-center">
-		  {{displayTitle model.movie}}
-		</a>
-	      </li>
-	      <li class="col-xs-4" style="padding-right: 0px;">
+	      <li class="col-xs-6" style="padding-right: 0px;">
 		{{#if model.movie.next_followed}}
 		{{#link-to 'movie' model.movie.next_followed.id class="btn wrap pull-right"}}
 		{{model.movie.next_followed.title}}
