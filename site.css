@@ -89,3 +89,7 @@ li.plot-summary {
 .navbar-custom .navbar-brand {
     color: #000;
 }
+
+.wrap {
+    white-space: normal !important;
+}
