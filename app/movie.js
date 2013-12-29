@@ -30,6 +30,7 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	goofs: 'goofs',
 	quotes: 'quotes',
 	links: 'externals',
+	episodes: 'episodes',
 	images: 'images'
     },
     model: function(context, transition) {
@@ -151,6 +152,9 @@ Nmdb.MoviePageController = Ember.Controller.extend({
         {name: 'cast',
          display: 'Cast',
          disabled: false},
+        {name: 'episodes',
+         display: 'Episodes',
+         disabled: true},
         {name: 'keywords',
          display: 'Keywords',
          disabled: false},

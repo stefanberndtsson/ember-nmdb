@@ -237,3 +237,36 @@
   </div>
 </script>
 
+<script type="text/x-handlebars" data-template-name="Nmdb-movie-page-episodes">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Episodes</h4>
+      </div>
+      <div class="panel-body">
+	<div class="row">
+        {{#each model.pageData.seasons}}
+	<h4 class="panel-heading">Season {{season}}</h4>
+	<ul class="list-group">
+        {{#each episodes}}
+	<li class="list-group-item">
+	  <h4 class="bold">
+	    {{episode.episode_season}}:{{episode.episode_episode}}
+	    {{#link-to 'movie' episode.id}}{{episode.episode_name}}{{/link-to}}
+	  </h4>
+	  {{#if plot.plot}}
+	  <div>{{plot.plot}}</div>
+	  {{/if}}
+	  {{#if release_date.release_date}}
+	  <h5><span class="bold">Released: </span>{{release_date.release_date}}</h5>
+	  {{/if}}
+	</li>
+        {{/each}}
+	</ul>
+	{{/each}}
+	</div>
+      </div>
+    </div>
+  </div>
+</script>
+
