@@ -64,3 +64,28 @@ li.plot-summary {
 .profile-image img {
     width: 100%;
 }
+
+.navbar-custom {
+    background-color: #f8f8f8;
+    color: #000;
+    border-radius: 0;
+}
+
+.navbar-custom li.disabled a.navbar-brand {
+    color: #000;
+}
+
+.navbar-custom li.disabled a:hover.navbar-brand {
+    color: #000;
+}
+
+.navbar-custom .navbar-nav > li > a {
+    color: #428bca;
+}
+.navbar-custom .navbar-nav > .active > a, .navbar-nav > .active > a:hover, .navbar-nav > .active > a:focus {
+    color: #ffffff;
+    background-color:transparent;
+}
+.navbar-custom .navbar-brand {
+    color: #000;
+}

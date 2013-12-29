@@ -15,6 +15,35 @@
             </div>
 	  </div>
 	</div>
+	<div class="row">
+	  <div class="navbar navbar-custom">
+	    <ul class="nav navbar-nav col-xs-12">
+	  {{#if model.movie.is_episode}}
+	  <li class="col-xs-4">
+	  {{#if model.movie.prev_episode}}
+	  {{#link-to 'movie' model.movie.prev_episode.id class="btn pull-left"}}
+	  <span class="glyphicon glyphicon-chevron-left"/>
+	  {{displayEpisodeShort model.movie.prev_episode}}
+	  {{/link-to}}
+	  {{/if}}
+	  </li>
+	  <li class="col-xs-4 disabled">
+	  <a href="javascript:void(0)" class="navbar-brand col-xs-12 text-center">
+	    {{displayEpisodeShort model.movie}}
+	  </a>
+	  </li>
+	  <li class="col-xs-4" style="padding-right: 0px;">
+	  {{#if model.movie.next_episode}}
+	  {{#link-to 'movie' model.movie.next_episode.id class="btn pull-right"}}
+	  {{displayEpisodeShort model.movie.next_episode}}
+	  <span class="glyphicon glyphicon-chevron-right"/>
+	  {{/link-to}}
+	  {{/if}}
+	  </li>
+	  {{/if}}
+	    </ul>
+	  </div>
+	</div>
 	{{outlet}}
       </div>
     </div>

@@ -35,6 +35,18 @@ Ember.Handlebars.registerBoundHelper('displayEpisode', function(movie, options) 
     return new Ember.Handlebars.SafeString(string);
 });
 
+Ember.Handlebars.registerBoundHelper('displayEpisodeShort', function(movie, options) {
+    var string = "";
+    if(movie.episode_name) {
+        string += movie.episode_name;
+    }
+    if(false && movie.episode_episode && movie.episode_season) {
+        var episode_num = movie.episode_season+":"+movie.episode_episode;
+        string = episode_num+"&nbsp;"+string;
+    }
+    return new Ember.Handlebars.SafeString(string);
+});
+
 Ember.Handlebars.registerBoundHelper('episodeCount', function(entry, options) {
     var string = "";
     if(entry.episodes) {
