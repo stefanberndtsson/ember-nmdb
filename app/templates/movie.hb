@@ -162,6 +162,8 @@
 	{{/if}}
 	<ul class="list-group">
 	{{#each model.pageData}}
+	<h4 class="panel-heading">{{category_display}}</h4>
+	{{#each goofs}}
         <li class="list-group-item">
 	  {{#if spoiler}}
 	  <span class="bold">[SPOILER]</span> <span class="spoiler">{{decodeLinks goof links}}</span>
@@ -169,6 +171,7 @@
 	  {{decodeLinks goof links}}
 	  {{/if}}
 	</li>
+	{{/each}}
 	{{/each}}
 	</ul>
       </div>

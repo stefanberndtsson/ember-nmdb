@@ -72,12 +72,22 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 		});
 	    }
 	}
-	if(model.page == 'trivia' || model.page == "goofs") {
+	if(model.page == 'trivia') {
 	    controller.set('hasSpoilers', false);
 	    model.pageData.forEach(function(item) {
 		if(item.spoiler) {
 		    controller.set('hasSpoilers', true);
 		}
+	    });
+	}
+	if(model.page == "goofs") {
+	    controller.set('hasSpoiler', false);
+	    model.pageData.forEach(function(category) {
+		category.goofs.forEach(function(item) {
+		    if(item.spoiler) {
+			controller.set('hasSpoilers', true);
+		    }
+		});
 	    });
 	}
 	if(model.page == 'links') {
