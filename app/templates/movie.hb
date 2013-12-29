@@ -15,6 +15,35 @@
             </div>
 	  </div>
 	</div>
+	{{#if model.movie.is_linked}}
+	<div class="row">
+	  <div class="navbar navbar-custom">
+	    <ul class="nav navbar-nav col-xs-12">
+	      <li class="col-xs-4">
+		{{#if model.movie.prev_followed}}
+		{{#link-to 'movie' model.movie.prev_followed.id class="btn pull-left"}}
+		<span class="glyphicon glyphicon-chevron-left"/>
+		{{model.movie.prev_followed.title}}
+		{{/link-to}}
+		{{/if}}
+	      </li>
+	      <li class="col-xs-4 disabled">
+		<a href="javascript:void(0)" class="navbar-brand col-xs-12 text-center">
+		  {{displayTitle model.movie}}
+		</a>
+	      </li>
+	      <li class="col-xs-4" style="padding-right: 0px;">
+		{{#if model.movie.next_followed}}
+		{{#link-to 'movie' model.movie.next_followed.id class="btn pull-right"}}
+		{{model.movie.next_followed.title}}
+		<span class="glyphicon glyphicon-chevron-right"/>
+		{{/link-to}}
+		{{/if}}
+	      </li>
+	    </ul>
+	  </div>
+	</div>
+	{{/if}}
 	{{#if model.movie.is_episode}}
 	<div class="row">
 	  <div class="navbar navbar-custom">
