@@ -5,16 +5,6 @@
 	{{outlet menu}}
       </div>
       <div class="col-xs-9">
-	<div class="row">
-	  <div class="well well-sm">
-            <h3>{{model.movie.full_title}}</h3>
-            <div class="row container col-xs-12 col-sm-12 col-md-12 col-lg-12">
-              {{#each model.genres}}
-              <span class="label label-default">{{genre}}</span>
-              {{/each}}
-            </div>
-	  </div>
-	</div>
 	{{#if model.movie.is_linked}}
 	<div class="row">
 	  <div class="navbar navbar-custom">
@@ -44,6 +34,16 @@
 	  </div>
 	</div>
 	{{/if}}
+	<div class="row">
+	  <div class="well well-sm">
+            <h3>{{model.movie.full_title}}</h3>
+            <div class="row container col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              {{#each model.genres}}
+              <span class="label label-default">{{genre}}</span>
+              {{/each}}
+            </div>
+	  </div>
+	</div>
 	{{#if model.movie.is_episode}}
 	<div class="row">
 	  <div class="navbar navbar-custom">
