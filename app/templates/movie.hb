@@ -302,3 +302,30 @@
   </div>
 </script>
 
+<script type="text/x-handlebars" data-template-name="Nmdb-movie-page-connections">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Movie Connections</h4>
+      </div>
+      <div class="panel-body">
+	<div class="row">
+        {{#each model.pageData}}
+	<h4 class="panel-heading">{{type}}</h4>
+	<ul class="list-group">
+        {{#each connections}}
+	<li class="list-group-item">
+	  {{#link-to 'movie' linked_movie.id}}{{displayTitle linked_movie}}{{/link-to}}
+	  {{#if text}}
+	  <div>&nbsp;&nbsp;-&nbsp;&nbsp;{{text}}</div>
+	  {{/if}}
+	</li>
+        {{/each}}
+	</ul>
+	{{/each}}
+	</div>
+      </div>
+    </div>
+  </div>
+</script>
+
