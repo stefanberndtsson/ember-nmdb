@@ -32,7 +32,7 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	quotes: 'quotes',
 	links: 'externals',
 	episodes: 'episodes',
-	connections: 'connections',
+	connections: 'local_connections',
 	images: 'images'
     },
     model: function(context, transition) {
@@ -134,6 +134,11 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	} else {
 	    controller.set('cover.url', model.movie.image_url);
 	    controller.set('cover.visible', true);
+	}
+	if(model.page == 'connections') {
+	    Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.movie.id+'/connections').then(function(data) {
+		controller.set('model.pageData', data);
+	    });
 	}
     },
     renderTemplate: function(x) {
