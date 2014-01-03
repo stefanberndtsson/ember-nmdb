@@ -38,11 +38,30 @@ function nmdbSetup(rootElement, environment) {
 
     Nmdb.ApplicationController = Ember.Controller.extend({
 	appName: "Nmdb",
+	spinnerOff: function() {
+	    $('.spinner').removeClass('spinner-on');
+	    $('.spinner').addClass('spinner-off');
+	    $('.spinner-loader').removeClass('spinner-loader-on');
+	    $('.spinner-loader').addClass('spinner-loader-off');
+	},
+	spinnerOn: function() {
+	    $('.spinner').removeClass('spinner-off');
+	    $('.spinner').addClass('spinner-on');
+	    $('.spinner-loader').removeClass('spinner-loader-off');
+	    $('.spinner-loader').addClass('spinner-loader-on');
+	}
     });
 
     Nmdb.Route = Ember.Route.extend({
 	transitionTo: function() {
 	    window.scrollTo(0,0);
+	    return this._super.apply(this, arguments);
+	},
+	redirect: function() {
+	    this.controllerFor('application').spinnerOn();
+	    return this._super.apply(this, arguments);
+	},
+	activate: function() {
 	    return this._super.apply(this, arguments);
 	}
     });

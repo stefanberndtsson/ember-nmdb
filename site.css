@@ -93,3 +93,53 @@ li.plot-summary {
 .wrap {
     white-space: normal !important;
 }
+
+.spinner {
+    box-sizing: content-box;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 10em;
+    height: 3.5em;
+    margin-left: -5em;
+    margin-top: -1.5em;
+    font-size: 150%;
+    text-align: center;
+    border: 1px solid black;
+
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.spinner-inner {
+    padding: 1em;
+    background-color: white;
+    opacity: 1;
+}
+.spinner-off {
+    opacity: 0;
+}
+
+.spinner-on {
+    opacity: 1;
+}
+
+.spinner-loader {
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+
+.spinner-loader-off {
+/*    opacity: 1; */
+}
+
+.spinner-loader-on {
+/*    opacity: 0; */
+}
