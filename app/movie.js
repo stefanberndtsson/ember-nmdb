@@ -51,18 +51,19 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	if(model.movie.active_pages) {
 	    var sections = controller.get('sections');
 	    sections.forEach(function(section, i) {
+		if(section.name == 'links') { return; }
 		Ember.set(sections[i], 'disabled', ($.inArray(section.name, model.movie.active_pages) == -1));
 	    });
-	    if(model.page != 'links') {
-		Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.movie.id+'/externals').then(function(data) {
-		    if(data.imdb_id) {
-			var linkSection = controller.get('sections').filter(function(item) {
-			    return (item.name == 'links');
-			});
-			Ember.set(linkSection[0], 'disabled', false);
-		    }
-		});
-	    }
+//	    if(model.page != 'links') {
+//		Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.movie.id+'/externals').then(function(data) {
+//		    if(data.imdb_id) {
+//			var linkSection = controller.get('sections').filter(function(item) {
+//			    return (item.name == 'links');
+//			});
+//			Ember.set(linkSection[0], 'disabled', false);
+//		    }
+//		});
+//	    }
 	    if(model.page != 'images' && $.inArray('images', model.movie.active_pages) == -1) {
 		Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.movie.id+'/images').then(function(data) {
 		    if(data.tmdb) {
@@ -94,12 +95,27 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	}
 	if(model.page == 'links') {
 	    var linkSections = [{
-		name: "IMDb",
+		name: "Google",
 		links: [{
-		    linkHref: 'http://www.imdb.com/title/'+model.pageData.imdb_id,
-		    linkText: 'IMDb - '+model.movie.full_title
+		    linkHref: 'http://www.google.com/search?q='+encodeURIComponent(model.movie.full_title),
+		    linkText: 'Google'
+		},{
+		    linkHref: 'http://www.google.com/images?q='+encodeURIComponent(model.movie.full_title),
+		    linkText: 'Google Images'
+		},{
+		    linkHref: 'http://www.youtube.com/results?search_query=foo'+encodeURIComponent(model.movie.full_title),
+		    linkText: 'Youtube'
 		}]
-	    }];
+	    }]
+	    if(model.pageData.imdb_id) {
+		linkSections.push({
+		    name: "IMDb",
+		    links: [{
+			linkHref: 'http://www.imdb.com/title/'+model.pageData.imdb_id,
+			linkText: 'IMDb - '+model.movie.full_title
+		    }]
+		});
+	    }
 	    if(model.pageData.freebase_topic) {
 		linkSections.push({
 		    name: "Freebase",
@@ -198,7 +214,7 @@ Nmdb.MoviePageController = Ember.Controller.extend({
          disabled: false},
         {name: 'links',
          display: 'Links',
-         disabled: true}
+         disabled: false}
     ],
     actions: {
 	toggleSpoilers: function() {

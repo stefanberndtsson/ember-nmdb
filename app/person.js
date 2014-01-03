@@ -92,18 +92,19 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 	if(model.person.active_pages) {
 	    var sections = controller.get('sections');
 	    sections.forEach(function(section, i) {
+		if(section.name == 'links') { return; }
 		Ember.set(sections[i], 'disabled', ($.inArray(section.name, model.person.active_pages) == -1));
 	    });
-	    if(model.page != 'links') {
-		Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.person.id+'/externals').then(function(data) {
-		    if(data.imdb_id) {
-			var linkSection = controller.get('sections').filter(function(item) {
-			    return (item.name == 'links');
-			});
-			Ember.set(linkSection[0], 'disabled', false);
-		    }
-		});
-	    }
+//	    if(model.page != 'links') {
+//		Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.person.id+'/externals').then(function(data) {
+//		    if(data.imdb_id) {
+//			var linkSection = controller.get('sections').filter(function(item) {
+//			    return (item.name == 'links');
+//			});
+//			Ember.set(linkSection[0], 'disabled', false);
+//		    }
+//		});
+//	    }
 	    if(model.page != 'images' && $.inArray('images', model.person.active_pages) == -1) {
 		Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.person.id+'/images').then(function(data) {
 		    if(data.tmdb) {
@@ -117,12 +118,27 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 	}
 	if(model.page == 'links') {
 	    var linkSections = [{
-		name: "IMDb",
+		name: "Google",
 		links: [{
-		    linkHref: 'http://www.imdb.com/name/'+model.pageData.imdb_id,
-		    linkText: 'IMDb - '+model.person.full_name
+		    linkHref: 'http://www.google.com/search?q='+encodeURIComponent([model.person.first_name, model.person.last_name].compact().join(" ")),
+		    linkText: 'Google'
+		},{
+		    linkHref: 'http://www.google.com/images?q='+encodeURIComponent([model.person.first_name, model.person.last_name].compact().join(" ")),
+		    linkText: 'Google Images'
+		},{
+		    linkHref: 'http://www.youtube.com/results?search_query='+encodeURIComponent([model.person.first_name, model.person.last_name].compact().join(" ")),
+		    linkText: 'Youtube'
 		}]
-	    }];
+	    }]
+	    if(model.pageData.imdb_id) {
+		linkSections.push({
+		    name: "IMDb",
+		    links: [{
+			linkHref: 'http://www.imdb.com/name/'+model.pageData.imdb_id,
+			linkText: 'IMDb - '+model.person.full_name
+		    }]
+		});
+	    }
 	    if(model.pageData.freebase_topic) {
 		linkSections.push({
 		    name: "Freebase",
@@ -210,7 +226,7 @@ Nmdb.PersonPageController = Ember.Controller.extend({
 	 disabled: true},
 	{name: 'links',
 	 display: 'Links',
-	 disabled: true},
+	 disabled: false},
     ],
     activeRole: null,
     tabbedRoles: [],
