@@ -8,6 +8,7 @@ Nmdb.SearchRoute = Nmdb.Route.extend({
 	});
     },
     setupController: function(controller, model, queryParams) {
+	this.controllerFor('application').spinnerOff();
 	this.controllerFor('index').set('queryString', model.query);
 	controller.set('model', model);
     }
