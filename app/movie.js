@@ -137,7 +137,10 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	}
 	if(model.page == 'connections') {
 	    Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.movie.id+'/connections').then(function(data) {
-		controller.set('model.pageData', data);
+		if((controller.get('model.page') == 'connections') &&
+                   (controller.get('model.movie.id') == model.movie.id)) {
+		    controller.set('model.pageData', data);
+		}
 	    });
 	}
     },
