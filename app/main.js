@@ -63,6 +63,14 @@ function nmdbSetup(rootElement, environment) {
 	},
 	activate: function() {
 	    return this._super.apply(this, arguments);
+	},
+	setupController: function() {
+	    this.controllerFor('application').spinnerOff();
+	    return this._super.apply(this, arguments);
+	},
+	beforeModel: function() {
+	    this.controllerFor('application').spinnerOn();
+	    return this._super.apply(this, arguments);
 	}
     });
 

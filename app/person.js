@@ -1,6 +1,7 @@
 Nmdb.PersonRoute = Nmdb.Route.extend({
     apiUrl: Nmdb.apiUrlBase+"/people",
     beforeModel: function(transition, x, y) {
+	this.controllerFor('application').spinnerOn();
 	if(transition.targetName == 'person.index') {
 	    this.transitionTo('person-page', transition.params.id, 'top_movies');
 	}
@@ -51,6 +52,7 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 	});
     },
     setupController: function(controller, model, queryParams) {
+	this.controllerFor('application').spinnerOff();
 	controller.set('model', model);
 	controller.set('section', model.page);
 	controller.set('pageData', model.pageData);

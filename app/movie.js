@@ -1,6 +1,7 @@
 Nmdb.MovieRoute = Nmdb.Route.extend({
     apiUrl: Nmdb.apiUrlBase+"/movies",
     beforeModel: function(transition) {
+	this.controllerFor('application').spinnerOn();
 	if(transition.targetName == 'movie.index') {
 	    this.transitionTo('movie-page', transition.params.id, 'cast');
 	}
@@ -45,6 +46,7 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	});
     },
     setupController: function(controller, model, queryParams) {
+	this.controllerFor('application').spinnerOff();
 	controller.set('model', model);
 	controller.set('section', model.page);
 	controller.set('cover.visible', false);
