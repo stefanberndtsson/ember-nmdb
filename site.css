@@ -127,10 +127,12 @@ li.plot-summary {
 }
 
 .spinner-off {
+    visibility: hidden;
     opacity: 0;
 }
 
 .spinner-on {
+    visibility: visible;
     opacity: 1;
 }
 
