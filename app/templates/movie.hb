@@ -330,7 +330,12 @@
   <div class="row">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h4 class="panel-title">Movie Connections</h4>
+        <h4 class="panel-title">
+	  Movie Connections
+	  {{#if showSpinner}}
+	  <img class="spinner-img" src="{{unbound appRoot}}/img/spinner.gif"/>
+	  {{/if}}
+	</h4>
       </div>
       <div class="panel-body">
 	<div class="row">

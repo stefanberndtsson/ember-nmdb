@@ -47,6 +47,7 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
     },
     setupController: function(controller, model, queryParams) {
 	this.controllerFor('application').spinnerOff();
+	controller.set('showSpinner', false);
 	controller.set('model', model);
 	controller.set('section', model.page);
 	controller.set('cover.visible', false);
@@ -154,10 +155,12 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	    controller.set('cover.visible', true);
 	}
 	if(model.page == 'connections') {
+	    controller.set('showSpinner', true);
 	    Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.movie.id+'/connections').then(function(data) {
 		if((controller.get('model.page') == 'connections') &&
                    (controller.get('model.movie.id') == model.movie.id)) {
 		    controller.set('model.pageData', data);
+		    controller.set('showSpinner', false);
 		}
 	    });
 	}
@@ -218,6 +221,9 @@ Nmdb.MoviePageController = Ember.Controller.extend({
          display: 'Links',
          disabled: false}
     ],
+    appRoot: function() {
+	return scriptHost;
+    }.property(),
     actions: {
 	toggleSpoilers: function() {
 	    $('.spoiler').visibilityToggle();

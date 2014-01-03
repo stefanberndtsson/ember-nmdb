@@ -100,9 +100,9 @@ li.plot-summary {
     left: 50%;
     top: 25%;
     width: 10em;
-    height: 3.5em;
+    height: 3.6em;
     margin-left: -5em;
-    margin-top: -1.5em;
+    margin-top: -1.8em;
     font-size: 150%;
     text-align: center;
     border: 1px solid black;
@@ -116,9 +116,16 @@ li.plot-summary {
 
 .spinner-inner {
     padding: 1em;
+    height: 3.6em;
     background-color: white;
     opacity: 1;
 }
+
+.spinner-img {
+    margin-top: -4px;
+    height: 1em;
+}
+
 .spinner-off {
     opacity: 0;
 }

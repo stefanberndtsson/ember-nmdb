@@ -38,6 +38,9 @@ function nmdbSetup(rootElement, environment) {
 
     Nmdb.ApplicationController = Ember.Controller.extend({
 	appName: "Nmdb",
+	appRoot: function() {
+	    return scriptHost;
+	}.property(),
 	spinnerOff: function() {
 	    $('.spinner').removeClass('spinner-on');
 	    $('.spinner').addClass('spinner-off');

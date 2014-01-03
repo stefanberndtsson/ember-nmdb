@@ -16,5 +16,9 @@
   {{outlet}}
   </div>
   <div class="container" style="height: 150px;"></div>
-  <div class="spinner spinner-off"><div class="spinner-inner">Loading...</div></div>
+  <div class="spinner spinner-off">
+    <div class="spinner-inner">
+      Loading...
+    </div>
+  </div>
 </script>
