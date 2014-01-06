@@ -381,3 +381,32 @@
   </div>
 </script>
 
+<script type="text/x-handlebars" data-template-name="Nmdb-movie-page-additionals">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+	  Additional Information
+	</h4>
+      </div>
+      <div class="panel-body">
+	<div class="row">
+          {{#if model.pageData.akas}}
+	  <h4 class="panel-heading">Alternate titles</h4>
+	  <ul class="list-group">
+            {{#each model.pageData.akas}}
+	    <li class="list-group-item">
+	      <span>{{title}}</span>
+	      {{#if info}}
+	      <div>&nbsp;&nbsp;-&nbsp;&nbsp;{{info}}</div>
+	      {{/if}}
+	    </li>
+            {{/each}}
+	  </ul>
+	  {{/if}}
+	</div>
+      </div>
+    </div>
+  </div>
+</script>
+

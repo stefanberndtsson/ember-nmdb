@@ -26,6 +26,7 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
     apiUrl: Nmdb.apiUrlBase+"/movies",
     pages: {
 	cast: 'cast_members',
+	additionals: 'additionals',
 	keywords: 'keywords',
 	plots: 'plots',
 	trivia: 'trivia',
@@ -196,6 +197,9 @@ Nmdb.MoviePageController = Ember.ArrayController.extend({
          disabled: false},
         {name: 'episodes',
          display: 'Episodes',
+         disabled: true},
+        {name: 'additionals',
+         display: 'Additional Information',
          disabled: true},
         {name: 'connections',
          display: 'Movie Connections',
