@@ -227,6 +227,18 @@ Nmdb.MoviePageController = Ember.Controller.extend({
     actions: {
 	toggleSpoilers: function() {
 	    $('.spoiler').visibilityToggle();
+	},
+	showSeason: function(selected) {
+	    var seasons = this.get('model.pageData.seasons');
+	    seasons.forEach(function(season) {
+		if(season.season == selected) {
+		    $('#episode-season-'+season.season).show();
+		    Ember.set(season, 'active', true);
+		} else {
+		    $('#episode-season-'+season.season).hide();
+		    Ember.set(season, 'active', false);
+		}
+	    });
 	}
     },
     hasImageBackdrop: function() {
@@ -243,4 +255,10 @@ Nmdb.MoviePageDataView = Ember.View.extend({
     _templateChanged: function() {
 	this.rerender();
     }.observes('templateName'),
+    didInsertElement: function() {
+	var controller = this.get('controller');
+	if(controller.get('section') == 'episodes') {
+	    controller.send('showSeason', 1);
+	}
+    }
 });

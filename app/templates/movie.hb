@@ -301,25 +301,39 @@
       </div>
       <div class="panel-body">
 	<div class="row">
-        {{#each model.pageData.seasons}}
-	<h4 class="panel-heading">Season {{season}}</h4>
-	<ul class="list-group">
-        {{#each episodes}}
-	<li class="list-group-item">
-	  <h4 class="bold">
-	    {{episode.episode_season}}:{{episode.episode_episode}}
-	    {{#link-to 'movie' episode.id}}{{episode.episode_name}}{{/link-to}}
+	  <h4 class="panel-heading">
+	    <ul class="nav nav-pills">
+	      <li class="disabled"><a class="black" href="javascript:void(0)">Season</a></li>
+	      {{#each model.pageData.seasons}}
+	      <li {{bind-attr class="active"}}>
+		<a href="javascript:void(0);" {{action showSeason season}}>{{season}}</a>
+	      </li>
+	      {{/each}}
+	    </ul>
 	  </h4>
-	  {{#if plot.plot}}
-	  <div>{{plot.plot}}</div>
-	  {{/if}}
-	  {{#if release_date.release_date}}
-	  <h5><span class="bold">Released: </span>{{release_date.release_date}}</h5>
-	  {{/if}}
-	</li>
-        {{/each}}
-	</ul>
-	{{/each}}
+	</div>
+	<div class="row">
+          {{#each model.pageData.seasons}}
+	  <div id="episode-season-{{unbound season}}">
+	    <h4 class="panel-heading">Season {{season}}</h4>
+	    <ul class="list-group">
+              {{#each episodes}}
+	      <li class="list-group-item">
+		<h4 class="bold">
+		  {{episode.episode_season}}:{{episode.episode_episode}}
+		  {{#link-to 'movie' episode.id}}{{episode.episode_name}}{{/link-to}}
+		</h4>
+		{{#if plot.plot}}
+		<div>{{plot.plot}}</div>
+		{{/if}}
+		{{#if release_date.release_date}}
+		<h5><span class="bold">Released: </span>{{release_date.release_date}}</h5>
+		{{/if}}
+	      </li>
+              {{/each}}
+	    </ul>
+	  </div>
+	  {{/each}}
 	</div>
       </div>
     </div>

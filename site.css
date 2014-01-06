@@ -90,6 +90,10 @@ li.plot-summary {
     color: #000;
 }
 
+.black {
+    color: #000 !important;
+}
+
 .wrap {
     white-space: normal !important;
 }
