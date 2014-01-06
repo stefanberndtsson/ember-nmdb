@@ -302,11 +302,13 @@
       <div class="panel-body">
 	<div class="row">
 	  <h4 class="panel-heading">
-	    <ul class="nav nav-pills">
+	    <ul class="nav nav-pills col-xs-2">
 	      <li class="disabled"><a class="black" href="javascript:void(0)">Season</a></li>
+	    </ul>
+	    <ul class="nav nav-pills col-xs-10">
 	      {{#each model.pageData.seasons}}
 	      <li {{bind-attr class="active"}}>
-		<a href="javascript:void(0);" {{action showSeason season}}>{{season}}</a>
+		<a href="javascript:void(0);" {{action showSeason season}}>{{season_name}}</a>
 	      </li>
 	      {{/each}}
 	    </ul>
@@ -314,14 +316,14 @@
 	</div>
 	<div class="row">
           {{#each model.pageData.seasons}}
-	  <div id="episode-season-{{unbound season}}">
+	  <div id="episode-season-{{unbound season_name}}">
 	    <h4 class="panel-heading">Season {{season}}</h4>
 	    <ul class="list-group">
               {{#each episodes}}
 	      <li class="list-group-item">
 		<h4 class="bold">
 		  {{episode.episode_season}}:{{episode.episode_episode}}
-		  {{#link-to 'movie' episode.id}}{{episode.episode_name}}{{/link-to}}
+		  {{#link-to 'movie' episode.id}}{{episode_name}}{{/link-to}}
 		</h4>
 		{{#if plot.plot}}
 		<div>{{plot.plot}}</div>

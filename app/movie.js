@@ -182,7 +182,8 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
     },
 });
 
-Nmdb.MoviePageController = Ember.Controller.extend({
+Nmdb.MoviePageController = Ember.ArrayController.extend({
+    itemController: 'MoviePageData',
     model: {},
     cover: {
 	visible: false,
@@ -230,15 +231,22 @@ Nmdb.MoviePageController = Ember.Controller.extend({
 	},
 	showSeason: function(selected) {
 	    var seasons = this.get('model.pageData.seasons');
+	    var anyActive = false;
 	    seasons.forEach(function(season) {
 		if(season.season == selected) {
-		    $('#episode-season-'+season.season).show();
+		    $('#episode-season-'+season.season_name).show();
 		    Ember.set(season, 'active', true);
+		    anyActive = true;
 		} else {
-		    $('#episode-season-'+season.season).hide();
+		    $('#episode-season-'+season.season_name).hide();
 		    Ember.set(season, 'active', false);
 		}
 	    });
+	    if(!anyActive) {
+		var first = seasons[0];
+		$('#episode-season-'+first.season_name).show();
+		Ember.set(first, 'active', true);
+	    }
 	}
     },
     hasImageBackdrop: function() {
@@ -260,5 +268,5 @@ Nmdb.MoviePageDataView = Ember.View.extend({
 	if(controller.get('section') == 'episodes') {
 	    controller.send('showSeason', 1);
 	}
-    }
+    },
 });
