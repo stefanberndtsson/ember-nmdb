@@ -136,12 +136,12 @@
       </div>
       <div class="panel-body">
 	<ul class="list-group">
-	{{#each model.pageData}}
-        <li class="list-group-item plot-summary">
-	  {{decodeLinks plot links}}
-	  <div><em class="pull-right">{{author}}</em></div>
-	</li>
-	{{/each}}
+	  {{#each model.pageData}}
+          <li class="list-group-item plot-summary">
+	    {{decodeLinks plot links}}
+	    <div><em class="pull-right">{{author}}</em></div>
+	  </li>
+	  {{/each}}
 	</ul>
       </div>
     </div>
@@ -159,15 +159,15 @@
 	<div class="panel-heading"><button class="btn btn-default" {{action toggleSpoilers}}>Toggle spoilers</button></div>
 	{{/if}}
 	<ul class="list-group">
-	{{#each model.pageData}}
-        <li class="list-group-item">
-	  {{#if spoiler}}
-	  <span class="bold">[SPOILER]</span> <span class="spoiler">{{decodeLinks trivia links}}</span>
-	  {{else}}
-	  {{decodeLinks trivia links}}
-	  {{/if}}
-	</li>
-	{{/each}}
+	  {{#each model.pageData}}
+          <li class="list-group-item">
+	    {{#if spoiler}}
+	    <span class="bold">[SPOILER]</span> <span class="spoiler">{{decodeLinks trivia links}}</span>
+	    {{else}}
+	    {{decodeLinks trivia links}}
+	    {{/if}}
+	  </li>
+	  {{/each}}
 	</ul>
       </div>
     </div>
@@ -185,18 +185,18 @@
 	<div class="panel-heading"><button class="btn btn-default" {{action toggleSpoilers}}>Toggle spoilers</button></div>
 	{{/if}}
 	<ul class="list-group">
-	{{#each model.pageData}}
-	<h4 class="panel-heading">{{category_display}}</h4>
-	{{#each goofs}}
-        <li class="list-group-item">
-	  {{#if spoiler}}
-	  <span class="bold">[SPOILER]</span> <span class="spoiler">{{decodeLinks goof links}}</span>
-	  {{else}}
-	  {{decodeLinks goof links}}
-	  {{/if}}
-	</li>
-	{{/each}}
-	{{/each}}
+	  {{#each model.pageData}}
+	  <h4 class="panel-heading">{{category_display}}</h4>
+	  {{#each goofs}}
+          <li class="list-group-item">
+	    {{#if spoiler}}
+	    <span class="bold">[SPOILER]</span> <span class="spoiler">{{decodeLinks goof links}}</span>
+	    {{else}}
+	    {{decodeLinks goof links}}
+	    {{/if}}
+	  </li>
+	  {{/each}}
+	  {{/each}}
 	</ul>
       </div>
     </div>
@@ -211,26 +211,26 @@
       </div>
       <div class="panel-body">
 	<ul class="list-group">
-	{{#each model.pageData}}
-        <li class="list-group-item">
-	  {{#each quote}}
-	  {{#if quoter}}
-	  <span class="bold">
-	    {{#if quoter.person}}
-	    {{#link-to 'person' quoter.person.id title=quoter.person.full_name}}
-	    {{quoter.character}}:
-	    {{/link-to}}
+	  {{#each model.pageData}}
+          <li class="list-group-item">
+	    {{#each quote}}
+	    {{#if quoter}}
+	    <span class="bold">
+	      {{#if quoter.person}}
+	      {{#link-to 'person' quoter.person.id title=quoter.person.full_name}}
+	      {{quoter.character}}:
+	      {{/link-to}}
+	      {{else}}
+	      {{quoter.character}}:
+	      {{/if}}
+	    </span> {{decodeLinks content links}}
 	    {{else}}
-	    {{quoter.character}}:
+	    {{decodeLinks content links}}
 	    {{/if}}
-	  </span> {{decodeLinks content links}}
-	  {{else}}
-	  {{decodeLinks content links}}
-	  {{/if}}
-	  <br/>
+	    <br/>
+	    {{/each}}
+	  </li>
 	  {{/each}}
-	</li>
-	{{/each}}
 	</ul>
       </div>
     </div>
@@ -256,37 +256,37 @@
       </div>
       <div class="panel-body">
 	<div class="row">
-	{{#if model.pageData.tmdb.posters}}
-	<h4 class="panel-heading">Posters</h4>
-        {{#each model.pageData.tmdb.posters}}
-        <span class="col-xs-6 col-sm-4 col-md-3 col-lg-3 panel">
-	  <span class="poster-image">
-	  <a target="_blank" href="{{unbound image_url}}">
-	    <img {{bind-attr src=image_url_thumb}} />
-	  </a>
+	  {{#if model.pageData.tmdb.posters}}
+	  <h4 class="panel-heading">Posters</h4>
+          {{#each model.pageData.tmdb.posters}}
+          <span class="col-xs-6 col-sm-4 col-md-3 col-lg-3 panel">
+	    <span class="poster-image">
+	      <a target="_blank" href="{{unbound image_url}}">
+		<img {{bind-attr src=image_url_thumb}} />
+	      </a>
+	    </span>
 	  </span>
-	</span>
-	{{#ifIndexMod 4}}<div class="clearfix visible-md visible-lg"></div>{{/ifIndexMod}}
-	{{#ifIndexMod 3}}<div class="clearfix visible-sm"></div>{{/ifIndexMod}}
-	{{#ifIndexMod 2}}<div class="clearfix visible-xs"></div>{{/ifIndexMod}}
-        {{/each}}
-	{{/if}}
+	  {{#ifIndexMod 4}}<div class="clearfix visible-md visible-lg"></div>{{/ifIndexMod}}
+	  {{#ifIndexMod 3}}<div class="clearfix visible-sm"></div>{{/ifIndexMod}}
+	  {{#ifIndexMod 2}}<div class="clearfix visible-xs"></div>{{/ifIndexMod}}
+          {{/each}}
+	  {{/if}}
 	</div>
 	<div class="row">
-	{{#if model.pageData.tmdb.backdrops}}
-	<h4 class="panel-heading">Backdrops</h4>
-        {{#each model.pageData.tmdb.backdrops}}
-        <span class="col-xs-6 col-sm-6 col-md-4 col-lg-4 panel">
-	  <span class="backdrop-image">
-	  <a target="_blank" href="{{unbound image_url}}">
-	    <img {{bind-attr src=image_url_thumb}} />
-	  </a>
+	  {{#if model.pageData.tmdb.backdrops}}
+	  <h4 class="panel-heading">Backdrops</h4>
+          {{#each model.pageData.tmdb.backdrops}}
+          <span class="col-xs-6 col-sm-6 col-md-4 col-lg-4 panel">
+	    <span class="backdrop-image">
+	      <a target="_blank" href="{{unbound image_url}}">
+		<img {{bind-attr src=image_url_thumb}} />
+	      </a>
+	    </span>
 	  </span>
-	</span>
-	{{#ifIndexMod 3}}<div class="clearfix visible-md visible-lg"></div>{{/ifIndexMod}}
-	{{#ifIndexMod 2}}<div class="clearfix visible-sm visible-xs"></div>{{/ifIndexMod}}
-        {{/each}}
-	{{/if}}
+	  {{#ifIndexMod 3}}<div class="clearfix visible-md visible-lg"></div>{{/ifIndexMod}}
+	  {{#ifIndexMod 2}}<div class="clearfix visible-sm visible-xs"></div>{{/ifIndexMod}}
+          {{/each}}
+	  {{/if}}
 	</div>
       </div>
     </div>
@@ -353,19 +353,19 @@
       </div>
       <div class="panel-body">
 	<div class="row">
-        {{#each model.pageData}}
-	<h4 class="panel-heading">{{type}}</h4>
-	<ul class="list-group">
-        {{#each connections}}
-	<li class="list-group-item">
-	  {{#link-to 'movie' linked_movie.id}}{{displayTitle linked_movie}}{{/link-to}}
-	  {{#if text}}
-	  <div>&nbsp;&nbsp;-&nbsp;&nbsp;{{text}}</div>
-	  {{/if}}
-	</li>
-        {{/each}}
-	</ul>
-	{{/each}}
+          {{#each model.pageData}}
+	  <h4 class="panel-heading">{{type}}</h4>
+	  <ul class="list-group">
+            {{#each connections}}
+	    <li class="list-group-item">
+	      {{#link-to 'movie' linked_movie.id}}{{displayTitle linked_movie}}{{/link-to}}
+	      {{#if text}}
+	      <div>&nbsp;&nbsp;-&nbsp;&nbsp;{{text}}</div>
+	      {{/if}}
+	    </li>
+            {{/each}}
+	  </ul>
+	  {{/each}}
 	</div>
       </div>
     </div>
