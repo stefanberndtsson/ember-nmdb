@@ -32,6 +32,13 @@
 	<div class="row">
 	  <div class="well well-sm">
             <h3>{{model.movie.full_title}}</h3>
+	    {{#if model.movie.rating}}
+            <div class="row container col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <h5>
+		<span class="bold">Rating:</span> {{model.movie.rating.rating}}/10 ({{pluralize model.movie.rating.votes 'vote'}})
+	      </h5>
+            </div>
+	    {{/if}}
             <div class="row container col-xs-12 col-sm-12 col-md-12 col-lg-12">
               {{#each model.genres}}
               <span class="label label-default">{{genre}}</span>
