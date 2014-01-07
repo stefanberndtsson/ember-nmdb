@@ -191,6 +191,18 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 		cover: controller.get('cover')
 	    }
 	});
+	this.render('components/section-menu-dropdown', {
+	    outlet: 'menu-dropdown',
+	    controller: {
+		target: controller.get('target'),
+		router: 'person-page',
+		modelId: controller.get('model.person.id'),
+		sections: controller.get('sections'),
+		currentSection: controller.get('section'),
+		sectionMenuTitle: 'Sections',
+		cover: controller.get('cover')
+	    }
+	});
     }
 });
 

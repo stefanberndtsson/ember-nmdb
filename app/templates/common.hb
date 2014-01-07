@@ -2,6 +2,10 @@
   <a href="javascript:void(0);">{{typeDisplay}}</a>
 </script>
 
+<script type="text/x-handlebars" data-template-name="Nmdb-components/section-dropdown-option">
+  {{section.display}}
+</script>
+
 <script type="text/x-handlebars" data-template-name="Nmdb-components/section-link">
   {{#if section.disabled}}
   <a href="javascript:void(0);">{{section.display}}</a>
@@ -20,4 +24,17 @@
     <img {{bind-attr src=cover.url}} id="cover-image"/>
     {{/if}}
   </ul>
+</script>
+
+<script type="text/x-handlebars" data-template-name="Nmdb-components/section-menu-dropdown">
+  <div class="row"><h4>
+  {{section-dropdown target=target router=router sections=sections 
+                     modelId=modelId currentSection=currentSection action=menuTransition}}
+  </h4></div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="Nmdb-components/section-dropdown">
+  {{#each section in sections}}
+  {{section-dropdown-option router=router section=section modelId=modelId currentSection=currentSection}}
+  {{/each}}
 </script>

@@ -1,14 +1,16 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-search">
   <div class="container">
-    {{search-select-buttons}}
+    <div class="row">
+      {{search-select-buttons}}
+    </div>
   </div>
   <div class="container">
-      {{#if moviesSelected}}
-      {{movies-results movies=model.movies}}
-      {{/if}}
-      {{#if peopleSelected}}
-      {{people-results people=model.people}}
-      {{/if}}
+    {{#if moviesSelected}}
+    {{movies-results movies=model.movies}}
+    {{/if}}
+    {{#if peopleSelected}}
+    {{people-results people=model.people}}
+    {{/if}}
   </div>
 </script>
 

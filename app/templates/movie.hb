@@ -1,10 +1,13 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-movie">
   <div class="container">
-    <div class="row">
-      <div class="col-xs-3">
+    <div class="row container">
+      <div class="col-md-3 hidden-sm hidden-xs">
 	{{outlet menu}}
       </div>
-      <div class="col-xs-9">
+      <div class="col-xs-12 hidden-md hidden-lg visible-sm visible-xs">
+	{{outlet menu-dropdown}}
+      </div>
+      <div class="col-md-9 col-xs-12">
 	{{#if model.movie.is_linked}}
 	<div class="row">
 	  <div class="navbar navbar-custom">

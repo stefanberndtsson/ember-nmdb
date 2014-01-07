@@ -180,7 +180,24 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 		cover: controller.get('cover'),
 	    }
 	});
+	this.render('components/section-menu-dropdown', {
+	    outlet: 'menu-dropdown',
+	    controller: {
+		target: controller.get('target'),
+		router: 'movie-page',
+		modelId: controller.get('model.movie.id'),
+		sections: controller.get('sections'),
+		currentSection: controller.get('section'),
+		sectionMenuTitle: 'Sections',
+		cover: controller.get('cover'),
+	    }
+	});
     },
+    actions: {
+	menuTransition: function(section) {
+	    console.log("menuTransition", section);
+	}
+    }
 });
 
 Nmdb.MoviePageController = Ember.ArrayController.extend({
@@ -251,6 +268,9 @@ Nmdb.MoviePageController = Ember.ArrayController.extend({
 		$('#episode-season-'+first.season_name).show();
 		Ember.set(first, 'active', true);
 	    }
+	},
+	menuTransition: function(section) {
+	    console.log("menuTransitionController", section);
 	}
     },
     hasImageBackdrop: function() {

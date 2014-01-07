@@ -59,3 +59,35 @@ Nmdb.SectionLinkComponent = Ember.Component.extend({
     }.property('currentSection')
 });
 
+Nmdb.SectionDropdownComponent = Ember.Component.extend({
+    tagName: 'select',
+    attributeBindings: ['name'],
+    classNames: ['col-xs-12', 'nav', 'navbar', 'well', 'well-sm'],
+    name: function() {
+	return "section";
+    }.property(),
+    change: function(event) {
+	var selected = $(event.target).val();
+	var route = this.get('target');
+	route.transitionTo(this.get('router'), this.get('modelId'), selected);
+    }
+});
+
+Nmdb.SectionDropdownOptionComponent = Ember.Component.extend({
+    tagName: 'option',
+    classNames: [],
+    classNameBindings: [],
+    attributeBindings: ['value', 'isActive:selected', 'isDisabled:disabled'],
+    isDisabled: function() {
+        return (this.get('section.disabled') !== false);
+    }.property('section.disabled'),
+    isActive: function() {
+        if(this.get('currentSection') === this.get('section.name')) {
+            return true;
+        }
+        return false;
+    }.property('currentSection'),
+    value: function() {
+	return this.get('section.name');
+    }.property('section.name')
+});
