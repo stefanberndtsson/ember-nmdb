@@ -49,7 +49,8 @@ function nmdbSetup(rootElement, environment) {
 	    $('.spinner').addClass('spinner-on');
 	    $('.spinner-loader').removeClass('spinner-loader-off');
 	    $('.spinner-loader').addClass('spinner-loader-on');
-	}
+	
+	},
     });
 
     Nmdb.Route = Ember.Route.extend({

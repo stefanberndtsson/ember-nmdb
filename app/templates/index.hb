@@ -1,5 +1,5 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-index">
-  <div class="container">
+  <div class="container hidden">
     <form class="form-horizontal" role="form">
       <div class="form-group">
 	<div class="col-xs-7 col-sm-8 col-xs-offset-1">

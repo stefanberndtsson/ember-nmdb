@@ -10,6 +10,12 @@
 	  {{bootstrap-indicator type='lg'}}
 	</ul>
       </div>
+    <form class="navbar-form" role="search">
+      <div class="form-group col-xs-7">
+        {{input type="text" value=queryString action="search" classNames="form-control"}}
+      </div>
+      <button type="submit" {{action "search" queryString}} class="btn btn-default">Search</button>
+    </form>
     </div>
   </nav>
   <div class="spinner-loader spinner-loader-off">
