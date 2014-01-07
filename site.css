@@ -69,6 +69,12 @@ li.plot-summary {
     width: 100%;
 }
 
+form.navbar-xs-form {
+    padding-top: 0;
+    padding-bottom: 0;
+    border: 0;
+}
+
 .navbar-custom {
     background-color: #f8f8f8;
     color: #000;
