@@ -24,7 +24,7 @@
 	<div class="form-group col-xs-7">
           {{input type="text" value=queryString action="search" classNames="form-control"}}
 	</div>
-	<button type="submit" {{action "search" queryString}} class="col-xs-2 btn btn-default">Search</button>
+	<button type="submit" {{action "search" queryString}} class="col-xs-3 btn btn-default">Search</button>
       </form>
     </div>
   </nav>
