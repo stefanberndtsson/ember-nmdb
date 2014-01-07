@@ -1,15 +1,31 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-search">
   <div class="container">
-    <div class="col-sm-12">
-      <div class="btn-toolbar visible-xs visible-sm" id="results-buttons">
-	<div class="btn-group col-xs-12 col-sm-12">
-	</div>
-      </div>
-    </div>
+    {{search-select-buttons}}
   </div>
   <div class="container">
-    {{movies-results movies=model.movies}}
-    {{people-results people=model.people}}
+    <div class="col-md-6">
+      {{#if moviesSelected}}
+      {{movies-results movies=model.movies}}
+      {{/if}}
+    </div>
+    <div class="col-md-6">
+      {{#if peopleSelected}}
+      {{people-results people=model.people}}
+      {{/if}}
+    </div>
+  </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="Nmdb-components/search-select-buttons">
+  <div class="btn-toolbar visible-xs visible-sm" id="results-buttons">
+    <div class="btn-group col-xs-12 col-sm-12">
+      <button {{bind-attr class=":btn :btn-default :col-xs-6 :col-sm-6 moviesSelected:active"}} {{action selectMovies}}>
+	Movies
+      </button>
+      <button {{bind-attr class=":btn :btn-default :col-xs-6 :col-sm-6 peopleSelected:active"}} {{action selectPeople}}>
+	People
+      </button>
+    </div>
   </div>
 </script>
 
