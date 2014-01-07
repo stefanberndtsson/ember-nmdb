@@ -3,16 +3,12 @@
     {{search-select-buttons}}
   </div>
   <div class="container">
-    <div class="col-md-6">
       {{#if moviesSelected}}
       {{movies-results movies=model.movies}}
       {{/if}}
-    </div>
-    <div class="col-md-6">
       {{#if peopleSelected}}
       {{people-results people=model.people}}
       {{/if}}
-    </div>
   </div>
 </script>
 

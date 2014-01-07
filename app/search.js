@@ -35,12 +35,12 @@ Nmdb.SearchController = Ember.Controller.extend({
 
 Nmdb.MoviesResultsComponent = Ember.Component.extend({
     tagName: 'div',
-    classNames: ['col-xs-12'],
+    classNames: ['col-md-6'],
 });
 
 Nmdb.PeopleResultsComponent = Ember.Component.extend({
     tagName: 'div',
-    classNames: ['col-xs-12']
+    classNames: ['col-md-6']
 });
 
 Nmdb.SearchSelectButtonsComponent = Ember.View.extend({
