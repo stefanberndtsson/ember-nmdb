@@ -111,11 +111,16 @@ li.plot-summary {
     text-align: center;
     border: 1px solid black;
 
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    -ms-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+    -xxwebkit-transition: all 0.5s ease;
+    -xxmoz-transition: all 0.5s ease;
+    -xxo-transition: all 0.5s ease;
+    -xxms-transition: all 0.5s ease;
+    xxtransition: all 0.5s ease;
+    -webkit-transition: all 2s cubic-bezier(0.5,0,0.5,0);
+    -moz-transition: all 2s cubic-bezier(0.5,0,0.5,0);
+    -o-transition: all 2s cubic-bezier(0.5,0,0.5,0);
+    -ms-transition: all 2s cubic-bezier(0.5,0,0.5,0);
+    transition: all 2s cubic-bezier(0.5,0,0.5,0);
 }
 
 .spinner-inner {
