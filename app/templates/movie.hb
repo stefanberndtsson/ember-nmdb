@@ -4,9 +4,6 @@
       <div class="col-md-3 hidden-sm hidden-xs">
 	{{outlet menu}}
       </div>
-      <div class="col-xs-12 hidden-md hidden-lg visible-sm visible-xs">
-	{{outlet menu-dropdown}}
-      </div>
       <div class="col-md-9 col-xs-12">
 	{{#if model.movie.is_linked}}
 	<div class="row">
@@ -84,6 +81,9 @@
 	  </div>
 	</div>
 	{{/if}}
+	<div class="hidden-md hidden-lg visible-sm visible-xs menu-dropdown">
+	  {{outlet menu-dropdown}}
+	</div>
 	{{outlet}}
       </div>
     </div>

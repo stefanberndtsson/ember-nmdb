@@ -4,9 +4,6 @@
       <div class="col-md-3 hidden-sm hidden-xs">
 	{{outlet menu}}
       </div>
-      <div class="col-xs-12 hidden-md hidden-lg visible-sm visible-xs">
-	{{outlet menu-dropdown}}
-      </div>
       <div class="col-md-9 col-xs-12">
 	<div class="row">
 	  <div class="well well-sm">
@@ -24,6 +21,9 @@
 	    </dl>
 	    <div class="row"></div>
 	  </div>
+	</div>
+	<div class="hidden-md hidden-lg visible-sm visible-xs menu-dropdown">
+	  {{outlet menu-dropdown}}
 	</div>
 	{{outlet}}
       </div>

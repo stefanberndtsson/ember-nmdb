@@ -167,3 +167,8 @@ form.navbar-xs-form {
 .spinner-loader-on {
 /*    opacity: 0; */
 }
+
+.menu-dropdown {
+    margin-top: -15px !important;
+    margin-bottom: -15px !important;
+}
