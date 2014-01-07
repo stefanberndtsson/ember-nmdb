@@ -34,19 +34,25 @@
 	{{/if}}
 	<div class="row">
 	  <div class="well well-sm">
-            <h3>{{model.movie.full_title}}</h3>
+	    {{#if cover.visible}}
+	    <div class="pull-right visible-xs visible-sm">
+	      <img {{bind-attr src=cover.url}} id="cover-image-sm"/>
+	    </div>
+	    {{/if}}
+            <h3 class="col-xs-12">{{model.movie.full_title}}</h3>
 	    {{#if model.movie.rating}}
-            <div class="row container col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
               <h5>
 		<span class="bold">Rating:</span> {{model.movie.rating.rating}}/10 ({{pluralize model.movie.rating.votes 'vote'}})
 	      </h5>
             </div>
 	    {{/if}}
-            <div class="row container col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
               {{#each model.genres}}
               <span class="label label-default">{{genre}}</span>
               {{/each}}
             </div>
+	    <div class="row"></div>
 	  </div>
 	</div>
 	{{#if model.movie.is_episode}}

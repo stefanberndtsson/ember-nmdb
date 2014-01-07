@@ -19,7 +19,11 @@ Nmdb.MovieRoute = Nmdb.Route.extend({
 });
 
 Nmdb.MovieController = Ember.Controller.extend({
+    needs: ['movie-page'],
     model: {},
+    cover: function() {
+	return this.get('controllers.movie-page.cover');
+    }.property('controllers.movie-page.cover')
 });
 
 Nmdb.MoviePageRoute = Nmdb.Route.extend({
@@ -58,16 +62,6 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 		if(section.name == 'links') { return; }
 		Ember.set(sections[i], 'disabled', ($.inArray(section.name, model.movie.active_pages) == -1));
 	    });
-//	    if(model.page != 'links') {
-//		Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.movie.id+'/externals').then(function(data) {
-//		    if(data.imdb_id) {
-//			var linkSection = controller.get('sections').filter(function(item) {
-//			    return (item.name == 'links');
-//			});
-//			Ember.set(linkSection[0], 'disabled', false);
-//		    }
-//		});
-//	    }
 	    if(model.page != 'images' && $.inArray('images', model.movie.active_pages) == -1) {
 		Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.movie.id+'/images').then(function(data) {
 		    if(data.tmdb) {
@@ -193,11 +187,6 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	    }
 	});
     },
-    actions: {
-	menuTransition: function(section) {
-	    console.log("menuTransition", section);
-	}
-    }
 });
 
 Nmdb.MoviePageController = Ember.ArrayController.extend({
@@ -269,9 +258,6 @@ Nmdb.MoviePageController = Ember.ArrayController.extend({
 		Ember.set(first, 'active', true);
 	    }
 	},
-	menuTransition: function(section) {
-	    console.log("menuTransitionController", section);
-	}
     },
     hasImageBackdrop: function() {
 	var images = this.get('model.pageData.tmdb.backdrops');

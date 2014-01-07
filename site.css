@@ -53,6 +53,10 @@ li.plot-summary {
     width: 100%;
 }
 
+#cover-image-sm {
+    height: 15em;
+}
+
 .poster-image img {
     width: 100%;
 }

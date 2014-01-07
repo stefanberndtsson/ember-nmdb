@@ -10,12 +10,19 @@
       <div class="col-md-9 col-xs-12">
 	<div class="row">
 	  <div class="well well-sm">
+	    {{#if cover.visible}}
+	    <div class="pull-right visible-xs visible-sm">
+	      <img {{bind-attr src=cover.url}} id="cover-image-sm"/>
+	    </div>
+	    {{/if}}
 	    <h3>{{model.person.first_name}}&nbsp;{{model.person.last_name}}</h3>
 	    <dl>
 	      {{displayInfo 'DB' model.info}}
 	      {{displayInfo 'AG' model.info}}
 	      {{displayInfo 'DD' model.info}}
+	      {{displayInfo 'RN' model.info}}
 	    </dl>
+	    <div class="row"></div>
 	  </div>
 	</div>
 	{{outlet}}
