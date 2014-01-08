@@ -189,6 +189,14 @@ form.navbar-xs-form {
     margin-left: 15px;
 }
 
+.pad-left {
+    padding-left: 25px !important;
+}
+
+.no-margin-bottom {
+    margin-bottom: 0 !important;
+}
+
 .truncate-text {
     text-overflow: ellipsis;
     overflow: hidden;

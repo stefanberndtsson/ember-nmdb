@@ -67,6 +67,7 @@
 	<h4 class="panel-title">Movies</h4>
       </div>
       <div class="panel-body">
+	{{#if controllers.application.bsMdLg}}
         <table class="table table-condensed">
           <thead>
             <tr>
@@ -97,6 +98,33 @@
             {{/each}}
           </tbody>
         </table>
+	{{else}}
+	<div class="list-group">
+	  {{#each entry in pageData}}
+	  {{#link-to 'movie' id classNames="list-group-item list-group-link-item"}}
+	  <span class="pull-right glyphicon glyphicon-chevron-right list-group-link-arrow"/>
+	  <h4 class="list-group-item-heading truncate-text">
+	    {{displayTitle entry.movie}}
+            {{episodeCount entry}}
+	  </h4>
+	  <div class="list-group-item-text indent-left truncate-text">
+	    {{entry.character}} {{entry.extras}}
+	  </div>
+	  {{/link-to}}
+	  {{#if entry.episodes}}
+	  <div class="list-group no-margin-bottom">
+	  {{#each episode in entry.episodes}}
+	  {{#link-to 'movie' episode.id classNames="list-group-item list-group-link-item pad-left"}}
+	  <span class="pull-right glyphicon glyphicon-chevron-right list-group-link-arrow"/>
+	  <div class="list-group-item-heading truncate-text"> - {{displayEpisode episode}}</div>
+	  <span class="list-group-item-text indent-left truncate-text">{{episode.character}} {{episode.extras}}</span>
+	  {{/link-to}}
+	  {{/each}}
+	  </div>
+	  {{/if}}
+	  {{/each}}
+	</div>
+	{{/if}}
       </div>
     </div>
   </div>
@@ -195,6 +223,7 @@
 	<h4 class="panel-title">Top Movies</h4>
       </div>
       <div class="panel-body">
+	{{#if controllers.application.bsMdLg}}
         <table class="table table-condensed">
           <thead>
             <tr>
@@ -215,6 +244,22 @@
             {{/each}}
           </tbody>
         </table>
+	{{else}}
+	<div class="list-group">
+	  {{#each entry in pageData}}
+	  {{#link-to 'movie' id classNames="list-group-item list-group-link-item"}}
+	  <span class="pull-right glyphicon glyphicon-chevron-right list-group-link-arrow"/>
+	  <h4 class="list-group-item-heading truncate-text">
+	    {{displayTitle entry.movie}}
+            {{episodeCount entry}}
+	  </h4>
+	  <div class="list-group-item-text indent-left truncate-text">
+	    {{entry.character}} {{entry.extras}}
+	  </div>
+	  {{/link-to}}
+	  {{/each}}
+	</div>
+	{{/if}}
       </div>
     </div>
   </div>

@@ -211,6 +211,7 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 });
 
 Nmdb.PersonPageController = Ember.Controller.extend({
+    needs: ['application'],
     model: {},
     cover: {
 	url: null,
