@@ -233,7 +233,6 @@ Nmdb.MoviePageController = Ember.Controller.extend({
          display: 'Links',
          disabled: false}
     ],
-    bsLevelSM: Ember.computed.alias('controllers.application.bsLevelSM'),
     appRoot: function() {
 	return scriptHost;
     }.property(),
