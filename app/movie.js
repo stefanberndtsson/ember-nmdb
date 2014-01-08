@@ -15,6 +15,7 @@ Nmdb.MovieRoute = Nmdb.Route.extend({
     setupController: function(controller, model, queryParams) {
 	this.controllerFor('application').spinnerOff();
 	controller.set('model', model);
+	this.controllerFor('application').set('pageTitle', model.movie.full_title);
     }
 });
 

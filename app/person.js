@@ -15,6 +15,8 @@ Nmdb.PersonRoute = Nmdb.Route.extend({
     setupController: function(controller, model, queryParams) {
 	this.controllerFor('application').spinnerOff();
 	controller.set('model', model);
+	this.controllerFor('application').set('pageTitle', 
+					      [model.person.first_name, model.person.last_name].compact().join(" "));
     }
 });
 

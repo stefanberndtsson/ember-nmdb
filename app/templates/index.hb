@@ -1,5 +1,7 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-index">
-  <div class="container hidden">
+  {{#if isIndex}}
+  {{#if controllers.application.bsXsSm}}
+  <div class="container">
     <form class="form-horizontal" role="form">
       <div class="form-group">
 	<div class="col-xs-7 col-sm-8 col-xs-offset-1">
@@ -9,5 +11,7 @@
       </div>
     </form>
   </div>
+  {{/if}}
+  {{/if}}
   {{outlet}}
 </script>

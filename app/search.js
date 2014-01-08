@@ -11,6 +11,7 @@ Nmdb.SearchRoute = Nmdb.Route.extend({
 	this.controllerFor('application').spinnerOff();
 	this.controllerFor('application').set('queryString', model.query);
 	controller.set('model', model);
+	this.controllerFor('application').set('pageTitle', "Search: "+model.query);
     }
 });
 

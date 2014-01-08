@@ -61,6 +61,17 @@ function nmdbSetup(rootElement, environment) {
 	    $('.spinner-loader').removeClass('spinner-loader-off');
 	    $('.spinner-loader').addClass('spinner-loader-on');
 	},
+	setPageTitle: function() {
+	    document.title = this.get('pageTitle');
+	}.observes('pageTitle'),
+	actions: {
+	    goSearch: function() {
+		this.transitionToRoute('index');
+	    },
+	    goTop: function() {
+		window.scrollTo(0,0);
+	    }
+	}
     });
 
     Nmdb.ApplicationView = Ember.View.extend({

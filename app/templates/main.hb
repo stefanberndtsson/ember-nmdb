@@ -1,4 +1,5 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-application">
+  {{#if bsMdLg}}
   <nav class="navbar navbar-default">
     <div class="container hidden-xs">
       <div class="navbar-header">
@@ -28,6 +29,14 @@
       </form>
     </div>
   </nav>
+  {{else}}
+  <nav class="navbar navbar-compact navbar-default navbar-fixed-top col-xs-12">
+    <button class="navbar-text btn btn-xs btn-default" {{action goSearch}}>Search</button>
+    <h5 class="navbar-text fixed-center">{{pageTitle}}</h5>
+    <button class="navbar-text navbar-right btn btn-xs btn-default" {{action goTop}}>Top</button>
+  </nav>
+  <div class="navbar-compact-fixed-offset"></div>
+  {{/if}}
   <div class="spinner-loader spinner-loader-off">
   {{outlet}}
   </div>
