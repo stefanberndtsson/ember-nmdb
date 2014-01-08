@@ -38,6 +38,11 @@ function nmdbSetup(rootElement, environment) {
 
     Nmdb.ApplicationController = Ember.Controller.extend({
 	appName: "Nmdb",
+	bsLevel: null,
+	bsLevelXS: null,
+	bsLevelSM: null,
+	bsLevelMD: null,
+	bsLevelLG: null,
 	spinnerOff: function() {
 	    $('.spinner').removeClass('spinner-on');
 	    $('.spinner').addClass('spinner-off');
@@ -49,8 +54,38 @@ function nmdbSetup(rootElement, environment) {
 	    $('.spinner').addClass('spinner-on');
 	    $('.spinner-loader').removeClass('spinner-loader-off');
 	    $('.spinner-loader').addClass('spinner-loader-on');
-	
 	},
+    });
+
+    Nmdb.ApplicationView = Ember.View.extend({
+       didInsertElement: function() {
+           var controller = this.get('controller');
+           var prevLevel = controller.get('bsLevel');
+           var that = this;
+           $(window).on('resize', function() {
+               that.setBsLevel(controller);
+           });
+           if(!prevLevel) { that.setBsLevel(controller); }
+       },
+       setBsLevel: function(controller) {
+           var levelXS = $('#bs-indicator-xs').is(':visible');
+           var levelSM = $('#bs-indicator-sm').is(':visible');
+           var levelMD = $('#bs-indicator-md').is(':visible');
+           var levelLG = $('#bs-indicator-lg').is(':visible');
+           if(levelXS) {
+               controller.set('bsLevel', 'xs')
+           } else if(levelSM) {
+               controller.set('bsLevel', 'sm')
+           } else if(levelMD) {
+               controller.set('bsLevel', 'md')
+           } else if(levelLG) {
+               controller.set('bsLevel', 'lg')
+           }
+           controller.set('bsLevelXS', levelXS);
+           controller.set('bsLevelSM', levelSM);
+           controller.set('bsLevelMD', levelMD);
+           controller.set('bsLevelLG', levelLG);
+       }
     });
 
     Nmdb.Route = Ember.Route.extend({

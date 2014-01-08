@@ -37,4 +37,8 @@
       Loading...
     </div>
   </div>
+  <span id="bs-indicator-xs" class="visible-xs">&nbsp;</span>
+  <span id="bs-indicator-sm" class="visible-sm">&nbsp;</span>
+  <span id="bs-indicator-md" class="visible-md">&nbsp;</span>
+  <span id="bs-indicator-lg" class="visible-lg">&nbsp;</span>
 </script>
