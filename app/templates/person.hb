@@ -101,7 +101,7 @@
 	{{else}}
 	<div class="list-group">
 	  {{#each entry in pageData}}
-	  {{#link-to 'movie' id classNames="list-group-item list-group-link-item"}}
+	  {{#link-to 'movie' entry.id classNames="list-group-item list-group-link-item"}}
 	  <span class="pull-right glyphicon glyphicon-chevron-right list-group-link-arrow"/>
 	  <h4 class="list-group-item-heading truncate-text">
 	    {{displayTitle entry.movie}}
@@ -247,7 +247,7 @@
 	{{else}}
 	<div class="list-group">
 	  {{#each entry in pageData}}
-	  {{#link-to 'movie' id classNames="list-group-item list-group-link-item"}}
+	  {{#link-to 'movie' entry.id classNames="list-group-item list-group-link-item"}}
 	  <span class="pull-right glyphicon glyphicon-chevron-right list-group-link-arrow"/>
 	  <h4 class="list-group-item-heading truncate-text">
 	    {{displayTitle entry.movie}}
