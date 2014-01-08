@@ -86,6 +86,34 @@ Ember.Handlebars.registerHelper('ifIndexMod', function(v1, options) {
     return options.inverse(this);
 });
 
+Ember.Handlebars.registerHelper("ifBS", function(bs1, bs2, bs3, bs4, options) {
+    if(!options) { options = bs4; bs4 = null; }
+    if(!options) { options = bs3; bs3 = null; }
+    if(!options) { options = bs2; bs2 = null; }
+    var context = (options.contexts && options.contexts[0]) || this;
+    var property = null;
+
+    var func = function(result) {
+	if (typeof result === 'boolean') {
+	    return result;
+	}
+	
+	return result != undefined && result != null;
+    };
+    
+    return Nmdb.OwnHandlebarHelpers._bind.call(context, property, options, true, func, func);
+});
+
+Ember.Handlebars.registerBoundHelper('BSmatch', function(bs1, bs2, bs3, bs4, options) {
+    if(!options) { options = bs4; bs4 = null; }
+    if(!options) { options = bs3; bs3 = null; }
+    if(!options) { options = bs2; bs2 = null; }
+    var appController = this.get('controllers.application');
+    console.log(bs1, bs2, bs3, bs4, appController.get('bsLevel'));
+    console.log($.inArray("xs", [bs1, bs2, bs3, bs4].compact()));
+    return true;
+});
+
 Ember.Handlebars.registerHelper('episode-hidden-class', function(options) {
     var parentId = options.data.view._parentView._parentView.content.id;
     return 'episode-hidden episode-hidden-'+parentId;

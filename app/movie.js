@@ -189,7 +189,8 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
     },
 });
 
-Nmdb.MoviePageController = Ember.ArrayController.extend({
+Nmdb.MoviePageController = Ember.Controller.extend({
+    needs: ['application'],
     itemController: 'MoviePageData',
     model: {},
     cover: {
@@ -232,6 +233,7 @@ Nmdb.MoviePageController = Ember.ArrayController.extend({
          display: 'Links',
          disabled: false}
     ],
+    bsLevelSM: Ember.computed.alias('controllers.application.bsLevelSM'),
     appRoot: function() {
 	return scriptHost;
     }.property(),

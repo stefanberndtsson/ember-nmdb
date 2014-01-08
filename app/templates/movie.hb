@@ -101,6 +101,7 @@
         <h4 class="panel-title">Cast</h4>
       </div>
       <div class="panel-body">
+	{{#if controllers.application.bsMdLg}}
         <table class="table table-condensed">
           <thead>
             <tr>
@@ -122,6 +123,20 @@
             {{/each}}
           </tbody>
         </table>
+	{{else}}
+	<div class="list-group">
+	  {{#each model.pageData}}
+	  {{#link-to 'person' id classNames="list-group-item list-group-link-item"}}
+	  <span class="pull-right glyphicon glyphicon-chevron-right list-group-link-arrow"/>
+	  <h4 class="list-group-item-heading truncate-text">{{name}}</h4>
+	  <div class="list-group-item-text indent-left truncate-text">
+	    {{character}} {{extras}}
+            {{#if episode_count}}({{episode_count}} episodes){{/if}}
+	  </div>
+	  {{/link-to}}
+	  {{/each}}
+	</div>
+	{{/if}}
       </div>
     </div>
   </div>

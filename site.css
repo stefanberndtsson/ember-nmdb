@@ -172,3 +172,26 @@ form.navbar-xs-form {
     margin-top: -15px !important;
     margin-bottom: -15px !important;
 }
+
+.list-group-link-arrow {
+    position: absolute;
+    height: 1em;
+    margin-top: -0.5em;
+    top: 50% !important;
+}
+
+.list-group-link-item {
+    position: relative;
+    height: 5em;
+}
+
+.indent-left {
+    margin-left: 15px;
+}
+
+.truncate-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 85%;
+}

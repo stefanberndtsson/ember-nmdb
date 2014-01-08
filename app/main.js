@@ -39,10 +39,16 @@ function nmdbSetup(rootElement, environment) {
     Nmdb.ApplicationController = Ember.Controller.extend({
 	appName: "Nmdb",
 	bsLevel: null,
-	bsLevelXS: null,
-	bsLevelSM: null,
-	bsLevelMD: null,
-	bsLevelLG: null,
+	bsXs: function() { return $.inArray(this.get('bsLevel'), ["xs"]) != -1 }.property('bsLevel'),
+	bsXsSm: function() { return $.inArray(this.get('bsLevel'), ["xs", "sm"]) != -1 }.property('bsLevel'),
+	bsXsSmMd: function() { return $.inArray(this.get('bsLevel'), ["xs", "sm", "md"]) != -1 }.property('bsLevel'),
+	bsXsSmMdLg: function() { return $.inArray(this.get('bsLevel'), ["xs", "sm", "md", "lg"]) != -1 }.property('bsLevel'),
+	bsSm: function() { return $.inArray(this.get('bsLevel'), ["sm"]) != -1 }.property('bsLevel'),
+	bsSmMd: function() { return $.inArray(this.get('bsLevel'), ["sm", "md"]) != -1 }.property('bsLevel'),
+	bsSmMdLg: function() { return $.inArray(this.get('bsLevel'), ["sm", "md", "lg"]) != -1 }.property('bsLevel'),
+	bsMd: function() { return $.inArray(this.get('bsLevel'), ["md"]) != -1 }.property('bsLevel'),
+	bsMdLg: function() { return $.inArray(this.get('bsLevel'), ["md", "lg"]) != -1 }.property('bsLevel'),
+	bsLg: function() { return $.inArray(this.get('bsLevel'), ["lg"]) != -1 }.property('bsLevel'),
 	spinnerOff: function() {
 	    $('.spinner').removeClass('spinner-on');
 	    $('.spinner').addClass('spinner-off');
