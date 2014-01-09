@@ -133,30 +133,27 @@
 		<img {{bind-attr src=cover.url}} id="cover-image-sm"/>
 	      </div>
 	      {{/if}}
+	      <dl class="no-margin">
 	      {{#if model.movie.rating}}
-              <div class="margin-bottom">
-		<h4 class="panel-title">Rating</h4>
-		<span>{{model.movie.rating.rating}}/10 ({{pluralize model.movie.rating.votes 'vote'}})</span>
-              </div>
+	      <dt>Rating</dt>
+	      <dd>{{model.movie.rating.rating}}/10 ({{pluralize model.movie.rating.votes 'vote'}})</dd>
 	      {{/if}}
 	      {{#if model.movie.first_release_date}}
-              <div class="margin-bottom">
-		<h4 class="panel-title">Release date</h4>
-		<span>
-		  {{model.movie.first_release_date.release_date}}
-		  {{#if model.movie.first_release_date.country}}
-		  ({{model.movie.first_release_date.country}})
-		  {{/if}}
-		</span>
-              </div>
+	      <dt>Release date</dt>
+	      <dd>
+		{{model.movie.first_release_date.release_date}}
+		{{#if model.movie.first_release_date.country}}
+		({{model.movie.first_release_date.country}})
+		{{/if}}
+	      </dd>
 	      {{/if}}
 	      {{#if model.genres}}
-	      <h4 class="panel-title">Genre</h4>
-              <div class="margin-bottom">
+	      <dt>Genre</dt>
+              <dd>
 		{{#each model.genres}}
 		<span class="label label-default">{{genre}}</span>
 		{{/each}}
-              </div>
+              </dd>
 	      {{/if}}
 	    </div>
 	    <div class="row"></div>

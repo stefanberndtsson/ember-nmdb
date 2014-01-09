@@ -21,7 +21,7 @@ Nmdb.PersonRoute = Nmdb.Route.extend({
 });
 
 Nmdb.PersonController = Ember.Controller.extend({
-    needs: ['person-page'],
+    needs: ['application', 'person-page'],
     model: {},
     cover: function() {
 	return this.get('controllers.person-page.cover');
