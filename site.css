@@ -225,7 +225,7 @@ form.navbar-xs-form {
 }
 
 .navbar-compact .fixed-center {
-    position: fixed;
+    position: absolute;
     width: 60%;
     left: 20%;
     top: 5px;
