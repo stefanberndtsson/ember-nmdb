@@ -1,11 +1,13 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-movie-page-quotes">
   <div class="row">
     <div class="panel panel-default">
+      {{#ifBS md lg}}
       <div class="panel-heading">
         <h4 class="panel-title">Quotes</h4>
       </div>
-      <div class="panel-body">
-	<ul class="list-group">
+      {{/ifBS}}
+      <div {{bind-attr class=":panel-body isMobile:no-padding"}}>
+	<ul class="list-group no-margin">
 	  {{#each model.pageData}}
           <li class="list-group-item">
 	    {{#each quote}}

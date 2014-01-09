@@ -1,14 +1,16 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-movie-page-goofs">
   <div class="row">
     <div class="panel panel-default">
+      {{#ifBS lg md}}
       <div class="panel-heading">
         <h4 class="panel-title">Goofs</h4>
       </div>
-      <div class="panel-body">
+      {{/ifBS}}
+      <div {{bind-attr class=":panel-body isMobile:no-padding"}}>
 	{{#if hasSpoilers}}
 	<div class="panel-heading"><button class="btn btn-default" {{action toggleSpoilers}}>Toggle spoilers</button></div>
 	{{/if}}
-	<ul class="list-group">
+	<ul class="list-group no-margin">
 	  {{#each model.pageData}}
 	  <h4 class="panel-heading">{{category_display}}</h4>
 	  {{#each goofs}}

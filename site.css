@@ -192,6 +192,14 @@ form.navbar-xs-form {
     height: 5em;
 }
 
+.list-group-link-item-single {
+    padding-top: 17px !important;
+}
+
+.list-group-link-item-single .list-group-link-arrow{
+    margin-top: -10px;
+}
+
 .indent-left {
     margin-left: 15px;
 }
