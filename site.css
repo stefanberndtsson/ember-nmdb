@@ -110,7 +110,7 @@ form.navbar-xs-form {
 
 .spinner {
     box-sizing: content-box;
-    position: absolute;
+    position: fixed;
     left: 50%;
     top: 25%;
     width: 10em;
