@@ -55,6 +55,10 @@ function nmdbSetup(rootElement, environment) {
 	setPageTitle: function() {
 	    document.title = this.get('documentTitle') || this.get('pageTitle');
 	}.observes('pageTitle', 'documentTitle'),
+	isMobile: function() {
+	    var bsLevel = this.get('bsLevel');
+	    return (bsLevel === "xs" || bsLevel === "sm");
+	}.property('bsLevel'),
 	actions: {
 	    goSearch: function() {
 		this.set('queryString', '');

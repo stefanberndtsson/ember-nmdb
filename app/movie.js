@@ -270,7 +270,8 @@ Nmdb.MoviePageController = Ember.Controller.extend({
 	var images = this.get('model.pageData.tmdb.backdrops');
 	console.log(images && images.length > 0);
 	return images && images.backdrops && images.backdrops.length > 0;
-    }.property('model.pageData')
+    }.property('model.pageData'),
+    isMobileBinding: 'controllers.application.isMobile'
 });
 
 Nmdb.MoviePageDataView = Ember.View.extend({
