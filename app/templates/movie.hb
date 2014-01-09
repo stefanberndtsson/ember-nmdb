@@ -100,8 +100,8 @@
       <div class="panel-heading">
         <h4 class="panel-title">Cast</h4>
       </div>
+      {{#if controllers.application.bsMdLg}}
       <div class="panel-body">
-	{{#if controllers.application.bsMdLg}}
         <table class="table table-condensed">
           <thead>
             <tr>
@@ -123,8 +123,10 @@
             {{/each}}
           </tbody>
         </table>
-	{{else}}
-	<div class="list-group">
+      </div>
+      {{else}}
+      <div class="panel-body no-padding">
+	<div class="list-group no-margin">
 	  {{#each model.pageData}}
 	  {{#link-to 'person' id classNames="list-group-item list-group-link-item"}}
 	  <span class="pull-right glyphicon glyphicon-chevron-right list-group-link-arrow"/>
@@ -136,8 +138,8 @@
 	  {{/link-to}}
 	  {{/each}}
 	</div>
-	{{/if}}
       </div>
+      {{/if}}
     </div>
   </div>
 </script>

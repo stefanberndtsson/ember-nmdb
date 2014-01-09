@@ -204,6 +204,14 @@ form.navbar-xs-form {
     margin-bottom: 0 !important;
 }
 
+.no-padding {
+    padding: 0 !important;
+}
+
+.no-margin {
+    margin: 0 !important;
+}
+
 .truncate-text {
     text-overflow: ellipsis;
     overflow: hidden;
