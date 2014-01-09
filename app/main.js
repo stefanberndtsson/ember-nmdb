@@ -37,6 +37,7 @@ function nmdbSetup(rootElement, environment) {
     });
 
     Nmdb.ApplicationController = Ember.Controller.extend({
+	needs: ['application'],
 	appName: "Nmdb",
 	bsLevel: null,
 	bsXs: function() { return $.inArray(this.get('bsLevel'), ["xs"]) != -1 }.property('bsLevel'),

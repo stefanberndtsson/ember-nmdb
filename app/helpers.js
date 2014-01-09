@@ -131,3 +131,37 @@ Ember.Handlebars.registerBoundHelper('displayInfo', function(code, infos, option
     var string ='<dt>'+info.display+'</dt><dd>'+info.value+'</dd>';
     return new Ember.Handlebars.SafeString(string);
 });
+
+Ember.Handlebars.registerHelper('ifBS', function(bs1, bs2, bs3, bs4, options) {
+    // bs2, bs3 and bs4 are optional. Set options to be the last non-null/undefined one.
+    if(!options) { options = bs4; bs4 = null; }
+    if(!options) { options = bs3; bs3 = null; }
+    if(!options) { options = bs2; bs2 = null; }
+
+    // Get context. We'll put our function in this.
+    var context = (options.contexts && options.contexts[0]) || this;
+
+    // Reopen context (otherwise we'll lose the context inside the if area) and
+    // create a function to check if condition is fulfilled.
+    // Also add controllers and provided parameters for the function to be available
+    var bsActive = context.reopen({
+	bsActive: function() {
+	    var bsLevel = this.get('controllers.application.bsLevel');
+	    if(bsLevel === this.get('bs1') ||
+	       bsLevel === this.get('bs2') ||
+	       bsLevel === this.get('bs3') ||
+	       bsLevel === this.get('bs4')) {
+		return true;
+	    }
+	    return false;
+	}.property('controllers.application.bsLevel'),
+	controllers: this.get('controllers'),
+	bs1: bs1,
+	bs2: bs2,
+	bs3: bs3,
+	bs4: bs4
+    });
+    
+    // Pass it on to boundIf to keep bindings working
+    return Ember.Handlebars.helpers.boundIf.call(bsActive, "bsActive", options);
+});

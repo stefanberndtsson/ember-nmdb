@@ -1,6 +1,6 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-index">
   {{#if isIndex}}
-  {{#if controllers.application.bsXsSm}}
+  {{#ifBS xs sm}}
   <div class="container">
     <form class="form-horizontal" role="form">
       <div class="form-group">
@@ -11,7 +11,7 @@
       </div>
     </form>
   </div>
-  {{/if}}
+  {{/ifBS}}
   {{/if}}
   {{outlet}}
 </script>

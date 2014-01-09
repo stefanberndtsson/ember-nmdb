@@ -100,7 +100,7 @@
       <div class="panel-heading">
         <h4 class="panel-title">Cast</h4>
       </div>
-      {{#if controllers.application.bsMdLg}}
+      {{#ifBS md lg}}
       <div class="panel-body">
         <table class="table table-condensed">
           <thead>
@@ -139,7 +139,7 @@
 	  {{/each}}
 	</div>
       </div>
-      {{/if}}
+      {{/ifBS}}
     </div>
   </div>
 </script>
