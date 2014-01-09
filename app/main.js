@@ -139,7 +139,27 @@ function nmdbSetup(rootElement, environment) {
 	loadTemplateSync(scriptHost+'/templates/index.hb');
 	loadTemplateSync(scriptHost+'/templates/search.hb');
 	loadTemplateSync(scriptHost+'/templates/movie.hb');
+	loadTemplateSync(scriptHost+'/templates/movie-page-additionals.hb');
+	loadTemplateSync(scriptHost+'/templates/movie-page-cast.hb');
+	loadTemplateSync(scriptHost+'/templates/movie-page-connections.hb');
+	loadTemplateSync(scriptHost+'/templates/movie-page-episodes.hb');
+	loadTemplateSync(scriptHost+'/templates/movie-page-goofs.hb');
+	loadTemplateSync(scriptHost+'/templates/movie-page-images.hb');
+	loadTemplateSync(scriptHost+'/templates/movie-page-keywords.hb');
+	loadTemplateSync(scriptHost+'/templates/movie-page-links.hb');
+	loadTemplateSync(scriptHost+'/templates/movie-page-plots.hb');
+	loadTemplateSync(scriptHost+'/templates/movie-page-quotes.hb');
+	loadTemplateSync(scriptHost+'/templates/movie-page-trivia.hb');
 	loadTemplateSync(scriptHost+'/templates/person.hb');
+	loadTemplateSync(scriptHost+'/templates/person-page-as_role.hb');
+	loadTemplateSync(scriptHost+'/templates/person-page-biography.hb');
+	loadTemplateSync(scriptHost+'/templates/person-page-images.hb');
+	loadTemplateSync(scriptHost+'/templates/person-page-links.hb');
+	loadTemplateSync(scriptHost+'/templates/person-page-other_works.hb');
+	loadTemplateSync(scriptHost+'/templates/person-page-publicity.hb');
+	loadTemplateSync(scriptHost+'/templates/person-page-quotes.hb');
+	loadTemplateSync(scriptHost+'/templates/person-page-top_movies.hb');
+	loadTemplateSync(scriptHost+'/templates/person-page-trivia.hb');
     }
 }
 
