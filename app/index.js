@@ -15,7 +15,4 @@ Nmdb.IndexController = Ember.Controller.extend({
 	}
 	return (currentPath === "index.index" || currentPath === "index.search");
     }.property('controllers.application.currentPath'),
-    queryString: function() {
-	return this.get('controllers.application.queryString');
-    }.property('controllers.application.queryString')
 });

@@ -40,16 +40,6 @@ function nmdbSetup(rootElement, environment) {
 	needs: ['application'],
 	appName: "Nmdb",
 	bsLevel: null,
-	bsXs: function() { return $.inArray(this.get('bsLevel'), ["xs"]) != -1 }.property('bsLevel'),
-	bsXsSm: function() { return $.inArray(this.get('bsLevel'), ["xs", "sm"]) != -1 }.property('bsLevel'),
-	bsXsSmMd: function() { return $.inArray(this.get('bsLevel'), ["xs", "sm", "md"]) != -1 }.property('bsLevel'),
-	bsXsSmMdLg: function() { return $.inArray(this.get('bsLevel'), ["xs", "sm", "md", "lg"]) != -1 }.property('bsLevel'),
-	bsSm: function() { return $.inArray(this.get('bsLevel'), ["sm"]) != -1 }.property('bsLevel'),
-	bsSmMd: function() { return $.inArray(this.get('bsLevel'), ["sm", "md"]) != -1 }.property('bsLevel'),
-	bsSmMdLg: function() { return $.inArray(this.get('bsLevel'), ["sm", "md", "lg"]) != -1 }.property('bsLevel'),
-	bsMd: function() { return $.inArray(this.get('bsLevel'), ["md"]) != -1 }.property('bsLevel'),
-	bsMdLg: function() { return $.inArray(this.get('bsLevel'), ["md", "lg"]) != -1 }.property('bsLevel'),
-	bsLg: function() { return $.inArray(this.get('bsLevel'), ["lg"]) != -1 }.property('bsLevel'),
 	spinnerOff: function() {
 	    $('.spinner').removeClass('spinner-on');
 	    $('.spinner').addClass('spinner-off');
@@ -67,6 +57,7 @@ function nmdbSetup(rootElement, environment) {
 	}.observes('pageTitle'),
 	actions: {
 	    goSearch: function() {
+		this.set('queryString', '');
 		this.transitionToRoute('index');
 	    },
 	    goTop: function() {
@@ -86,23 +77,15 @@ function nmdbSetup(rootElement, environment) {
            if(!prevLevel) { that.setBsLevel(controller); }
        },
        setBsLevel: function(controller) {
-           var levelXS = $('#bs-indicator-xs').is(':visible');
-           var levelSM = $('#bs-indicator-sm').is(':visible');
-           var levelMD = $('#bs-indicator-md').is(':visible');
-           var levelLG = $('#bs-indicator-lg').is(':visible');
-           if(levelXS) {
+           if($('#bs-indicator-xs').is(':visible')) {
                controller.set('bsLevel', 'xs')
-           } else if(levelSM) {
+           } else if($('#bs-indicator-sm').is(':visible')) {
                controller.set('bsLevel', 'sm')
-           } else if(levelMD) {
+           } else if($('#bs-indicator-md').is(':visible')) {
                controller.set('bsLevel', 'md')
-           } else if(levelLG) {
+           } else if($('#bs-indicator-lg').is(':visible')) {
                controller.set('bsLevel', 'lg')
            }
-           controller.set('bsLevelXS', levelXS);
-           controller.set('bsLevelSM', levelSM);
-           controller.set('bsLevelMD', levelMD);
-           controller.set('bsLevelLG', levelLG);
        }
     });
 
