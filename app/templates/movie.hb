@@ -439,6 +439,7 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-movie-page-episodes">
   <div class="row">
     <div class="panel panel-default">
+      {{#ifBS md lg}}
       <div class="panel-heading">
         <h4 class="panel-title">Episodes</h4>
       </div>
@@ -481,6 +482,27 @@
 	  {{/each}}
 	</div>
       </div>
+      {{else}}
+      <div class="panel-body no-padding">
+        {{#each model.pageData.seasons}}
+	<h4 class="panel-heading">Season {{season}}</h4>
+	<div class="list-group no-margin">
+          {{#each episodes}}
+	  {{#link-to 'movie' episode.id classNames="list-group-item list-group-link-item"}}
+	  <span class="pull-right glyphicon glyphicon-chevron-right list-group-link-arrow"/>
+	  <h4 class="list-group-item-heading truncate-text">
+	    {{episode.episode_episode}}.
+	    {{episode_name}}
+	  </h4>
+	  {{#if release_date.release_date}}
+	  <div class="list-group-item-text indent-left truncate-text">{{release_date.release_date}}</div>
+	  {{/if}}
+	  {{/link-to}}
+          {{/each}}
+	</div>
+	{{/each}}
+      </div>
+      {{/ifBS}}
     </div>
   </div>
 </script>
