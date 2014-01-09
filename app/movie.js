@@ -15,12 +15,17 @@ Nmdb.MovieRoute = Nmdb.Route.extend({
     setupController: function(controller, model, queryParams) {
 	this.controllerFor('application').spinnerOff();
 	controller.set('model', model);
-	this.controllerFor('application').set('pageTitle', model.movie.full_title);
+	if(model.movie.is_episode) {
+	    this.controllerFor('application').set('documentTitle', model.movie.full_title);
+	    this.controllerFor('application').set('pageTitle', model.movie.episode_parent_title);
+	} else {
+	    this.controllerFor('application').set('pageTitle', model.movie.full_title);
+	}
     }
 });
 
 Nmdb.MovieController = Ember.Controller.extend({
-    needs: ['movie-page'],
+    needs: ['application', 'movie-page'],
     model: {},
     cover: function() {
 	return this.get('controllers.movie-page.cover');

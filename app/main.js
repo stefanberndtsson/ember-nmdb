@@ -53,8 +53,8 @@ function nmdbSetup(rootElement, environment) {
 	    $('.spinner-loader').addClass('spinner-loader-on');
 	},
 	setPageTitle: function() {
-	    document.title = this.get('pageTitle');
-	}.observes('pageTitle'),
+	    document.title = this.get('documentTitle') || this.get('pageTitle');
+	}.observes('pageTitle', 'documentTitle'),
 	actions: {
 	    goSearch: function() {
 		this.set('queryString', '');
@@ -92,9 +92,11 @@ function nmdbSetup(rootElement, environment) {
     Nmdb.Route = Ember.Route.extend({
 	transitionTo: function() {
 	    window.scrollTo(0,0);
+	    this.controllerFor('application').set('documentTitle', null);
 	    return this._super.apply(this, arguments);
 	},
 	redirect: function() {
+	    this.controllerFor('application').set('documentTitle', null);
 	    this.controllerFor('application').spinnerOn();
 	    return this._super.apply(this, arguments);
 	},
@@ -102,10 +104,12 @@ function nmdbSetup(rootElement, environment) {
 	    return this._super.apply(this, arguments);
 	},
 	setupController: function() {
+	    this.controllerFor('application').set('documentTitle', null);
 	    this.controllerFor('application').spinnerOff();
 	    return this._super.apply(this, arguments);
 	},
 	beforeModel: function() {
+	    this.controllerFor('application').set('documentTitle', null);
 	    this.controllerFor('application').spinnerOn();
 	    return this._super.apply(this, arguments);
 	}

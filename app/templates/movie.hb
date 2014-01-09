@@ -5,6 +5,7 @@
 	{{outlet menu}}
       </div>
       <div class="col-md-9 col-xs-12">
+	{{#ifBS md lg}}
 	{{#if model.movie.is_linked}}
 	<div class="row">
 	  <div class="navbar navbar-custom">
@@ -29,6 +30,59 @@
 	  </div>
 	</div>
 	{{/if}}
+	{{else}}
+	{{#if model.movie.is_linked}}
+	{{#unless model.movie.is_episode}}
+	<div class="row">
+	  <div class="navbar navbar-compact">
+	    <ul class="nav navbar-compact-nav col-xs-12">
+	      <li class="col-xs-6">
+		{{#if model.movie.prev_followed}}
+		{{#link-to 'movie' model.movie.prev_followed.id class="btn wrap pull-left"}}
+		<span class="glyphicon glyphicon-chevron-left"/>
+		{{model.movie.prev_followed.title}}
+		{{/link-to}}
+		{{/if}}
+	      </li>
+	      <li class="col-xs-6" style="padding-right: 0px;">
+		{{#if model.movie.next_followed}}
+		{{#link-to 'movie' model.movie.next_followed.id class="btn wrap pull-right"}}
+		{{model.movie.next_followed.title}}
+		<span class="glyphicon glyphicon-chevron-right"/>
+		{{/link-to}}
+		{{/if}}
+	      </li>
+	    </ul>
+	  </div>
+	</div>
+	{{/unless}}
+	{{/if}}
+	{{#if model.movie.is_episode}}
+	<div class="row">
+	  <div class="navbar navbar-compact">
+	    <ul class="nav navbar-compact-nav col-xs-12">
+	      <li class="col-xs-6">
+		{{#if model.movie.prev_episode}}
+		{{#link-to 'movie' model.movie.prev_episode.id class="btn wrap pull-left"}}
+		<span class="glyphicon glyphicon-chevron-left"/>
+		{{displayEpisodeShort model.movie.prev_episode}}
+		{{/link-to}}
+		{{/if}}
+	      </li>
+	      <li class="col-xs-6" style="padding-right: 0px;">
+		{{#if model.movie.next_episode}}
+		{{#link-to 'movie' model.movie.next_episode.id class="btn wrap pull-right"}}
+		{{displayEpisodeShort model.movie.next_episode}}
+		<span class="glyphicon glyphicon-chevron-right"/>
+		{{/link-to}}
+		{{/if}}
+	      </li>
+	    </ul>
+	  </div>
+	</div>
+	{{/if}}
+	{{/ifBS}}
+	{{#ifBS md lg}}
 	<div class="row">
 	  <div class="well well-sm">
 	    {{#if cover.visible}}
@@ -44,6 +98,17 @@
 	      </h5>
             </div>
 	    {{/if}}
+	    {{#if model.movie.first_release_date}}
+            <div class="col-xs-12">
+	      <h5>
+		<span class="bold">Release date:</span>
+		{{model.movie.first_release_date.release_date}}
+		{{#if model.movie.first_release_date.country}}
+		({{model.movie.first_release_date.country}})
+		{{/if}}
+	      </h5>
+            </div>
+	    {{/if}}
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
               {{#each model.genres}}
               <span class="label label-default">{{genre}}</span>
@@ -52,6 +117,53 @@
 	    <div class="row"></div>
 	  </div>
 	</div>
+	{{else}}
+	<div class="row">
+	  <div class="panel panel-default">
+	    <div class="panel-heading">
+	      {{#if model.movie.is_episode}}
+              <h3 class="panel-title">{{displayEpisode model.movie}}</h3>
+	      {{else}}
+              <h3 class="panel-title">{{model.movie.full_title}}</h3>
+	      {{/if}}
+	    </div>
+	    <div class="panel-body">
+	      {{#if cover.visible}}
+	      <div class="pull-right visible-xs visible-sm">
+		<img {{bind-attr src=cover.url}} id="cover-image-sm"/>
+	      </div>
+	      {{/if}}
+	      {{#if model.movie.rating}}
+              <div class="margin-bottom">
+		<h4 class="panel-title">Rating</h4>
+		<span>{{model.movie.rating.rating}}/10 ({{pluralize model.movie.rating.votes 'vote'}})</span>
+              </div>
+	      {{/if}}
+	      {{#if model.movie.first_release_date}}
+              <div class="margin-bottom">
+		<h4 class="panel-title">Release date</h4>
+		<span>
+		  {{model.movie.first_release_date.release_date}}
+		  {{#if model.movie.first_release_date.country}}
+		  ({{model.movie.first_release_date.country}})
+		  {{/if}}
+		</span>
+              </div>
+	      {{/if}}
+	      {{#if model.genres}}
+	      <h4 class="panel-title">Genre</h4>
+              <div class="margin-bottom">
+		{{#each model.genres}}
+		<span class="label label-default">{{genre}}</span>
+		{{/each}}
+              </div>
+	      {{/if}}
+	    </div>
+	    <div class="row"></div>
+	  </div>
+	</div>
+	{{/ifBS}}
+	{{#ifBS md lg}}
 	{{#if model.movie.is_episode}}
 	<div class="row">
 	  <div class="navbar navbar-custom">
@@ -81,6 +193,7 @@
 	  </div>
 	</div>
 	{{/if}}
+	{{/ifBS}}
 	<div class="hidden-md hidden-lg visible-sm visible-xs menu-dropdown">
 	  {{outlet menu-dropdown}}
 	</div>
@@ -97,10 +210,10 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-movie-page-cast">
   <div class="row">
     <div class="panel panel-default">
+      {{#ifBS md lg}}
       <div class="panel-heading">
         <h4 class="panel-title">Cast</h4>
       </div>
-      {{#ifBS md lg}}
       <div class="panel-body">
         <table class="table table-condensed">
           <thead>

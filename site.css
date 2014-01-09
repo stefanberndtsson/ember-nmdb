@@ -54,7 +54,7 @@ li.plot-summary {
 }
 
 #cover-image-sm {
-    height: 15em;
+    width: 120px;
 }
 
 .poster-image img {
@@ -204,6 +204,10 @@ form.navbar-xs-form {
     margin-bottom: 0 !important;
 }
 
+.margin-bottom {
+    margin-bottom: 5px;
+}
+
 .no-padding {
     padding: 0 !important;
 }
@@ -219,14 +223,19 @@ form.navbar-xs-form {
     max-width: 85%;
 }
 
+.shift-up {
+    margin-top: -15px !important;
+}
+
 .navbar-compact-fixed-offset {
     margin-top: 45px;
 }
 
 .navbar-compact {
-    background-color: #aaa;
+    xbackground-color: #ccc;
     height: 34px;
     min-height: 34px !important;
+    margin-bottom: 0px !important;
 }
 
 .navbar-compact .navbar-text {
@@ -237,6 +246,20 @@ form.navbar-xs-form {
 
 .navbar-compact .navbar-right {
     float: right;
+}
+
+.navbar-compact .navbar-compact-nav {
+    padding-right: 0;
+}
+
+.navbar-compact .navbar-compact-nav li {
+    padding-left: 0;
+}
+
+.navbar-compact .navbar-compact-nav .btn {
+    padding: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .navbar-compact .fixed-center {
