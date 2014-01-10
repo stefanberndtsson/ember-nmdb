@@ -7,9 +7,9 @@
       <div class="panel-heading">
         <h4 class="panel-title">Episodes</h4>
       </div>
-      <div class="panel-body">
-	<div class="row">
-	  <h4 class="panel-heading">
+      <div class="panel-body no-padding-top">
+	<div class="row padding-bottom">
+	  <h4>
 	    <ul class="nav nav-pills col-xs-2">
 	      <li class="disabled"><a class="black" href="javascript:void(0)">Season</a></li>
 	    </ul>

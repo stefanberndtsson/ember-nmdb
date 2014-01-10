@@ -230,6 +230,10 @@ form.navbar-xs-form {
     padding-top: 0 !important;
 }
 
+.padding-bottom {
+    padding-bottom: 10px;
+}
+
 .no-margin {
     margin: 0 !important;
 }
