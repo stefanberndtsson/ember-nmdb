@@ -30,7 +30,7 @@
     </div>
   </nav>
   {{else}}
-  <nav class="navbar navbar-compact navbar-default navbar-fixed-top col-xs-12">
+  <nav class="navbar navbar-compact navbar-default navbar-fixed-top">
     <button class="navbar-text btn btn-xs btn-default" {{action goSearch}}>Search</button>
     <h5 class="navbar-text fixed-center">{{pageTitle}}</h5>
     <button class="navbar-text navbar-right btn btn-xs btn-default" {{action goTop}}>Top</button>
