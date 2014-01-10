@@ -26,7 +26,7 @@
   </div>
   <div class="row">
     <div class="panel panel-default">
-      {{#ifBS md lg}}
+      {{#unless isMobile}}
       <div class="panel-heading">
 	<h4 class="panel-title">Movies</h4>
       </div>
@@ -90,7 +90,7 @@
 	  {{/each}}
 	</div>
       </div>
-      {{/ifBS}}
+      {{/unless}}
     </div>
   </div>
 </script>

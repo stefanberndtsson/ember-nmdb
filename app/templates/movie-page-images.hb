@@ -6,8 +6,8 @@
         <h4 class="panel-title">Images</h4>
       </div>
       {{/unless}}
-      <div class="panel-body">
-	<div class="row">
+      <div {{bind-attr class=":panel-body isMobile:no-padding:no-padding-top"}}>
+	<div {{bind-attr class="isMobile::row"}} style="overflow: hidden">
 	  {{#if model.pageData.tmdb.posters}}
 	  <h4 class="panel-heading">Posters</h4>
           {{#each model.pageData.tmdb.posters}}
@@ -24,7 +24,7 @@
           {{/each}}
 	  {{/if}}
 	</div>
-	<div class="row">
+	<div {{bind-attr class="isMobile::row"}} style="overflow: hidden">
 	  {{#if model.pageData.tmdb.backdrops}}
 	  <h4 class="panel-heading">Backdrops</h4>
           {{#each model.pageData.tmdb.backdrops}}

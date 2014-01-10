@@ -222,6 +222,10 @@ form.navbar-xs-form {
     padding: 0 !important;
 }
 
+.no-padding-top {
+    padding-top: 0 !important;
+}
+
 .no-margin {
     margin: 0 !important;
 }
@@ -282,4 +286,10 @@ form.navbar-xs-form {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.panel-body h4.panel-heading {
+    margin-top: 0;
+    margin-bottom: 0;
+    background-color: #eef;
 }

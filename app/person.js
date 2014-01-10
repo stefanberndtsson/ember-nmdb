@@ -129,10 +129,10 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 		name: "Google",
 		links: [{
 		    linkHref: 'http://www.google.com/search?q='+encodeURIComponent([model.person.first_name, model.person.last_name].compact().join(" ")),
-		    linkText: 'Google'
+		    linkText: 'Search'
 		},{
 		    linkHref: 'http://www.google.com/images?q='+encodeURIComponent([model.person.first_name, model.person.last_name].compact().join(" ")),
-		    linkText: 'Google Images'
+		    linkText: 'Images'
 		},{
 		    linkHref: 'http://www.youtube.com/results?search_query='+encodeURIComponent([model.person.first_name, model.person.last_name].compact().join(" ")),
 		    linkText: 'Youtube'
@@ -262,7 +262,8 @@ Nmdb.PersonPageController = Ember.Controller.extend({
 	    }
 	});
 	return isDropdown;
-    }.property('activeRole')
+    }.property('activeRole'),
+    isMobileBinding: 'controllers.application.isMobile'
 });
 
 Nmdb.PersonPageDataView = Ember.View.extend({

@@ -1,7 +1,7 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-person-page-top_movies">
   <div class="row">
     <div class="panel panel-default">
-      {{#ifBS md lg}}
+      {{#unless isMobile}}
       <div class="panel-heading">
 	<h4 class="panel-title">Top Movies</h4>
       </div>
@@ -44,7 +44,7 @@
 	  {{/each}}
 	</div>
       </div>
-      {{/ifBS}}
+      {{/unless}}
     </div>
   </div>
 </script>

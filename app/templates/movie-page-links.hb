@@ -14,7 +14,7 @@
 	  <a target="_blank" class="list-group-item list-group-link-item list-group-link-item-single"
 	     href="{{unbound linkHref}}">
 	    <span class="pull-right glyphicon glyphicon-chevron-right list-group-link-arrow"/>
-	    <h5>{{linkText}}</h5>
+	    <h4>{{linkText}}</h4>
 	  </a>
 	  {{/each}}
 	</div>
