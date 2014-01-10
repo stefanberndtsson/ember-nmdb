@@ -129,11 +129,13 @@ form.navbar-xs-form {
     -ms-transition: all 0.5s cubic-bezier(0.5,0,0.5,0);
     transition: all 0.5s cubic-bezier(0.5,0,0.5,0);
     */
+/*
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     -ms-transition: all 0.5s ease;
     transition: all 0.5s ease;
+*/
 }
 
 .spinner-inner {
