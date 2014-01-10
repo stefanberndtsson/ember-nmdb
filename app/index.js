@@ -15,4 +15,5 @@ Nmdb.IndexController = Ember.Controller.extend({
 	}
 	return (currentPath === "index.index" || currentPath === "index.search");
     }.property('controllers.application.currentPath'),
+    isMobileBinding: 'controllers.application.isMobile'
 });
