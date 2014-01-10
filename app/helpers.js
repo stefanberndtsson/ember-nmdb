@@ -137,6 +137,7 @@ Ember.Handlebars.registerHelper('ifBS', function(bs1, bs2, bs3, bs4, options) {
     if(!options) { options = bs4; bs4 = null; }
     if(!options) { options = bs3; bs3 = null; }
     if(!options) { options = bs2; bs2 = null; }
+    var hash = "foo"; 
 
     // Get context. We'll put our function in this.
     var context = (options.contexts && options.contexts[0]) || this;
@@ -144,24 +145,28 @@ Ember.Handlebars.registerHelper('ifBS', function(bs1, bs2, bs3, bs4, options) {
     // Reopen context (otherwise we'll lose the context inside the if area) and
     // create a function to check if condition is fulfilled.
     // Also add controllers and provided parameters for the function to be available
-    var bsActive = context.reopen({
-	bsActive: function() {
-	    var bsLevel = this.get('controllers.application.bsLevel');
-	    if(bsLevel === this.get('bs1') ||
-	       bsLevel === this.get('bs2') ||
-	       bsLevel === this.get('bs3') ||
-	       bsLevel === this.get('bs4')) {
-		return true;
-	    }
-	    return false;
-	}.property('controllers.application.bsLevel'),
-	controllers: this.get('controllers'),
-	bs1: bs1,
-	bs2: bs2,
-	bs3: bs3,
-	bs4: bs4
-    });
+    var bsActive = function() {
+	console.log("bsActive");
+	var bsLevel = this.get('controllers.application.bsLevel');
+	if(!bsLevel) { return false; }
+	if(bsLevel === bs1 ||
+	   bsLevel === bs2 ||
+	   bsLevel === bs3 ||
+	   bsLevel === bs4) {
+	    console.log("bsActive", bsLevel, "===", bs1,bs2,bs3,bs4);
+	    return true;
+	}
+	console.log("bsActive", bsLevel, "!==", bs1,bs2,bs3,bs4);
+	return false;
+    }
     
+    var bsData = {}
+    bsData[hash.slice(0,6)] = bsActive.property('controllers.application.bsLevel')
+
+    var bsContext = context.reopen({
+	bsActive: bsData
+    });
+
     // Pass it on to boundIf to keep bindings working
-    return Ember.Handlebars.helpers.boundIf.call(bsActive, "bsActive", options);
+    return Ember.Handlebars.helpers.boundIf.call(bsContext, 'bsActive.'+hash.slice(0,6), options);
 });

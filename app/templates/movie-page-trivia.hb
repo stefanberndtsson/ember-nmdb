@@ -1,11 +1,11 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-movie-page-trivia">
   <div class="row">
     <div class="panel panel-default">
-      {{#ifBS md lg}}
+      {{#unless isMobile}}
       <div class="panel-heading">
         <h4 class="panel-title">Trivia</h4>
       </div>
-      {{/ifBS}}
+      {{/unless}}
       <div {{bind-attr class=":panel-body isMobile:no-padding"}}>
 	{{#if hasSpoilers}}
 	<div class="panel-heading"><button class="btn btn-default" {{action toggleSpoilers}}>Toggle spoilers</button></div>

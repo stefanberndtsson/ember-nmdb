@@ -1,7 +1,7 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-movie-page-connections">
   <div class="row">
     <div class="panel panel-default">
-      {{#ifBS lg md}}
+      {{#unless isMobile}}
       <div class="panel-heading">
         <h4 class="panel-title">
 	  Movie Connections
@@ -10,7 +10,7 @@
 	  {{/if}}
 	</h4>
       </div>
-      {{/ifBS}}
+      {{/unless}}
       <div {{bind-attr class=":panel-body isMobile:no-padding"}}>
         {{#each model.pageData}}
 	<h4 class="panel-heading">{{type}}</h4>

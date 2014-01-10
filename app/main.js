@@ -138,6 +138,7 @@ function nmdbSetup(rootElement, environment) {
 	loadScriptSync(scriptHost+"/search.js");
 	loadScriptSync(scriptHost+"/movie.js");
 	loadScriptSync(scriptHost+"/person.js");
+	loadScriptSync(scriptHost+"/sha256.js");
 	loadTemplateSync(scriptHost+'/templates/main.hb');
 	loadTemplateSync(scriptHost+'/templates/common.hb');
 	loadTemplateSync(scriptHost+'/templates/index.hb');

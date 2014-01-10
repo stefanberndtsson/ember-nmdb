@@ -1,11 +1,11 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-movie-page-plots">
   <div class="row">
     <div class="panel panel-default">
-      {{#ifBS md lg}}
+      {{#unless isMobile}}
       <div class="panel-heading">
         <h4 class="panel-title">Plot summary</h4>
       </div>
-      {{/ifBS}}
+      {{/unless}}
       <div {{bind-attr class=":panel-body isMobile:no-padding"}}>
 	<ul class="list-group no-margin">
 	  {{#each model.pageData}}
