@@ -108,7 +108,7 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 		    linkHref: 'http://www.google.com/images?q='+encodeURIComponent(model.movie.full_title),
 		    linkText: 'Google Images'
 		},{
-		    linkHref: 'http://www.youtube.com/results?search_query=foo'+encodeURIComponent(model.movie.full_title),
+		    linkHref: 'http://www.youtube.com/results?search_query='+encodeURIComponent(model.movie.full_title),
 		    linkText: 'Youtube'
 		}]
 	    }]
