@@ -1,9 +1,11 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-movie-page-images">
   <div class="row">
     <div class="panel panel-default">
+      {{#ifBS md lg}}
       <div class="panel-heading">
         <h4 class="panel-title">Images</h4>
       </div>
+      {{/ifBS}}
       <div class="panel-body">
 	<div class="row">
 	  {{#if model.pageData.tmdb.posters}}
