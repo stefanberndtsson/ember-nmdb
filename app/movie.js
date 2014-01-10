@@ -110,6 +110,9 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 		},{
 		    linkHref: 'http://www.youtube.com/results?search_query='+encodeURIComponent(model.movie.full_title),
 		    linkText: 'Youtube'
+		},{
+		    linkHref: 'http://www.youtube.com/results?search_query='+encodeURIComponent(model.movie.full_title)+' trailer',
+		    linkText: 'Youtube (Trailer)'
 		}]
 	    }]
 	    if(model.pageData.imdb_id) {
