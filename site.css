@@ -301,3 +301,11 @@ form.navbar-xs-form {
     margin-bottom: 0;
     background-color: #eef;
 }
+
+.text-left-force {
+    text-align: left !important;
+}
+
+.text-right-force {
+    text-align: right !important;
+}
