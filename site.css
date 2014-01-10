@@ -198,8 +198,12 @@ form.navbar-xs-form {
     padding-top: 17px !important;
 }
 
-.list-group-link-item-single .list-group-link-arrow{
+.list-group-link-item-single .list-group-link-arrow {
     margin-top: -10px;
+}
+
+.list-group-link-item-single h4 {
+    margin-top: 8px;
 }
 
 .indent-left {

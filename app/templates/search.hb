@@ -28,27 +28,29 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="Nmdb-components/movies-results">
-  <ul class="list-group">
+  <div class="list-group">
     {{#if movies}}
     <h2 class="list-group-item-heading">Movies</h2>
     {{/if}}
     {{#each movies}}
-    <li class="list-group-item">{{#link-to 'movie' id}}{{full_title}}{{/link-to}}</li>
+    {{#link-to 'movie' id classNames="list-group-item list-group-link-item list-group-link-item-single"}}
+      <span class="pull-right glyphicon glyphicon-chevron-right list-group-link-arrow"/>
+      <h4>{{full_title}}</h4>
+    {{/link-to}}
     {{/each}}
-  </ul>
+  </div>
 </script>
 
 <script type="text/x-handlebars" data-template-name="Nmdb-components/people-results">
-    <ul class="list-group">
+    <div class="list-group">
       {{#if people}}
       <h2 class="list-group-item-heading">People</h2>
       {{/if}}
       {{#each people}}
-      <li class="list-group-item">
-        {{#link-to 'person' id}}
-        {{first_name}} {{last_name}} {{#if name_count}}({{name_count}}){{/if}}
-        {{/link-to}}
-      </li>
+      {{#link-to 'person' id classNames="list-group-item list-group-link-item list-group-link-item-single"}}
+        <span class="pull-right glyphicon glyphicon-chevron-right list-group-link-arrow"/>
+        <h4>{{first_name}} {{last_name}} {{#if name_count}}({{name_count}}){{/if}}</h4>
+      {{/link-to}}
       {{/each}}
-    </ul>
+    </div>
 </script>
