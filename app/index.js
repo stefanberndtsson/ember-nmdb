@@ -1,6 +1,9 @@
 Nmdb.IndexRoute = Nmdb.Route.extend({
     actions: {
 	search: function(params) {
+	    if(this.controller.get('isMobile')) {
+		$('.search-field').blur();
+	    }
 	    this.transitionTo('search', params);
 	}
     },
@@ -15,5 +18,5 @@ Nmdb.IndexController = Ember.Controller.extend({
 	}
 	return (currentPath === "index.index" || currentPath === "index.search");
     }.property('controllers.application.currentPath'),
-    isMobileBinding: 'controllers.application.isMobile'
+    isMobileBinding: 'controllers.application.isMobile',
 });
