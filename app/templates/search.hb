@@ -30,7 +30,7 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-components/movies-results">
   <div class="list-group">
     {{#if movies}}
-    <h2 class="list-group-item-heading">Movies</h2>
+    <h2 class="list-group-item-heading visible-md visible-lg">Movies</h2>
     {{/if}}
     {{#each movies}}
     {{#link-to 'movie' id classNames="list-group-item list-group-link-item list-group-link-item-single"}}
@@ -44,7 +44,7 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-components/people-results">
     <div class="list-group">
       {{#if people}}
-      <h2 class="list-group-item-heading">People</h2>
+      <h2 class="list-group-item-heading visible-md visible-lg">People</h2>
       {{/if}}
       {{#each people}}
       {{#link-to 'person' id classNames="list-group-item list-group-link-item list-group-link-item-single"}}

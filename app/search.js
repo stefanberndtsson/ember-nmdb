@@ -16,6 +16,7 @@ Nmdb.SearchRoute = Nmdb.Route.extend({
 });
 
 Nmdb.SearchController = Ember.Controller.extend({
+    needs: ['application'],
     model: {},
     moviesSelected: true,
     peopleSelected: true,
@@ -31,7 +32,8 @@ Nmdb.SearchController = Ember.Controller.extend({
 	    this.set('moviesSelected', false);
 	    this.set('peopleSelected', true);
 	}
-    }
+    },
+    isMobileBinding: 'controllers.application.isMobile'
 });
 
 Nmdb.MoviesResultsComponent = Ember.Component.extend({
