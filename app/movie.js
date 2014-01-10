@@ -166,6 +166,16 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 		}
 	    });
 	}
+	if(model.page == 'quotes') {
+	    controller.set('showSpinner', true);
+	    Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.movie.id+'/quotes?mode=full').then(function(data) {
+		if((controller.get('model.page') == 'quotes') &&
+                   (controller.get('model.movie.id') == model.movie.id)) {
+		    controller.set('model.pageData', data);
+		    controller.set('showSpinner', false);
+		}
+	    });
+	}
     },
     renderTemplate: function(x) {
 	var controller = this.get('controller');

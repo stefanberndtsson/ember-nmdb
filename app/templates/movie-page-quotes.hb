@@ -3,7 +3,11 @@
     <div class="panel panel-default">
       {{#unless isMobile}}
       <div class="panel-heading">
-        <h4 class="panel-title">Quotes</h4>
+        <h4 class="panel-title">Quotes
+	  {{#if showSpinner}}
+	  <img class="spinner-img" src="{{unbound appRoot}}/img/spinner.gif"/>
+	  {{/if}}
+	</h4>
       </div>
       {{/unless}}
       <div {{bind-attr class=":panel-body isMobile:no-padding"}}>
