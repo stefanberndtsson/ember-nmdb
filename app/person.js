@@ -147,6 +147,15 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 		    }]
 		});
 	    }
+	    if(model.pageData.twitter) {
+		linkSections.push({
+		    name: "Twitter",
+		    links: [{
+			linkHref: 'http://twitter.com/'+model.pageData.twitter,
+			linkText: 'Twitter - '+model.pageData.twitter
+		    }]
+		});
+	    }
 	    if(model.pageData.freebase_topic) {
 		linkSections.push({
 		    name: "Freebase",
