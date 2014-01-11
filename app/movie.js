@@ -10,6 +10,7 @@ Nmdb.MovieRoute = Nmdb.Route.extend({
 	return Ember.RSVP.hash({
 	    movie: Nmdb.AjaxPromise(this.get('apiUrl')+'/'+context.id),
 	    genres: Nmdb.AjaxPromise(this.get('apiUrl')+'/'+context.id+'/genres'),
+	    languages: Nmdb.AjaxPromise(this.get('apiUrl')+'/'+context.id+'/languages'),
 	});
     },
     setupController: function(controller, model, queryParams) {
@@ -55,6 +56,7 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	    page: context.page,
 	    movie: this.modelFor('movie').movie,
 	    genres: this.modelFor('movie').genres,
+	    languages: this.modelFor('movie').languages,
 	    pageData: Nmdb.AjaxPromise(this.get('apiUrl')+'/'+movie_id+'/'+this.get('pages')[context.page]),
 	});
     },

@@ -83,7 +83,15 @@
 		<span class="label label-default">{{genre}}</span>
 		{{/each}}
               </dd>
-	      {{/if}}
+	      {{/if}}	
+	      {{#if model.languages}}
+	      <dt>Language</dt>
+              <dd>
+		{{#each model.languages}}
+		<span class="label label-default">{{language}}</span>
+		{{/each}}
+              </dd>
+	      {{/if}}	
 	      {{#if model.movie.is_episode}}
 	      <dt>Episode {{model.movie.episode_episode}} of Season {{model.movie.episode_season}} of</dt>
 	      <dd>{{#link-to 'movie' model.movie.parent_id}}{{model.movie.episode_parent_title}}{{/link-to}}</dd>
