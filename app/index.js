@@ -5,6 +5,9 @@ Nmdb.IndexRoute = Nmdb.Route.extend({
 		$('.search-field').blur();
 	    }
 	    this.transitionTo('search', params);
+	},
+	toMovie: function(params) {
+	    this.transitionTo('movie', params);
 	}
     },
 });
@@ -20,3 +23,4 @@ Nmdb.IndexController = Ember.Controller.extend({
     }.property('controllers.application.currentPath'),
     isMobileBinding: 'controllers.application.isMobile',
 });
+

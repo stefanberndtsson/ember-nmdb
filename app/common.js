@@ -91,3 +91,40 @@ Nmdb.SectionDropdownOptionComponent = Ember.Component.extend({
 	return this.get('section.name');
     }.property('section.name')
 });
+
+Nmdb.SearchFieldComponent = Ember.TextField.extend({
+    didInsertElement: function() {
+	var that = this;
+	$('input.search-field').typeahead({
+	    minLength: 3,
+	    autoSelect: false,
+	    updater: function(item, itemId) {
+		that.sendAction('toMovie', itemId);
+		return item;
+	    },
+	    matcher: function(item) {
+		return true;
+	    },
+	    sorter: function(items) {
+		return items;
+	    },
+	    select: function () {
+		var val = this.$menu.find('.active').attr('data-value')
+		var valId = this.$menu.find('.active').attr('data-id')
+		if(this.autoSelect || val) {
+		    this.$element
+			.val(this.updater(val, valId))
+			.change()
+		}
+		this.hide();
+		return true;
+	    },
+	    source: function(query, process) {
+		var that = this;
+		Nmdb.AjaxPromise(Nmdb.apiUrlBase+'/searches/solr_suggest_movies?query='+query).then(function(data) {
+		    return process(data);
+		});
+	    }
+	});
+    }
+});

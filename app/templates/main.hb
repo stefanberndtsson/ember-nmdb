@@ -12,20 +12,9 @@
       </div>
       <form class="navbar-form" role="search">
 	<div class="form-group col-sm-7">
-          {{input type="text" value=queryString action="search" classNames="form-control"}}
+          {{search-field type="text" value=queryString action="search" toMovie="toMovie" classNames="form-control search-field"}}
 	</div>
 	<button type="submit" {{action "search" queryString}} class="btn btn-default">Search</button>
-      </form>
-    </div>
-    <div class="container visible-xs">
-      <div class="navbar-header pull-left">
-	{{#link-to 'index' classNames="navbar-brand"}}{{appName}}{{/link-to}}
-      </div>
-      <form class="navbar-form navbar-xs-form" role="search">
-	<div class="form-group col-xs-7">
-          {{input type="text" value=queryString action="search" classNames="form-control"}}
-	</div>
-	<button type="submit" {{action "search" queryString}} class="col-xs-3 btn btn-default">Search</button>
       </form>
     </div>
   </nav>
@@ -38,9 +27,9 @@
   <div class="navbar-compact-fixed-offset"></div>
   {{/unless}}
   <div class="spinner-loader spinner-loader-off">
-  {{outlet}}
+    {{outlet}}
   </div>
-  <div class="container" style="height: 150px;"></div>
+  <div class="container" style="height: 250px;"></div>
   <div class="spinner spinner-off">
     <div class="spinner-inner">
       Loading...
