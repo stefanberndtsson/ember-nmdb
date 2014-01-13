@@ -93,11 +93,14 @@ Nmdb.SectionDropdownOptionComponent = Ember.Component.extend({
 });
 
 Nmdb.SearchFieldComponent = Ember.TextField.extend({
+    attributeBindings: ['autocomplete'],
+    autocomplete: "off",
     didInsertElement: function() {
 	var that = this;
 	$('input.search-field').typeahead({
 	    minLength: 3,
 	    autoSelect: false,
+	    autoUpdate: true,
 	    updater: function(item, itemId) {
 		that.sendAction('toMovie', itemId);
 		return item;
@@ -107,6 +110,14 @@ Nmdb.SearchFieldComponent = Ember.TextField.extend({
 	    },
 	    sorter: function(items) {
 		return items;
+	    },
+	    renderItem: function(scope, item) {
+		console.log("renderItem", scope, item);
+		var itemTitle = item.full_title;
+		var itemId = item.id;
+	  	i = $(scope.options.item).attr('data-value', itemTitle).attr('data-id', itemId);
+		i.find('a').html(scope.highlighter(itemTitle));
+		return i[0];
 	    },
 	    select: function () {
 		var val = this.$menu.find('.active').attr('data-value')

@@ -34,9 +34,11 @@
     this.matcher = this.options.matcher || this.matcher
     this.sorter = this.options.sorter || this.sorter
     this.select = this.options.select || this.select
+    this.autoUpdate = typeof this.options.autoUpdate == 'boolean' ? this.options.autoUpdate : false
     this.autoSelect = typeof this.options.autoSelect == 'boolean' ? this.options.autoSelect : true
     this.highlighter = this.options.highlighter || this.highlighter
     this.updater = this.options.updater || this.updater
+    this.renderItem = this.options.renderItem || this.renderItem
     this.source = this.options.source
     this.$menu = $(this.options.menu)
     this.shown = false
@@ -159,13 +161,8 @@
   , render: function (items) {
       var that = this
 
-      items = $(items).map(function (i, itemData) {
-	  var item = itemData.full_title;
-	  var itemId = itemData.id;
-	  
-        i = $(that.options.item).attr('data-value', item).attr('data-id', itemId);
-        i.find('a').html(that.highlighter(item))
-        return i[0]
+      items = $(items).map(function (i, item) {
+	return that.renderItem(that, item);
       })
 
       if (this.autoSelect) {
@@ -175,6 +172,11 @@
       return this
     }
 
+  , renderItem: function(scope, item) {
+      var i = $(scope.options.item).attr('data-value', item)
+      i.find('a').html(scope.highlighter(item))
+      return i[0]
+    }
   , next: function (event) {
       var active = this.$menu.find('.active').removeClass('active')
         , next = active.next()
@@ -244,7 +246,7 @@
         case 13: // enter
         case 27: // escape
 	  var val = this.$menu.find('.active').attr('data-value')
-	  if(val) {
+	  if(val || !this.autoUpdate) {
               e.preventDefault();
 	  }
           break
