@@ -7,6 +7,7 @@ Nmdb.IndexRoute = Nmdb.Route.extend({
 	    this.transitionTo('search', params);
 	},
 	toMovie: function(params) {
+	    this.controllerFor('application').set('queryString', null);
 	    this.transitionTo('movie', params);
 	}
     },
