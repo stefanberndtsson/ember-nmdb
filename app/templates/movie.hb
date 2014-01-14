@@ -29,14 +29,14 @@
 		{{#if model.movie.prev_followed}}
 		{{#link-to 'movie' model.movie.prev_followed.id class="btn wrap pull-left text-left-force"}}
 		<span class="glyphicon glyphicon-chevron-left"/>
-		{{model.movie.prev_followed.title}}
+		{{model.movie.prev_followed.display_title}}
 		{{/link-to}}
 		{{/if}}
 	      </li>
 	      <li class="col-xs-6" style="padding-right: 0px;">
 		{{#if model.movie.next_followed}}
 		{{#link-to 'movie' model.movie.next_followed.id class="btn wrap pull-right text-right-force"}}
-		{{model.movie.next_followed.title}}
+		{{model.movie.next_followed.display_title}}
 		<span class="glyphicon glyphicon-chevron-right"/>
 		{{/link-to}}
 		{{/if}}
@@ -53,7 +53,7 @@
 	      {{#if model.movie.is_episode}}
               <h3 class="panel-title">{{displayEpisode model.movie}}</h3>
 	      {{else}}
-              <h3 class="panel-title">{{model.movie.full_title}}</h3>
+              <h3 class="panel-title">{{model.movie.display_full_title}}</h3>
 	      {{/if}}
 	    </div>
 	    <div class="panel-body">

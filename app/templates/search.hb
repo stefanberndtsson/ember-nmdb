@@ -35,7 +35,7 @@
     {{#each movies}}
     {{#link-to 'movie' id classNames="list-group-item list-group-link-item list-group-link-item-single"}}
       <span class="pull-right glyphicon glyphicon-chevron-right list-group-link-arrow"/>
-      <h4>{{full_title}}</h4>
+      <h4>{{display_full_title}}</h4>
     {{/link-to}}
     {{/each}}
   </div>

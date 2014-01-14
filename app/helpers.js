@@ -9,7 +9,7 @@ Ember.Handlebars.registerHelper('index', function(obj) {
 Ember.Handlebars.registerBoundHelper('displayTitle', function(movie, options) {
     var string = "";
     if(movie.is_episode) {
-        string = movie.title + " ("+movie.title_year+")" +"<br/>&nbsp;-&nbsp;";
+        string = movie.display_title + " ("+movie.title_year+")" +"<br/>&nbsp;-&nbsp;";
         if(movie.episode_name) {
             string += movie.episode_name;
         }
@@ -18,7 +18,7 @@ Ember.Handlebars.registerBoundHelper('displayTitle', function(movie, options) {
             string += " (#"+episode_num+")";
         }
     } else {
-        string = movie.full_title;
+        string = movie.display_full_title;
     }
     return new Ember.Handlebars.SafeString(string);
 });
@@ -114,8 +114,8 @@ Ember.Handlebars.registerBoundHelper('decodeLinks', function(string, links, opti
 	    linkTitle = linked.full_name.replace(/'/g,"\\'");
 	} else {
 	    var linked = links.movies[matchId][0];
-	    linkText = linked.title;
-	    linkTitle = linked.full_title.replace(/'/g,"\\'");;
+	    linkText = linked.display_title;
+	    linkTitle = linked.display_full_title.replace(/'/g,"\\'");;
 	}
 	return "{{#link-to '"+router+"' "+matchId+" title='"+linkTitle+"'}}"+linkText+"{{/link-to}}";
     });

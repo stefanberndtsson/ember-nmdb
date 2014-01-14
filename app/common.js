@@ -112,8 +112,7 @@ Nmdb.SearchFieldComponent = Ember.TextField.extend({
 		return items;
 	    },
 	    renderItem: function(scope, item) {
-		console.log("renderItem", scope, item);
-		var itemTitle = item.full_title;
+		var itemTitle = item.display_full_title;
 		var itemId = item.id;
 	  	i = $(scope.options.item).attr('data-value', itemTitle).attr('data-id', itemId);
 		i.find('a').html(scope.highlighter(itemTitle));

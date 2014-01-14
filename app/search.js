@@ -12,6 +12,24 @@ Nmdb.SearchRoute = Nmdb.Route.extend({
 	this.controllerFor('application').set('queryString', model.query);
 	controller.set('model', model);
 	this.controllerFor('application').set('pageTitle', "Search: "+model.query);
+	var movies = controller.get('model.movies');
+	var lookupNewTitles = [];
+	movies.forEach(function(movie) {
+	    if(!movie.display_title_fresh) {
+		lookupNewTitles.push(movie.id);
+	    }
+	});
+	if(lookupNewTitles.length > 0) {
+	    Nmdb.AjaxPromise(Nmdb.apiUrlBase+'/movies/new_title?'+$.param({ids: lookupNewTitles.join(",")}))
+		.then(function(data) {
+		    movies.forEach(function(movie) {
+			if(!movie.display_title_fresh) {
+			    Ember.set(movie, 'display_full_title', data[movie.id].display_full_title);
+			    Ember.set(movie, 'display_title', data[movie.id].display_title);
+			}
+		    });
+		});
+	}
     }
 });
 

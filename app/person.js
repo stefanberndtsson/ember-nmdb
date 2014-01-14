@@ -63,6 +63,27 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 	controller.set('section', model.page);
 	controller.set('pageData', model.pageData);
 	controller.set('cover.visible', false);
+	if(false && model.page == 'top_movies') {  // Disabled for now...
+	    var movies = controller.get('model.pageData');
+	    var lookupNewTitles = [];
+	    movies.forEach(function(movieEntry) {
+		if(!movieEntry.movie.display_title_fresh) {
+		    lookupNewTitles.push(movieEntry.movie.id);
+		}
+	    });
+	    if(lookupNewTitles.length > 0) {
+		Nmdb.AjaxPromise(Nmdb.apiUrlBase+'/movies/new_title?'+$.param({ids: lookupNewTitles.join(",")}))
+		    .then(function(data) {
+			movies.forEach(function(movieEntry) {
+			    if(!movieEntry.movie.display_title_fresh) {
+//				console.log("Replaced", movieEntry.movie.display_full_title, "with", data[movieEntry.movie.id].display_full_title);
+				Ember.set(movieEntry.movie, 'display_full_title', data[movieEntry.movie.id].display_full_title);
+				Ember.set(movieEntry.movie, 'display_title', data[movieEntry.movie.id].display_title);
+			    }
+			});
+		    });
+	    }
+	}
 	if(model.page == 'as_role') {
 	    if(model.person.all_roles[0] != model.person.active_roles[0]) {
 		if(queryParams.role != model.person.active_roles[0]) {

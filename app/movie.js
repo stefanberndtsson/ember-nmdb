@@ -17,10 +17,10 @@ Nmdb.MovieRoute = Nmdb.Route.extend({
 	this.controllerFor('application').spinnerOff();
 	controller.set('model', model);
 	if(model.movie.is_episode) {
-	    this.controllerFor('application').set('documentTitle', model.movie.full_title);
+	    this.controllerFor('application').set('documentTitle', model.movie.display_full_title);
 	    this.controllerFor('application').set('pageTitle', model.movie.episode_parent_title);
 	} else {
-	    this.controllerFor('application').set('pageTitle', model.movie.full_title);
+	    this.controllerFor('application').set('pageTitle', model.movie.display_full_title);
 	}
     }
 });
@@ -61,11 +61,25 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	});
     },
     setupController: function(controller, model, queryParams) {
-	this.controllerFor('application').spinnerOff();
+	var appController = this.controllerFor('application');
+	appController.spinnerOff();
 	controller.set('showSpinner', false);
 	controller.set('model', model);
 	controller.set('section', model.page);
 	controller.set('cover.visible', false);
+	if(!model.movie.display_title_fresh) {
+	    console.log("Refetching for new title...");
+	    Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.movie.id+'/new_title').then(function(data) {
+		controller.set('model.movie.display_title', data.display_title);
+		controller.set('model.movie.display_full_title', data.display_full_title);
+		if(model.movie.is_episode) {
+		    appController.set('documentTitle', data.display_full_title);
+		    appController.set('pageTitle', model.movie.episode_parent_title);
+		} else {
+		    appController.set('pageTitle', data.display_full_title);
+		}
+	    });
+	}
 	if(model.movie.active_pages) {
 	    var sections = controller.get('sections');
 	    sections.forEach(function(section, i) {
@@ -105,16 +119,16 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	    var linkSections = [{
 		name: "Google",
 		links: [{
-		    linkHref: 'http://www.google.com/search?q='+encodeURIComponent(model.movie.full_title),
+		    linkHref: 'http://www.google.com/search?q='+encodeURIComponent(model.movie.display_full_title),
 		    linkText: 'Google'
 		},{
-		    linkHref: 'http://www.google.com/images?q='+encodeURIComponent(model.movie.full_title),
+		    linkHref: 'http://www.google.com/images?q='+encodeURIComponent(model.movie.display_full_title),
 		    linkText: 'Google Images'
 		},{
-		    linkHref: 'http://www.youtube.com/results?search_query='+encodeURIComponent(model.movie.full_title),
+		    linkHref: 'http://www.youtube.com/results?search_query='+encodeURIComponent(model.movie.display_full_title),
 		    linkText: 'Youtube'
 		},{
-		    linkHref: 'http://www.youtube.com/results?search_query='+encodeURIComponent(model.movie.full_title)+' trailer',
+		    linkHref: 'http://www.youtube.com/results?search_query='+encodeURIComponent(model.movie.display_full_title)+' trailer',
 		    linkText: 'Youtube (Trailer)'
 		}]
 	    }]
@@ -123,7 +137,7 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 		    name: "IMDb",
 		    links: [{
 			linkHref: 'http://www.imdb.com/title/'+model.pageData.imdb_id,
-			linkText: 'IMDb - '+model.movie.full_title
+			linkText: 'IMDb - '+model.movie.display_full_title
 		    }]
 		});
 	    }
@@ -132,7 +146,7 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 		    name: "Freebase",
 		    links: [{
 			linkHref: 'http://www.freebase.com/'+model.pageData.freebase_topic,
-			linkText: 'Freebase - '+model.movie.full_title
+			linkText: 'Freebase - '+model.movie.display_full_title
 		    }]
 		});
 	    }
