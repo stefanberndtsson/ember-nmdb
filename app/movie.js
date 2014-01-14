@@ -68,8 +68,12 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	controller.set('section', model.page);
 	controller.set('cover.visible', false);
 	if(!model.movie.display_title_fresh) {
-	    console.log("Refetching for new title...");
+	    var oldMovieId = model.movie.id;
 	    Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.movie.id+'/new_title').then(function(data) {
+		if((oldMovieId != controller.get('model.id')) ||
+		   (appController.get('currentPath') != 'index.movie.movie-page')) {
+		    return;
+		}
 		controller.set('model.movie.display_title', data.display_title);
 		controller.set('model.movie.display_full_title', data.display_full_title);
 		if(model.movie.is_episode) {
