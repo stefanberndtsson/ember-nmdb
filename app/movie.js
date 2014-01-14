@@ -70,7 +70,7 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	if(!model.movie.display_title_fresh) {
 	    var oldMovieId = model.movie.id;
 	    Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.movie.id+'/new_title').then(function(data) {
-		if((oldMovieId != controller.get('model.id')) ||
+		if((oldMovieId != controller.get('model.movie.id')) ||
 		   (appController.get('currentPath') != 'index.movie.movie-page')) {
 		    return;
 		}
