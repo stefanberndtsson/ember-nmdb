@@ -82,6 +82,14 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 		} else {
 		    appController.set('pageTitle', data.display_full_title);
 		}
+		if(data.next_followed) {
+		    controller.set('model.movie.next_followed.display_title', data.next_followed.display_title);
+		    controller.set('model.movie.next_followed.display_full_title', data.next_followed.display_full_title);
+		}
+		if(data.prev_followed) {
+		    controller.set('model.movie.prev_followed.display_title', data.prev_followed.display_title);
+		    controller.set('model.movie.prev_followed.display_full_title', data.prev_followed.display_full_title);
+		}
 	    });
 	}
 	if(model.movie.active_pages) {
