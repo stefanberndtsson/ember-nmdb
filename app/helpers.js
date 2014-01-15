@@ -6,17 +6,29 @@ Ember.Handlebars.registerHelper('index', function(obj) {
     return obj.data.view.contentIndex+1;
 });
 
-Ember.Handlebars.registerBoundHelper('displayTitle', function(movie, options) {
+Ember.Handlebars.registerBoundHelper('displayTitle', function(movie, oneline, options) {
     var string = "";
+    var episodeData = "";
+    var breakLine = (oneline === "oneline") ? false : true;
     if(movie.is_episode) {
-        string = movie.display_title + " ("+movie.title_year+")" +"<br/>&nbsp;-&nbsp;";
+        string = movie.display_title + " ("+movie.title_year+")";
+	if(breakLine) {
+	    string += "<br/>&nbsp;-&nbsp;";
+	} else {
+	    string += " ";
+	}
         if(movie.episode_name) {
-            string += movie.episode_name;
+            episodeData += movie.episode_name;
         }
         if(movie.episode_episode && movie.episode_season) {
             var episode_num = movie.episode_season+":"+movie.episode_episode;
-            string += " (#"+episode_num+")";
+            episodeData += " (#"+episode_num+")";
         }
+	if(episodeData) {
+	    if(!breakLine) { string += "{"; }
+	    string += episodeData;
+	    if(!breakLine) { string += "}"; }
+	}
     } else {
         string = movie.display_full_title;
     }

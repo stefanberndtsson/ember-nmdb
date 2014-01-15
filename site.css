@@ -194,12 +194,20 @@ form.navbar-xs-form {
     height: 5em;
 }
 
+.list-group-link-item-flexible {
+    position: relative;
+}
+
 .list-group-link-item-single {
     padding-top: 17px !important;
 }
 
 .list-group-link-item-single .list-group-link-arrow {
     margin-top: -10px;
+}
+
+.list-group-link-item-flexible .list-group-link-arrow {
+    margin-top: 0.9em;
 }
 
 .list-group-link-item-single h4 {
@@ -250,7 +258,7 @@ form.navbar-xs-form {
 }
 
 .shift-up {
-    margin-top: -15px !important;
+    margin-top: -8px !important;
 }
 
 .navbar-compact-fixed-offset {

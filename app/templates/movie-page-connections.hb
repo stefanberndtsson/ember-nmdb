@@ -1,6 +1,6 @@
 <script type="text/x-handlebars" data-template-name="Nmdb-movie-page-connections">
   <div class="row">
-    <div class="panel panel-default">
+    <div {{bind-attr class="isMobile::panel isMobile::panel-default"}}>
       {{#unless isMobile}}
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -11,21 +11,30 @@
 	</h4>
       </div>
       {{/unless}}
+      {{#each section in model.pageData}}
+      <div {{bind-attr class="isMobile:panel isMobile:panel-default isMobile:margin-bottom-large"}}>
       <div {{bind-attr class=":panel-body isMobile:no-padding"}}>
-        {{#each model.pageData}}
-	<h4 class="panel-heading">{{type}}</h4>
-	<ul class="list-group no-margin">
-          {{#each connections}}
-	  <li class="list-group-item">
-	    {{#link-to 'movie' linked_movie.id}}{{displayTitle linked_movie}}{{/link-to}}
-	    {{#if text}}
-	    <div>&nbsp;&nbsp;-&nbsp;&nbsp;{{text}}</div>
+	<h4 class="panel-heading">{{section.type}}</h4>
+	<div class="list-group no-margin">
+          {{#each entry in section.connections}}
+	  {{#link-to 'movie' entry.linked_movie.id classNames="list-group-item list-group-link-item-flexible"}}
+	  <span class="pull-right glyphicon glyphicon-chevron-right list-group-link-arrow"/>
+	  <h4>
+	    {{#if isMobile}}
+	    {{displayTitle entry.linked_movie}}
+	    {{else}}
+	    {{displayTitle entry.linked_movie "oneline"}}
 	    {{/if}}
-	  </li>
+	  </h4>
+	    {{#if entry.text}}
+	    <div class="shift-up">&nbsp;&nbsp;-&nbsp;&nbsp;{{entry.text}}</div>
+	    {{/if}}
+	  {{/link-to}}
           {{/each}}
-	</ul>
-	{{/each}}
+	</div>
       </div>
+      </div>
+      {{/each}}
     </div>
   </div>
 </script>

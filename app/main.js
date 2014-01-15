@@ -59,6 +59,10 @@ function nmdbSetup(rootElement, environment) {
 	    var bsLevel = this.get('bsLevel');
 	    return (bsLevel === "xs" || bsLevel === "sm");
 	}.property('bsLevel'),
+	isBSXS: function() {
+	    var bsLevel = this.get('bsLevel');
+	    return (bsLevel === "xs");
+	}.property('bsLevel'),
 	actions: {
 	    goSearch: function() {
 		this.set('queryString', '');
