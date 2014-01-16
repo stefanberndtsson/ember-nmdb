@@ -47,6 +47,7 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	links: 'externals',
 	episodes: 'episodes',
 	connections: 'local_connections',
+	versions: 'versions',
 	similar: 'similar',
 	images: 'images'
     },
@@ -275,6 +276,9 @@ Nmdb.MoviePageController = Ember.Controller.extend({
          disabled: false},
         {name: 'quotes',
          display: 'Quotes',
+         disabled: false},
+        {name: 'versions',
+         display: 'Alternate Versions',
          disabled: false},
         {name: 'similar',
          display: 'Similar Movies',
