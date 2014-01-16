@@ -85,11 +85,15 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 	    }
 	}
 	if(model.page == 'as_role') {
-	    if(model.person.all_roles[0] != model.person.active_roles[0]) {
-		if(queryParams.role != model.person.active_roles[0]) {
-		    this.replaceWith('person-page', model.person.id, 
-				     'as_role', {queryParams: {role: model.person.active_roles[0]}});
+	    var hasRole = false;
+	    model.person.active_roles.forEach(function(active_role) {
+		if(queryParams.role === active_role) {
+		    hasRole = true;
 		}
+	    });
+	    if(!hasRole) {
+		this.replaceWith('person-page', model.person.id,
+				 'as_role', {queryParams: {role: model.person.active_roles[0]}});
 	    }
             var roleStructureTabbed = [];
             var roleStructureDropdown = [];
