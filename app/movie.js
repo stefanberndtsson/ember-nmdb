@@ -177,14 +177,15 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	    }
 	    controller.set('linkSections', linkSections);
 	}
-	if(!model.movie.image_url) {
+	if(!model.movie.image_url || model.movie.image_url_expired) {
 	    Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.movie.id+'/cover').then(function(data) {
 		if(data.image) {
 		    controller.set('cover.url', data.image);
 		    controller.set('cover.visible', true);
 		}
 	    });
-	} else {
+	}
+	if(model.movie.image_url) {
 	    controller.set('cover.url', model.movie.image_url);
 	    controller.set('cover.visible', true);
 	}

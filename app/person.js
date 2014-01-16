@@ -205,14 +205,15 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 	    }
 	    controller.set('linkSections', linkSections);
 	}
-	if(!model.person.image_url) {
+	if(!model.person.image_url || model.person.image_url_expired) {
 	    Nmdb.AjaxPromise(this.get('apiUrl')+'/'+model.person.id+'/cover').then(function(data) {
 		if(data.image) {
 		    controller.set('cover.url', data.image);
 		    controller.set('cover.visible', true);
 		}
 	    });
-	} else {
+	}
+	if(model.person.image_url) {
 	    controller.set('cover.url', model.person.image_url);
 	    controller.set('cover.visible', true);
 	}
