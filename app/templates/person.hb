@@ -5,6 +5,7 @@
 	      <h3 class="panel-title">{{model.person.first_name}}&nbsp;{{model.person.last_name}}</h3>
 	    </div>
 	    <div class="panel-body">
+	      <div class="col-xs-12 col-md-9 no-padding">
 	      {{#if cover.visible}}
 	      <div class="pull-right visible-xs visible-sm">
 		<img {{bind-attr src=cover.url}} id="cover-image-sm"/>
@@ -16,7 +17,12 @@
 		{{displayInfo 'DD' model.info}}
 		{{displayInfo 'RN' model.info}}
 	      </dl>
-	      <div class="row"></div>
+	      </div>
+	      {{#if cover.visible}}
+	      <div class="pull-right visible-md visible-lg col-md-3 no-padding">
+		<img {{bind-attr src=cover.url}} id="cover-image"/>
+	      </div>
+	      {{/if}}
 	    </div>
 	  </div>
 	</div>

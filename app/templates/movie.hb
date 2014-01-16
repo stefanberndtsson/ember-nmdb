@@ -57,6 +57,7 @@
 	      {{/if}}
 	    </div>
 	    <div class="panel-body">
+	      <div class="col-xs-12 col-md-9 no-padding">
 	      {{#if cover.visible}}
 	      <div class="pull-right visible-xs visible-sm">
 		<img {{bind-attr src=cover.url}} id="cover-image-sm"/>
@@ -95,6 +96,12 @@
 	      {{#if model.movie.is_episode}}
 	      <dt>Episode {{model.movie.episode_episode}} of Season {{model.movie.episode_season}} of</dt>
 	      <dd>{{#link-to 'movie' model.movie.parent_id}}{{model.movie.episode_parent_title}}{{/link-to}}</dd>
+	      {{/if}}
+	      </div>
+	      {{#if cover.visible}}
+	      <div class="pull-right visible-md visible-lg col-md-3 no-padding">
+		<img {{bind-attr src=cover.url}} id="cover-image"/>
+	      </div>
 	      {{/if}}
 	    </div>
 	{{#unless isMobile}}
