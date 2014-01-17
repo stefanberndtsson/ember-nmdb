@@ -77,6 +77,12 @@
 		{{/if}}
 	      </dd>
 	      {{/if}}
+	      {{#if model.movie.tagline}}
+	      <dt>Tagline</dt>
+	      <dd>
+		{{model.movie.tagline}}
+	      </dd>
+	      {{/if}}
 	      {{#if model.genres}}
 	      <dt>Genre</dt>
               <dd>
