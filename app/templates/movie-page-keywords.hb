@@ -11,6 +11,8 @@
         <span class="col-xs-6 col-sm-6 col-md-4 col-lg-4 panel">
 	  <span {{bind-attr class="strong:bold"}}>{{display}}</span>
 	</span>
+	{{#ifIndexMod 3}}<div class="clearfix visible-md visible-lg"></div>{{/ifIndexMod}}
+	{{#ifIndexMod 2}}<div class="clearfix visible-xs visible-sm"></div>{{/ifIndexMod}}
         {{/each}}
       </div>
     </div>
