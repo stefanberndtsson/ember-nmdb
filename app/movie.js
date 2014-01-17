@@ -50,6 +50,7 @@ Nmdb.MoviePageRoute = Nmdb.Route.extend({
 	versions: 'versions',
 	soundtrack: 'soundtrack',
 	taglines: 'taglines',
+	technicals: 'technicals',
 	similar: 'similar',
 	images: 'images'
     },
