@@ -247,6 +247,15 @@ form.navbar-xs-form {
     padding-top: 0 !important;
 }
 
+.no-padding-right {
+    padding-right: 0 !important;
+}
+
+.no-padding-hori {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
 .padding-bottom {
     padding-bottom: 10px;
 }
@@ -325,4 +334,8 @@ form.navbar-xs-form {
 
 .text-right-force {
     text-align: right !important;
+}
+
+.grey-border {
+    border: 1px solid #ddd;
 }

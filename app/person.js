@@ -38,6 +38,8 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 	quotes: 'quotes',
 	other_works: 'other_works',
 	publicity: 'publicity',
+	by_genre: 'by_genre',
+	by_keyword: 'by_keyword',
 	images: 'images',
 	links: 'externals'
     },
@@ -217,6 +219,9 @@ Nmdb.PersonPageRoute = Nmdb.Route.extend({
 	    controller.set('cover.url', model.person.image_url);
 	    controller.set('cover.visible', true);
 	}
+	if(model.page == 'by_keyword') {
+	    controller.set('pageDataSelection', null);
+	}
     },
     renderTemplate: function(x) {
 	var controller = this.get('controller');
@@ -262,6 +267,12 @@ Nmdb.PersonPageController = Ember.Controller.extend({
         {name: 'as_role',
          display: 'As Role',
          disabled: false},
+        {name: 'by_genre',
+         display: 'Movies by Genre',
+         disabled: false},
+        {name: 'by_keyword',
+         display: 'Movies by Keyword',
+         disabled: false},
 	{name: 'biography',
 	 display: 'Biography',
 	 disabled: false},
@@ -288,6 +299,17 @@ Nmdb.PersonPageController = Ember.Controller.extend({
     tabbedRoles: [],
     dropdownRoles: [],
     pageData: [],
+    pageDataSelection: null,
+    pageDataSelected: function() {
+	var selected = this.get('pageDataSelection');
+	var selectionData = [];
+	this.get('pageData').forEach(function(keyword) {
+	    if(selected == keyword.keyword) {
+		selectionData = [keyword];
+	    }
+	});
+	return selectionData;
+    }.property('pageDataSelection'),
     activeRoleIsDropdown: function() {
 	var activeRole = this.get('activeRole');
 	var isDropdown = false;
@@ -298,7 +320,16 @@ Nmdb.PersonPageController = Ember.Controller.extend({
 	});
 	return isDropdown;
     }.property('activeRole'),
-    isMobileBinding: 'controllers.application.isMobile'
+    isMobileBinding: 'controllers.application.isMobile',
+    actions: {
+	scrollTo: function(genre) {
+	    $('#'+genre)[0].scrollIntoView();
+	},
+	selectEntry: function(keyword) {
+	    this.set('pageDataSelection', keyword);
+	    $('#keyword-header')[0].scrollIntoView();
+	}
+    }
 });
 
 Nmdb.PersonPageDataView = Ember.View.extend({
@@ -326,4 +357,27 @@ Nmdb.PersonRoleLinkComponent = Ember.Component.extend({
         }
         return false;
     }.property('currentRole')
+});
+
+Nmdb.PersonPageByGenreDropdownView = Ember.View.extend({
+    tagName: 'select',
+    classNames: ['col-xs-12', 'nav', 'navbar', 'well', 'well-sm'],
+    templateName: 'person-page-by_genre-dropdown',
+    change: function(event) {
+	var selected = $(event.target).val();
+	if(selected) {
+	    var offset = $('#'+selected).offset();
+	    $(document.body).scrollTop(offset.top-50);
+	}
+    }
+});
+
+Nmdb.PersonPageByKeywordDropdownView = Ember.View.extend({
+    tagName: 'select',
+    classNames: ['col-xs-12', 'nav', 'navbar', 'well', 'well-sm'],
+    templateName: 'person-page-by_keyword-dropdown',
+    change: function(event) {
+	var selected = $(event.target).val();
+	this.get('controller').set('pageDataSelection', selected);
+    }
 });

@@ -173,6 +173,8 @@ function nmdbSetup(rootElement, environment) {
 	loadTemplateSync(scriptHost+'/templates/person-page-quotes.hb');
 	loadTemplateSync(scriptHost+'/templates/person-page-top_movies.hb');
 	loadTemplateSync(scriptHost+'/templates/person-page-trivia.hb');
+	loadTemplateSync(scriptHost+'/templates/person-page-by_genre.hb');
+	loadTemplateSync(scriptHost+'/templates/person-page-by_keyword.hb');
     }
 }
 
