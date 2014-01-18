@@ -60,6 +60,30 @@
           {{/each}}
 	</div>
 	{{/if}}
+	{{#if model.pageData.color_infos}}
+	<h4 class="panel-heading">Color Information</h4>
+	<ul class="list-group no-margin">
+          {{#each model.pageData.color_infos}}
+	  <li class="list-group-item">
+	    <span>{{color}}{{#if info}} {{info}}{{/if}}</span>
+	  </li>
+          {{/each}}
+	</ul>
+	{{/if}}
+	{{#if model.pageData.certificates}}
+	<h4 class="panel-heading">Certificates</h4>
+	<ul class="list-group no-margin">
+          {{#each model.pageData.certificates}}
+	  <li class="list-group-item">
+	    <span class="col-xs-4 col-sm-3 col-md-2 no-padding">{{country}}</span>
+	    <span class="col-xs-8 col-sm-9 col-md-10 no-padding">
+	      {{certificate}}&nbsp;&nbsp;&nbsp; {{#if info}} {{info}}{{/if}}
+	    </span>
+	    <span class="clearfix">
+	  </li>
+          {{/each}}
+	</ul>
+	{{/if}}
       </div>
     </div>
   </div>
