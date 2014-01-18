@@ -83,19 +83,19 @@
 		{{model.movie.tagline}}
 	      </dd>
 	      {{/if}}
-	      {{#if model.genres}}
-	      <dt>Genre</dt>
-              <dd>
-		{{#each model.genres}}
-		<span class="label label-default">{{genre}}</span>
-		{{/each}}
-              </dd>
-	      {{/if}}	
 	      {{#if model.languages}}
 	      <dt>Language</dt>
               <dd>
 		{{#each model.languages}}
 		<span class="label label-default">{{language}}</span>
+		{{/each}}
+              </dd>
+	      {{/if}}
+	      {{#if model.genres}}
+	      <dt>Genre</dt>
+              <dd>
+		{{#each model.genres}}
+		<span class="label label-default">{{genre}}</span>
 		{{/each}}
               </dd>
 	      {{/if}}	
