@@ -64,6 +64,10 @@
 	      </div>
 	      {{/if}}
 	      <dl class="no-margin">
+		{{#if showOriginalTitle}}
+		<dt>Original title</dt>
+		<dd>{{model.movie.full_title}}</dd>
+		{{/if}}
 	      {{#if model.movie.rating}}
 	      <dt>Rating</dt>
 	      <dd>{{model.movie.rating.rating}}/10 ({{pluralize model.movie.rating.votes 'vote'}})</dd>

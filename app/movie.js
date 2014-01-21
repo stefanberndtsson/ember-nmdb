@@ -31,7 +31,12 @@ Nmdb.MovieController = Ember.Controller.extend({
     cover: function() {
 	return this.get('controllers.movie-page.cover');
     }.property('controllers.movie-page.cover'),
-    isMobileBinding: 'controllers.application.isMobile'
+    isMobileBinding: 'controllers.application.isMobile',
+    showOriginalTitle: function() {
+	var orig_title = this.get('model.movie.full_title');
+	var disp_title = this.get('model.movie.display_full_title');
+	return (orig_title != disp_title);
+    }.property('model.movie.full_title', 'model.movie.display_full_title')
 });
 
 Nmdb.MoviePageRoute = Nmdb.Route.extend({
@@ -342,7 +347,7 @@ Nmdb.MoviePageController = Ember.Controller.extend({
 		controller.send('showSeason', 1);
 	    },0);
 	}
-    }.observes('isMobile')
+    }.observes('isMobile'),
 });
 
 Nmdb.MoviePageDataView = Ember.View.extend({
